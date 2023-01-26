@@ -1,0 +1,24 @@
+.search-box {
+  color: white;
+}
+
+.search-box input, .search-box button {
+  color: inherit;
+  background-color: #383737;
+  border: none;
+  outline: none;
+  border-radius: .5rem;
+
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.search-box input {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.search-box button {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

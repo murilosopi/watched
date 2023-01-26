@@ -1,0 +1,10 @@
+/* Declaração das variáveis com as cores principais */
+:root {
+   --cor-azul: #3f424a; 
+   --cor-azul-opaco: #1C1E21;
+   --cor-amarelo: #FA9F42;
+   --cor-ciano: #5BC0EB;
+   --cor-vermelho: #FA003F;
+   --cor-dark: #0F0F0F;
+   --cor-marrom: #3A3335;
+}

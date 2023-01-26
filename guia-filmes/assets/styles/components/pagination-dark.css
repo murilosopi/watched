@@ -1,0 +1,20 @@
+.pagination.pagination-dark {
+  --bs-pagination-color: white;
+  --bs-pagination-bg: rgb(26, 26, 26);
+  --bs-pagination-border-width: 1px;
+  --bs-pagination-border-color: #272727;
+  --bs-pagination-border-radius: 0;
+  --bs-pagination-hover-color: inherit;
+  --bs-pagination-hover-bg: rgb(36, 36, 36);
+  --bs-pagination-hover-border-color: #272727;
+  --bs-pagination-focus-color: inherit;
+  --bs-pagination-focus-bg: rgb(36, 36, 36);
+  --bs-pagination-focus-box-shadow: none;
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: var(--cor-azul);
+  --bs-pagination-active-border-color: var(--cor-azul);
+  --bs-pagination-disabled-color: #ffffff50;
+  --bs-pagination-disabled-bg: rgb(49, 49, 49);
+  --bs-pagination-disabled-border-color: #272727;
+  border-bottom: 2px solid white;
+}

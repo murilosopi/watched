@@ -1,0 +1,19 @@
+.input-custom .input-group-text, .input-custom .form-control{
+  border: none;
+  border-radius: 0;
+  border-bottom: 1.5px solid white;
+  outline: none;
+  padding: 0.7rem;
+  background-color: rgba(76, 76, 76, 0.3);
+}
+
+.input-custom .input-group-text, 
+.input-custom .form-control, 
+.input-custom .form-control::placeholder, 
+.input-custom .form-floating label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-custom .form-control:focus {
+  box-shadow: none;
+}

@@ -1,0 +1,37 @@
+<svg width="177" height="93" viewBox="0 0 177 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_209_241)">
+<rect x="162" y="80.8302" width="5" height="5" transform="rotate(-50 162 80.8302)" fill="#FA003F"/>
+<rect x="4" y="25.8302" width="5" height="5" transform="rotate(-50 4 25.8302)" fill="#FA003F"/>
+<rect x="165" y="51.8302" width="5" height="5" transform="rotate(-50 165 51.8302)" fill="#FA003F"/>
+<rect x="138" y="58.8302" width="5" height="5" transform="rotate(-50 138 58.8302)" fill="#FA003F"/>
+<rect x="74" y="46.8302" width="5" height="5" transform="rotate(-50 74 46.8302)" fill="#FA003F"/>
+<rect x="111" y="56.1105" width="6.5" height="6.5" transform="rotate(-9.83705 111 56.1105)" fill="#FA003F"/>
+<rect x="111" y="10.1105" width="6.5" height="6.5" transform="rotate(-9.83705 111 10.1105)" fill="#FA003F"/>
+<rect x="13" y="30.1105" width="6.5" height="6.5" transform="rotate(-9.83705 13 30.1105)" fill="#FA003F"/>
+<rect x="77" y="25.1105" width="6.5" height="6.5" transform="rotate(-9.83705 77 25.1105)" fill="#FA003F"/>
+<rect x="93" y="12.1105" width="6.5" height="6.5" transform="rotate(-9.83705 93 12.1105)" fill="#FA003F"/>
+<rect x="91" y="43.1284" width="8" height="8" transform="rotate(-50 91 43.1284)" fill="#FA003F"/>
+<rect x="123" y="38.1284" width="8" height="8" transform="rotate(-50 123 38.1284)" fill="#FA003F"/>
+<rect x="48" y="51.1284" width="8" height="8" transform="rotate(-50 48 51.1284)" fill="#FA003F"/>
+<rect x="102" y="27.1284" width="8" height="8" transform="rotate(-50 102 27.1284)" fill="#FA003F"/>
+<rect x="145" y="28.1284" width="8" height="8" transform="rotate(-50 145 28.1284)" fill="#FA003F"/>
+<rect x="28" y="31.6604" width="10" height="10" transform="rotate(-50 28 31.6604)" fill="#FA003F"/>
+<rect x="13" y="15.9321" width="12.9654" height="12.9654" transform="rotate(-50 13 15.9321)" fill="#FA003F"/>
+<rect x="43" y="20.6604" width="10" height="10" transform="rotate(-50 43 20.6604)" fill="#FA003F"/>
+<rect x="57" y="34.6604" width="10" height="10" transform="rotate(-50 57 34.6604)" fill="#FA003F"/>
+<rect x="30" y="54.6604" width="10" height="10" transform="rotate(-50 30 54.6604)" fill="#FA003F"/>
+<rect x="60" y="7.66045" width="10" height="10" transform="rotate(-50 60 7.66045)" fill="#FA003F"/>
+</g>
+<defs>
+<filter id="filter0_d_209_241" x="0" y="0" width="176.044" height="92.0442" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_209_241"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_209_241" result="shape"/>
+</filter>
+</defs>
+</svg>

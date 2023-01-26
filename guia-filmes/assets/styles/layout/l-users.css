@@ -1,0 +1,10 @@
+.l-users {
+  gap: 4rem;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.l-users::-webkit-scrollbar{
+  height: 0;
+}

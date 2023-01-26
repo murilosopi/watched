@@ -1,0 +1,14 @@
+.scroller {
+  font-size: 2.3rem;
+}
+
+.scroller .scroller-prev, .scroller .scroller-next {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  transition: 150ms;
+}
+
+.scroller .scroller-prev:not(.disabled):hover, .scroller .scroller-next:hover {
+  color: white;
+}

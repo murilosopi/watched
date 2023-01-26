@@ -1,0 +1,9 @@
+.l-header-user {
+  position: relative;
+}
+
+.l-header-user .photo-change-form {
+  position: absolute;
+  bottom: 2.5%;
+  right: 11%;
+}

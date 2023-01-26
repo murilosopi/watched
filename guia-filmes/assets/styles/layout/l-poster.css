@@ -1,0 +1,44 @@
+.l-poster {
+  display: flex;
+  width: 75%;
+  margin: auto;
+  padding: 2rem 1rem;
+  justify-content: center;
+  gap: 3rem 2rem;
+
+  overflow-x: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.l-poster .poster-card {
+  display: flex;
+  width: 250px;
+  min-width: 250px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.l-poster .poster-card .poster-inner {
+  display: flex;  
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+}
+
+.l-poster .poster-card .poster-img {
+  width: 100%;
+}
+
+
+.l-poster::-webkit-scrollbar{
+  height: 0;
+}
+
+.l-poster + .scroller {
+  position: relative;
+  bottom: 1rem;
+}

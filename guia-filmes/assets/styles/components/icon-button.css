@@ -1,0 +1,15 @@
+.icon-button {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  transition: 100ms ease-in-out;
+}
+
+.icon-button i {
+  font-size: 1.5rem;
+}
+
+.icon-button:hover {
+  transform: scale(1.05);
+}

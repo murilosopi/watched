@@ -1,0 +1,7 @@
+.l-movie .poster-card {
+  max-width: 250px;
+}
+
+.l-movie .poster-card:hover {
+  transform: scale(1.05);
+}
