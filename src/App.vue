@@ -1,29 +1,28 @@
 <template>
   <div id="app">
     <PageHeader />
-    <Slider />
-    <main class="l-poster">
-      <MovieCard
-        :title="'Teste'"
-        :rating="4.14"
-        :liked="false"
-        :watched="true"
-        :saved="true"
+    <InputCustom>
+      <i class="bi bi-lock-fill" slot="icon"></i>
+
+      <input
+        type="password"
+        class="form-control"
+        name="senha"
+        placeholder="Senha"
+        slot="input"
       />
-    </main>
+    </InputCustom>
   </div>
 </template>
 
 <script>
 import PageHeader from "@/components/PageHeader.vue";
-import Slider from "@/components/Slider.vue";
-import MovieCard from "@/components/MovieCard.vue";
+import InputCustom from "@/components/InputCustom.vue";
 export default {
   name: "App",
   components: {
     PageHeader,
-    Slider,
-    MovieCard,
+    InputCustom,
   },
 };
 </script>
