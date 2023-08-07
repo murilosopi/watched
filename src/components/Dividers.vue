@@ -1,3 +1,16 @@
+<template>
+    <div class="line-box">
+      <div class="line mb-3 w-50"></div>
+      <div class="line mb-3 w-100"></div>
+      <div class="line mb-3 w-75"></div>
+    </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
 .line-box {
   width: 60%;
 }
@@ -23,7 +36,7 @@
 .line-box .line:nth-child(1)::after,
 .line-box .line:nth-child(2)::after,
 .line-box .line:nth-child(3)::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   width: 20rem;
@@ -32,19 +45,20 @@
 }
 
 .line-box.line-box-error .line:nth-child(1)::after {
-  background-image: url('../../img/linebox/after-azul.svg');
+  background-image: url("../assets/img/linebox/after-azul.svg");
   left: 30%;
   top: 2rem;
 }
 
 .line-box.line-box-error .line:nth-child(2)::after {
-  background-image: url('../../img/linebox/after-amarelo.svg');
+  background-image: url("../assets/img/linebox/after-amarelo.svg");
   left: 60%;
   top: 3rem;
 }
 
 .line-box.line-box-error .line:nth-child(3)::after {
-  background-image: url('../../img/linebox/after-vermelho.svg');
+  background-image: url("../assets/img/linebox/after-vermelho.svg");
   left: 45%;
   top: 6rem;
 }
+</style>

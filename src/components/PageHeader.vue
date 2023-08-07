@@ -1,5 +1,5 @@
 <template>
-  <header class="py-4 px-md-3">
+  <header class="py-4">
     <div class="navbar navbar-expand-lg navbar-dark">
       <div class="container-md justify-content-between">
         <MainTitle>
@@ -11,9 +11,11 @@
 
         <!-- Navegação -->
         <Navigation/>
+
         
       </div>
     </div>
+    <Dividers />
   </header>
 </template>
 
@@ -21,9 +23,10 @@
 import SearchBar from '@/components/SearchBar.vue';
 import MainTitle from '@/components/MainTitle.vue';
 import Navigation from '@/components/Navigation.vue';
+import Dividers from '@/components/Dividers.vue';
 export default {
   components: {
-    SearchBar, MainTitle, Navigation
+    SearchBar, MainTitle, Navigation, Dividers
   }
 };
 </script>
