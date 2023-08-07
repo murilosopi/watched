@@ -1,17 +1,18 @@
 <template>
   <div id="app">
     <PageHeader />
+    <Slider/>
   </div>
 </template>
 
 <script>
 
 import PageHeader from '@/components/PageHeader.vue';
-
+import Slider from '@/components/Slider.vue';
 export default {
   name: 'App',
   components: {
-    PageHeader
+    PageHeader, Slider
   }
 }
 </script>

@@ -7,12 +7,10 @@
         </MainTitle>
 
         <!-- Formulário de pesquisa -->
-        <SearchBar/>
+        <SearchBar />
 
         <!-- Navegação -->
-        <Navigation/>
-
-        
+        <Navigation />
       </div>
     </div>
     <Dividers />
@@ -20,17 +18,18 @@
 </template>
 
 <script>
-import SearchBar from '@/components/SearchBar.vue';
-import MainTitle from '@/components/MainTitle.vue';
-import Navigation from '@/components/Navigation.vue';
-import Dividers from '@/components/Dividers.vue';
+import SearchBar from "@/components/SearchBar.vue";
+import MainTitle from "@/components/MainTitle.vue";
+import Navigation from "@/components/Navigation.vue";
+import Dividers from "@/components/Dividers.vue";
 export default {
   components: {
-    SearchBar, MainTitle, Navigation, Dividers
-  }
+    SearchBar,
+    MainTitle,
+    Navigation,
+    Dividers,
+  },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
