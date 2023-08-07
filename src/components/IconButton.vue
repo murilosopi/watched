@@ -1,3 +1,14 @@
+<template>
+  <button class="icon-button d-flex flex-column">
+    <slot></slot>
+  </button>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
 .icon-button {
   background: none;
   border: none;
@@ -13,3 +24,4 @@
 .icon-button:hover {
   transform: scale(1.05);
 }
+</style>
