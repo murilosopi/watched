@@ -8,7 +8,7 @@
     }
 
     // Define as informações de controlador e ação de cada rota acessada pela URL
-    protected function initRoutes() {
+    protected function initRoutes_old() {
 
       $routes['sobre-filme'] = array(
         'route' => '/sobre-filme',
@@ -142,6 +142,16 @@
         'route' => '/alterar-foto-perfil',
         'controller' => 'UsuarioController',
         'action' => 'alterarFotoPerfil'
+      );
+
+      $this->setRoutes($routes); 
+    }
+
+    protected function initRoutes() {
+      $routes['todos-filmes'] = array(
+        'route' => '/todos-filmes',
+        'controller' => 'FilmeController',
+        'action' => 'obterTodosFilmes'
       );
 
       $this->setRoutes($routes); 

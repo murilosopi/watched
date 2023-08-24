@@ -8,6 +8,19 @@
   use App\Action;
 
   class FilmeController extends Action {
+
+    public function obterTodosFilmes() {
+      $inicio = $_GET['offset'] ?? 0;
+      $fim = $_GET['limit'] ?? 0;
+
+      $filmeModel = new Filme();
+
+      $filmes = $filmeModel->obterTodosFilmes($inicio, $fim);
+
+      $this->retornarResposta($filmes);
+    }
+
+
     // carrega a view do filme e os dados necessários
     public function sobreFilme() {
       $filmeModel = new Filme();
