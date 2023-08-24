@@ -3,8 +3,9 @@
   use App\Views\View;
   use App\Models\Usuario;
   use App\Models\Filme;
+  use App\Action;
 
-  class PesquisaController {
+  class PesquisaController extends action {
     public function telaPesquisaMobile() {
       session_start();
       View::render(
@@ -50,19 +51,18 @@
       }
 
 
-      View::render(
-        'pesquisa',
-        [
-          'pesquisa' => $pesquisa,
-          'filtro' => $filtro,
-          'usuarios' => $usuarios,
-          'num_usuarios' => count($usuarios),
-          'num_filmes' => count($filmes),
-          'filmes' => $filmes,
-          'num_resultados' => count($filmes) + count($usuarios),
-          'usuario' => $idUsuario ? $_SESSION['usuario'] : NULL
-          ]
-      );
+      $dados - [ 
+        'pesquisa' => $pesquisa,
+        'filtro' => $filtro,
+        'usuarios' => $usuarios,
+        'num_usuarios' => count($usuarios),
+        'num_filmes' => count($filmes),
+        'filmes' => $filmes,
+        'num_resultados' => count($filmes) + count($usuarios),
+        'usuario' => $idUsuario ? $_SESSION['usuario'] : NULL
+      ];
+      
+      $this->retornarResposta($dados);
     }
 
     private function atribuiNumSeguindoSeguidores(array $perfil) {
