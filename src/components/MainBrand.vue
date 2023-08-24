@@ -12,4 +12,8 @@ export default {};
 .title {
   font-family: "Unica One";
 }
+
+.title a {
+  color: white!important;
+}
 </style>
