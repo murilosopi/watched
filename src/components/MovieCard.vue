@@ -26,12 +26,12 @@
         <!-- salvar/removerSalvoFilme -->
         <div>
           <IconButton>
-            <i class="bi" :class="{' bi-bookmark-star': !watched, ' bi-bookmark-star-fill': watched}"></i>
+            <i class="bi" :class="{' bi-bookmark-star': !saved, ' bi-bookmark-star-fill': saved}"></i>
           </IconButton>
         </div>
       </div>
       <!-- Link para o filme -->
-      <a class="fw-normal p-2" href="sobre-filme?id=<?= $filme['id'] ?>">
+      <a class="fw-normal p-2 text-light" href="sobre-filme?id=<?= $filme['id'] ?>">
         <div class="poster-bottom">
           <h3 class="poster-title text-truncate">{{ title }}</h3>
           <span class="poster-rating">
@@ -51,12 +51,18 @@ export default {
     IconButton,
   },
   props: {
-    title: String,
-    rating: Number,
-    liked: Boolean,
-    saved: Boolean,
-    watched: Boolean,
+    movie: Object
   },
+  data() {
+    return {
+      title: this.movie.title,
+      rating: this.movie.rating,
+      liked: this.movie.liked,
+      saved: this.movie.saved,
+      watched: this.movie.watched,
+      id: this.movie.id
+    }
+  }
 };
 </script>
 
