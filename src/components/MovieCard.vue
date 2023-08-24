@@ -2,8 +2,8 @@
   <article class="poster-card">
     <img
       class="poster-img w-100"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcYujNBQq53Q8zvISFhnguM42cFndgo-8UQso2ZMZREnEhhMQW"
-      alt="Cartaz do filme [ NOME FILME ]"
+      :src="urlImage"
+      :alt="`Cartaz do filme ${title}`"
     />
 
     <div class="poster-inner">
@@ -31,15 +31,18 @@
         </div>
       </div>
       <!-- Link para o filme -->
-      <a class="fw-normal p-2 text-light" href="sobre-filme?id=<?= $filme['id'] ?>">
-        <div class="poster-bottom">
-          <h3 class="poster-title text-truncate">{{ title }}</h3>
-          <span class="poster-rating">
-            <i class="bi bi-star-half"></i>
-            {{ rating.toFixed(1) }}
-          </span>
-        </div>
-      </a>
+      <router-link :to="`/filme/${id}`">
+        <a class="fw-normal p-2 text-light" >
+
+          <div class="poster-bottom">
+            <h3 class="poster-title text-truncate">{{ title }}</h3>
+            <span class="poster-rating">
+              <i class="bi bi-star-half"></i>
+              {{ rating.toFixed(1) }}
+            </span>
+          </div>
+        </a>
+      </router-link>
     </div>
   </article>
 </template>
@@ -55,8 +58,9 @@ export default {
   },
   data() {
     return {
-      title: this.movie.title,
-      rating: this.movie.rating,
+      title: this.movie.nome,
+      rating: Number(this.movie.nota_avaliacao),
+      urlImage: this.movie.url_cartaz,
       liked: this.movie.liked,
       saved: this.movie.saved,
       watched: this.movie.watched,

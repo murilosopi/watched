@@ -17,6 +17,11 @@ export default {
     return {
       movies: []
     }
+  },
+  created() {
+    this.$api.get('/todos-filmes').then(response => {
+      this.movies = response.data;
+    });
   }
 }
 </script>
