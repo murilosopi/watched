@@ -34,7 +34,7 @@
     }
 
     // Retorna todos os filmes registrados no banco de dados, podendo limitar os resultados
-    public function obterTodosFilmes(int $limite = 0, int $offset = 0) {
+    public function obterTodosFilmes(int $offset = 0, int $limite = 0) {
       $sql = 'SELECT id, nome, url_cartaz, nota_avaliacao FROM tb_filmes';
       
       $stmt = $this->conexao->prepare($sql);
