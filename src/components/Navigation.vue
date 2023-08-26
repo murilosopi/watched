@@ -10,10 +10,12 @@
     </button>
     <div class="collapse navbar-collapse flex-grow-0" id="navbar">
       <nav class="navbar-nav text-end py-3 px-4 gap-3">
-        <a href="/guia-filmes" class="nav-link fw-bold">
-          <i class="bi bi-house"></i>
-          Home
-        </a>
+        <router-link to="/">
+          <a class="nav-link fw-bold">
+            <i class="bi bi-house"></i>
+            Home
+          </a>
+        </router-link>
 
         <a
           href="pesquisa-mobile?rota=/guia-filmes"
@@ -24,20 +26,26 @@
         </a>
 
         <template v-if="usuarioLogado">
-            <a href="meu-perfil" class="nav-link fw-bold">
-              <i class="bi bi-person-circle"></i>
-              Meu perfil
-            </a>
-            <a href="logout" class="nav-link fw-bold">
-              <i class="bi bi-box-arrow-left"></i>
-              Sair
-            </a>
+            <router-link to="/meu-perfil">
+              <a class="nav-link fw-bold">
+                <i class="bi bi-person-circle"></i>
+                Meu perfil
+              </a>
+            </router-link>
+            <router-link to="/logout">
+              <a class="nav-link fw-bold">
+                <i class="bi bi-box-arrow-left"></i>
+                Sair
+              </a>
+            </router-link>
         </template>
         <template v-else>
-            <a href="login" class="nav-link fw-bold">
-              <i class="bi bi-box-arrow-in-right"></i>
-              Entre na sua conta!
-            </a>
+            <router-link to="/login">
+              <a class="nav-link fw-bold">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Entre na sua conta!
+              </a>
+            </router-link>
         </template>
       </nav>
     </div>
