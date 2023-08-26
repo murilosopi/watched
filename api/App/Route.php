@@ -8,7 +8,7 @@
     }
 
     // Define as informações de controlador e ação de cada rota acessada pela URL
-    protected function initRoutes_old() {
+protected function initRoutes_old() {
 
       $routes['sobre-filme'] = array(
         'route' => '/sobre-filme',
@@ -152,6 +152,12 @@
         'route' => '/todos-filmes',
         'controller' => 'FilmeController',
         'action' => 'obterTodosFilmes'
+      );
+
+      $routes['cadastrar-usuario'] = array(
+        'route' => '/usuario/cadastrar',
+        'controller' => 'AuthController',
+        'action' => 'cadastrarUsuario'
       );
 
       $this->setRoutes($routes); 

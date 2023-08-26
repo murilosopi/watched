@@ -1,8 +1,45 @@
 <?php
   namespace App\Controllers;
   use App\Models\Usuario;
+  use App\Models\Auth;
+  use App\Resources\Response;
 
   class AuthController {
+    private Usuario $usuarioModel;
+    private Auth $authModel;
+
+    public function __construct()
+    {
+      $this->usuarioModel = new Usuario();
+      $this->authModel = new Auth();
+    }
+
+    public function cadastrarUsuario() {
+      $nome = $_POST['nome'] ?? NULL;
+      $email = $_POST['email'] ?? NULL;
+      $senha = $_POST['senha'] ?? NULL;
+      $username = $_POST['user'] ?? NULL;
+
+
+      if(isset($nome, $email, $senha, $username)) {
+
+        $this->authModel
+          ->__set('nome', $nome)
+          ->__set('email', $email)
+          ->__set('senha', $senha)
+          ->__set('username', $username);  
+          
+        $cadastroValido = !$this->authModel->cadastroExistente();
+        if($cadastroValido) {
+          $this->authModel->cadastrarUsuario();
+        }  
+      }
+      
+      $response = new Response();
+      $response->sucesso = $cadastroValido ?? false;
+      $response->enviar();
+    }
+
     // Realiza as verificações de dados necessárias e cadastra o usuário
     public function autenticarCadastro() {
       $nomeCadastro = trim($_POST['nome']);
