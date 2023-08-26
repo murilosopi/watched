@@ -4,5 +4,7 @@
   error_reporting(E_ALL);
   require_once "./vendor/autoload.php";
 
+  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: *");
   $route = new \App\Route;
 ?>  
