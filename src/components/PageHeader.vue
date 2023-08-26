@@ -2,11 +2,11 @@
   <header class="py-4">
     <div class="navbar navbar-expand-lg navbar-dark">
       <div class="container-md justify-content-between">
-        <MainBrand>
+        <Title>
           <router-link to="/">
             <a class="fw-normal" href="/">Watched!</a>
           </router-link>
-        </MainBrand>
+        </Title>
 
         <!-- Formulário de pesquisa -->
         <SearchBar />
@@ -21,13 +21,13 @@
 
 <script>
 import SearchBar from "@/components/SearchBar.vue";
-import MainBrand from "@/components/MainBrand.vue";
+import Title from "@/components/Title.vue";
 import Navigation from "@/components/Navigation.vue";
 import Dividers from "@/components/Dividers.vue";
 export default {
   components: {
     SearchBar,
-    MainBrand,
+    Title,
     Navigation,
     Dividers,
   },
