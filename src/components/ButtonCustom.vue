@@ -1,3 +1,19 @@
+<template>
+  <button
+    class="button-custom w-100"
+    :class="{ 'button-custom-azul': variant == 'azul' }"
+  >
+    <slot></slot>
+  </button>
+</template>
+
+<script>
+export default {
+  props: ["variant"],
+};
+</script>
+
+<style>
 .button-custom {
   cursor: pointer;
   border: 0;
@@ -19,3 +35,4 @@
   background-color: var(--cor-azul);
   color: white;
 }
+</style>
