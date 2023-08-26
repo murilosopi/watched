@@ -3,7 +3,9 @@
     <div class="navbar navbar-expand-lg navbar-dark">
       <div class="container-md justify-content-between">
         <MainBrand>
-          <a class="fw-normal" href="/guia-filmes">Watched!</a>
+          <router-link to="/">
+            <a class="fw-normal" href="/">Watched!</a>
+          </router-link>
         </MainBrand>
 
         <!-- Formulário de pesquisa -->

@@ -19,9 +19,18 @@ export default {
     }
   },
   created() {
-    this.$api.get('/todos-filmes').then(response => {
-      this.movies = response.data;
-    });
+    this.searchAllMovies();
+  },
+  methods: {
+    searchAllMovies(offset = 0, limit = 0) {
+      const params = {
+        offset, limit
+      };
+
+      this.$api.get('/todos-filmes', { params }).then(response => {
+        this.movies.push(...response.data);
+      });
+    }
   }
 }
 </script>
