@@ -3,7 +3,7 @@
   class Connection {
     public static function getDb() {
       $host = 'localhost';
-      $dbname = 'bd_guia_filmes';
+      $dbname = 'watched';
       $username = 'root';
       $password = '';
 

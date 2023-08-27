@@ -1,124 +1,155 @@
-DROP DATABASE IF EXISTS bd_guia_filmes;
-CREATE DATABASE bd_guia_filmes;
-use bd_guia_filmes;
+-- TODO: meios de contato/redes, reacoes, avatar, listas, posts, denuncias, solicitações seguidores
 
-/*
-    TABELAS PRINCIPAIS:
-*/
+DROP DATABASE IF EXISTS watched;
+CREATE DATABASE watched;
+use watched;
 
-CREATE TABLE tb_usuarios(
+CREATE TABLE tbUsuarios(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     username VARCHAR(20) NOT NULL,
-    foto_perfil VARCHAR(500) DEFAULT "assets/img/users/default.svg",
     sobre VARCHAR(240),
     email VARCHAR(75) NOT NULL,   
-    senha CHAR(32) NOT NULL
+    senha CHAR(32) NOT NULL,
+    privado BOOLEAN DEFAULT FALSE,
+    assinante BOOLEAN DEFAULT FALSE,
+    ultimoAcesso DATE,
+    dataCadastro DATE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tb_filmes(
+CREATE TABLE tbAdministradores(
+    usuario INT,
+    status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios(id)
+);
+
+CREATE TABLE tbUsuarioRedes(
+    usuario INT,
+    rede INT,
+    idUsuarioRede INT
+);
+
+CREATE TABLE tbFilmes(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    url_cartaz TEXT NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    tituloOriginal VARCHAR(100),
+    cartaz TEXT NOT NULL,
     sinopse TEXT NOT NULL,
-    nota_avaliacao DECIMAL(2, 1) DEFAULT 0.0,
-    duracao_min INT(3) NOT NULL,
-    num_curtidas INT DEFAULT 0,
-    num_salvos INT DEFAULT 0,
-    num_assistidos INT DEFAULT 0,
-    ano_lancamento INT(4) NOT NULL,
+    nota DECIMAL(2, 1) DEFAULT 0.0,
+    duracaoMin INT(3) NOT NULL,
+    anoLancamento INT(4) NOT NULL,
     direcao VARCHAR(400) NOT NULL,
     roteiro VARCHAR(400) NOT NULL,
     distribuicao VARCHAR(100) NOT NULL,
     idioma VARCHAR(200) NOT NULL,
     pais VARCHAR(30) NOT NULL,
-    elenco VARCHAR(500) NOT NULL,
-    nome_original VARCHAR(100)
+    elenco VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE tb_generos(
+CREATE TABLE tbGeneros(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
 );
 
 
-CREATE TABLE tb_plataformas(
+CREATE TABLE tbPlataformas(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    url_icone TEXT NOT NULL,
-    url_link TEXT NOT NULL
+    icone TEXT NOT NULL,
+    url TEXT NOT NULL
 );    
 
-CREATE TABLE tb_resenhas (
+CREATE TABLE tbResenhas (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_filme INT NOT NULL,
-    id_usuario INT NOT NULL,
+    filme INT NOT NULL,
+    usuario INT NOT NULL,
     titulo VARCHAR(100) DEFAULT "",
     descricao TEXT NOT NULL,
-    nota_avaliacao DECIMAL(2, 1) DEFAULT 0.0,
-    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios (id),
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id)
+    nota DECIMAL(2, 1) DEFAULT 0.0,
+    dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    reacao CHAR(1),
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id),
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
 
-/*/================================================/*/
+/*Chat: */
+CREATE TABLE tbChats(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tipo CHAR(1) NOT NULL, -- I: individual | G: grupo,
+    data DATE DEFAULT CURRENT_TIMESTAMP,
+    descricao VARCHAR(1000)
+);
+
+CREATE TABLE tbParticipantesChat(
+    chat INT NOT NULL,
+    participante INT NOT NULL,
+    adm BOOLEAN DEFAULT FALSE,
+    entrada DATE DEFAULT CURRENT_TIMESTAMP,
+    saida DATE,
+    expulso BOOLEAN
+);
+
+CREATE TABLE tbMensagens(
+    chat INT NOT NULL,
+    data DATETIME DEFAULT CURRENT_TIMESTAMP,
+    texto VARCHAR(600) NOT NULL
+);
+
+
+
 /* TABELAS AUXILIARES (N-N) */
 
-CREATE TABLE tb_generos_filmes(
-    id_genero INT NOT NULL,
-    id_filme INT NOT NULL,
-    FOREIGN KEY (id_genero) REFERENCES tb_generos (id),
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id)
+CREATE TABLE tbGenerosFilmes(
+    genero INT NOT NULL,
+    filme INT NOT NULL,
+    FOREIGN KEY (genero) REFERENCES tbGeneros (id),
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
-CREATE TABLE tb_plataformas_filmes(
-    id_plataforma INT NOT NULL,
-    id_filme INT NOT NULL,
-    FOREIGN KEY (id_plataforma) REFERENCES tb_plataformas (id), 
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id)
+CREATE TABLE tbPlataformasFilmes(
+    plataforma INT NOT NULL,
+    filme INT NOT NULL,
+    FOREIGN KEY (plataforma) REFERENCES tbPlataformas (id), 
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
-CREATE TABLE tb_filmes_assistidos_usuario(
-    id_filme INT NOT NULL,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id),
-    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios (id)
+CREATE TABLE tbFilmesAssistidosUsuario(
+    filme INT NOT NULL,
+    usuario INT NOT NULL,
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
 );
 
-CREATE TABLE tb_filmes_curtidos_usuario(
-    id_filme INT NOT NULL,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id),
-    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios (id)
+CREATE TABLE tbFilmesCurtidosUsuario(
+    filme INT NOT NULL,
+    usuario INT NOT NULL,
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
 );
 
-CREATE TABLE tb_filmes_salvos_usuario(
-    id_filme INT NOT NULL,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES tb_filmes (id),
-    FOREIGN KEY (id_usuario) REFERENCES tb_usuarios (id)
+CREATE TABLE tbFilmesSalvosUsuario(
+    filme INT NOT NULL,
+    usuario INT NOT NULL,
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
 );
 
-CREATE TABLE tb_usuarios_seguidores (
-    id_usuario INT NOT NULL,
-    id_seguidor INT NOT NULL,
-    FOREIGN KEY(id_usuario) REFERENCES tb_usuarios(id),
-    FOREIGN KEY(id_seguidor) REFERENCES tb_usuarios(id)
+CREATE TABLE tbUsuariosSeguidores (
+    usuario INT NOT NULL,
+    seguidor INT NOT NULL,
+    FOREIGN KEY(usuario) REFERENCES tbUsuarios(id),
+    FOREIGN KEY(seguidor) REFERENCES tbUsuarios(id)
 );
 
-
-/*/================================================/*/
-/* INSERÇÃO DE DADOS */
-
-INSERT INTO tb_filmes (nome, url_cartaz, sinopse, duracao_min, ano_lancamento, direcao, roteiro, distribuicao, idioma, pais, nome_original, elenco)
+INSERT INTO tbFilmes (titulo, Cartaz, sinopse, duracaoMin, anoLancamento, direcao, roteiro, distribuicao, idioma, pais, tituloOriginal, elenco)
 VALUES 
     ("Sociedade dos Poetas Mortos", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcYujNBQq53Q8zvISFhnguM42cFndgo-8UQso2ZMZREnEhhMQW", "O novo professor de Inglês John Keating é introduzido a uma escola preparatória de meninos que é conhecida por suas antigas tradições e alto padrão. Ele usa métodos pouco ortodoxos para atingir seus alunos, que enfrentam enormes pressões de seus pais e da escola. Com a ajuda de Keating, os alunos Neil Perry, Todd Anderson e outros aprendem como não serem tão tímidos, seguir seus sonhos e aproveitar cada dia.", 128, 1989, "Peter Weir", "Tom Schulman", "Disney", "Inglês", "Estados Unidos", "Dead Poets Society", "Robin Williams;Ethan Hawke;Robert Sean;Josh Charles"),
-    ("Antes do Amanhecer", "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRytXtKVFseDVfEqbi-SFX_OXjed_SzDJWd0qQ9MPdclk-YcKc8", "Jesse, um jovem americano, e Celine, uma linda francesa, se conhecem no trem para Paris, e começam uma conversa que os leva a fazer uma escala em Viena e ficar um pouco mais juntos, sem imaginar o que o destino os reserva.", 105, 1995, "Richard Linklater", "Richard Linklater, Kim Krizan", "Columbia Pictures", "Inglês", "Estados Unidos e Áustria", "Before Sunrise", "Ethan Hawke;Julie Delpy;Hanno Poschl;Hans Weingartner"),
+    ("Antes do Amanhecer", "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRytXtKVFseDVfEqbi-SFX_OXjedSzDJWd0qQ9MPdclk-YcKc8", "Jesse, um jovem americano, e Celine, uma linda francesa, se conhecem no trem para Paris, e começam uma conversa que os leva a fazer uma escala em Viena e ficar um pouco mais juntos, sem imaginar o que o destino os reserva.", 105, 1995, "Richard Linklater", "Richard Linklater, Kim Krizan", "Columbia Pictures", "Inglês", "Estados Unidos e Áustria", "Before Sunrise", "Ethan Hawke;Julie Delpy;Hanno Poschl;Hans Weingartner"),
     ("Viva: A Vida é Uma Festa", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlC1BU-d_49KZvZrLQ6vhp_dsWObCyp9a7UuJe0-8tpQcJ3fM", "Apesar da proibição da música por gerações de sua família, o jovem Miguel sonha em se tornar um músico talentoso como seu ídolo Ernesto de la Cruz. Desesperado para provar seu talento, Miguel se encontra na deslumbrante e colorida Terra dos Mortos. Depois de conhecer um charmoso malandro chamado Héctor, os dois novos amigos embarcam em uma jornada extraordinária para desvendar a verdadeira história por trás da história da família de Miguel.", 105, 2017, "Adrian Molina, Lee Unkrich", "Adrian Molina, Lee Unkrich, Matthew Aldrich, Jason Katz", "Disney", "Inglês", "Estados Unidos", "Coco", "Arthur Salerno;Leando Luna;Nando Pradho;Adriana Quadros"),
     ("Uma Noite de Crime", "https://br.web.img3.acsta.net/pictures/210/335/21033500_20130830193413918.jpg", "The Purge é uma franquia americana de filmes de terror e ação, composta por cinco filmes e uma série de televisão. A franquia se passa numa versão distópica dos Estados Unidos onde, uma vez por ano, durante um período de 12 horas, todo crime, incluindo até mesmo estupro e homicídio, é legalizado.", 88, 2013, "James DeMonaco", "James DeMonaco", "Universal Pictures", "Inglês", "Estados Unidos", "The Purge", "Ethan Hawke;Lena Headey;Max Burkholder;Adelaide Kane"),
     ("Em Busca da Perfeição", "https://i.pinimg.com/originals/e3/ae/19/e3ae19905686795e350cbb54ff4c99ea.jpg", "Andrew sonha em ser o melhor baterista de sua geração. Ele chama a atenção do impiedoso mestre do jazz Terence Fletcher, que ultrapassa os limites e transforma seu sonho em uma obsessão, colocando em risco a saúde física e mental do jovem músico.", 107, 2014, "Damien Chazelle", "Damien Chazelle", "Sony Pictures Classics", "Inglês", "Estados Unidos", "Whiplash", "Miles Teller;J.K Simmons;Paul Reiser;Melissa Benoist"),
-    ("O Sexto Sentido", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSm1bD7Hdfo2lFPc4GdhCWa0moWg5jkL_rnnD8eIJz0BmaSCe2V", "Um garoto vê o espírito de pessoas mortas à sua volta. Um dia, ele conta o segredo ao psicólogo Malcolm Crowe, que tenta ajudá-lo a descobrir o que está por trás dos distúrbios. A pesquisa de Crowe sobre os poderes do garoto causa consequências inesperadas a ambos.", 107, 1999, "M. Night Shyamalan", "M. Night Shyamalan", "Buena Vista Pictures Distribution", "Inglês", "Estados Unidos", "The Sixth Sense", "Bruce Willis;Haley Joel Osment;Toni Collete;Olivia Williams"),
+    ("O Sexto Sentido", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSm1bD7Hdfo2lFPc4GdhCWa0moWg5jkLRnnD8eIJz0BmaSCe2V", "Um garoto vê o espírito de pessoas mortas à sua volta. Um dia, ele conta o segredo ao psicólogo Malcolm Crowe, que tenta ajudá-lo a descobrir o que está por trás dos distúrbios. A pesquisa de Crowe sobre os poderes do garoto causa consequências inesperadas a ambos.", 107, 1999, "M. Night Shyamalan", "M. Night Shyamalan", "Buena Vista Pictures Distribution", "Inglês", "Estados Unidos", "The Sixth Sense", "Bruce Willis;Haley Joel Osment;Toni Collete;Olivia Williams"),
     ("A Outra Face", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4yxlPR0kQVjAP_xXjOYdtdrxTEsvNNq1utBORBZqQUo5CBtZz", "Agente do FBI troca de rosto com um terrorista para vingar a morte do filho, mas tudo se transforma em um grande pesadelo e ele precisa lutar pela sua vida e também de sua família.", 138, 1997, "John Woo", "Mike Werb e Michael Colleary", "Paramount Pictures (América do Norte) e Buena Vista International", "Inglês", "Estados Unidos", "Face Off", "John Travolta;Nicolas Cage;Joan Allen;Alessandro Nivola"),
     ("O Show de Truman", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOcA2mFPvtwJaYBUmFebJ0g6DUyrsl912CcPkAFhnkkj2Dt-d6", "Truman Burbank é um pacato vendedor de seguros que leva uma vida simples com sua esposa Meryl Burbank. Porém, algumas coisas ao seu redor fazem com que ele passe a estranhar sua cidade, seus supostos amigos e até sua mulher. Após conhecer a misteriosa Lauren, ele fica intrigado e acaba descobrindo que toda sua vida foi monitorada por câmeras e transmitida em rede nacional.", 103, 1998, "Peter Weir", "Andrew Niccol", "Paramount Pictures", "Inglês", "Estado Unidos", "The Thuman Show", "Jim Carrey;Laura Linney;Ed Harris;Noah Emmerich;Natascha McElhone"),
     ("Jogos Mortais", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQ_bHH1GHmNAry7yF3QASbvbIb-pV6xwmnad02t0HWw2CHO5-mS", "Dois homens acordam acorrentados em um banheiro como prisioneiros de um assassino em série que leva suas vítimas a situações limítrofes em um jogo macabro. Para sobreviver, eles terão de desvendar juntos as peças desse quebra-cabeças doentio.", 103, 2004, "James Wan", "Leigh Whannell", "Lions Gate Films e Paris Filmes (Brasil)", "Inglês", "Estados Unidos", "The Thuman Show", "Tobin Beel;Cary Elwes;Leigh Whannell;Shawnee Smith;Danny Glover;Michael Emerson"),
@@ -135,7 +166,7 @@ VALUES
     ("O Homem de Palha", "https://blogdokira250242846.files.wordpress.com/2020/08/homem.jpg", "Uma jovem desaparece misteriosamente. Para investigar o desaparecimento, o Sargento Howie viaja para uma remota ilha escocesa onde conhece o esquisito Lord Summerisle, um líder religioso da pequena comunidade que realiza estranhos rituais pagãos.", 92, 1973, "Robin Hardy", "Anthony Shaffer", "British Lion Films", "Inglês", "Reino Unido", "The Wicker Man", "Edward Woodward;Diane Cilento;Ingrid Pitt;Chrisstopher Lee");
 
 
-INSERT INTO tb_plataformas (nome, url_icone, url_link)
+INSERT INTO tbPlataformas (nome, icone, url)
 VALUES 
     ("Amazon Prime", "assets/img/icons/amazon-icon.svg", "https://www.primevideo.com/"),
     ("Apple TV+", "assets/img/icons/apple-icon.svg", "https://www.apple.com/br/apple-tv-plus/"),
@@ -147,13 +178,13 @@ VALUES
 
 
 -- Registro dos gêneros
-INSERT INTO tb_generos(nome) 
+INSERT INTO tbGeneros(nome) 
 VALUES 
     ("Ação"), ("Comédia"), ("Drama"), ("Documentário"), ("Infantil"), ("Fantasia"), ("Terror"), ("Romance"), ("Ficção científica"), ("Suspense"), ("Animação"), ("Musical"), ("Aventura");
 
 
 -- Relação entre generos e filmes
-INSERT INTO tb_generos_filmes(id_filme, id_genero)
+INSERT INTO tbGenerosFilmes(filme, genero)
 VALUES
     -- Sociedade dos poetas mortos
     (1, 3),
@@ -216,7 +247,7 @@ VALUES
     (20, 7), (20, 6), (20, 10);
 
 
-INSERT INTO tb_plataformas_filmes (id_plataforma, id_filme)
+INSERT INTO tbPlataformasFilmes (plataforma, filme)
 VALUES 
     -- Sociedade dos poetas mortos
     (7, 1),
