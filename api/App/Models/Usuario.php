@@ -43,23 +43,6 @@
     }
 
     // Retorna um usuário que tenha um username ou email e senha compatíveis
-    public function obterUsuarioLogin() {
-      $sql = "
-        SELECT 
-          id, nome, username, sobre, foto_perfil
-        FROM 
-          tb_usuarios 
-        WHERE 
-          (username = :username OR email = :username) AND senha = :senha
-      ";
-      $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':username', $this->username);
-      $stmt->bindValue(':senha', $this->senha);
-      $stmt->execute();
-      return $stmt->fetch(\PDO::FETCH_ASSOC);
-    }
-
-    // Retorna um usuário que tenha um username ou email e senha compatíveis
     public function obterUsuarioPorId() {
       $sql = "
         SELECT 
@@ -188,24 +171,6 @@
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':id_usuario', $this->id);
       $stmt->bindValue(':id_seguidor', $idSeguidor);
-
-      return $stmt->execute();
-    }
-
-    // Registra o usuário no banco de dados
-    public function cadastrarUsuario() {
-      $sql = "
-        INSERT INTO 
-          tb_usuarios(nome, username, email, senha)
-        VALUES
-          (:nome, :username, :email, :senha)
-      ";
-
-      $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':nome', $this->nome);
-      $stmt->bindValue(':username', $this->username);
-      $stmt->bindValue(':email', $this->email);
-      $stmt->bindValue(':senha', $this->senha);
 
       return $stmt->execute();
     }
