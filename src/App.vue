@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <PageHeader />
-    <router-view />
+    <div class="container my-auto">
+      <router-view />
+    </div>
   </div>
 </template>
 
