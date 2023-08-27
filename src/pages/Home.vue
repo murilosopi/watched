@@ -27,9 +27,13 @@ export default {
         offset, limit
       };
 
-      this.$api.get('/todos-filmes', { params }).then(response => {
+      this.$api.get('/todos-filmes', { params })
+      .then(response => {
         this.movies.push(...response.data);
-      });
+      })
+      .catch(error => {
+        console.log(`${error.code}: ${error.message}`);
+      })
     }
   }
 }
