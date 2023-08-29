@@ -20,14 +20,15 @@
     protected $numCurtidas;
     protected $numSalvos;
     protected $numAssistidos;
-    protected $conexao;
 
     // Retorna todos os filmes registrados no banco de dados, podendo limitar os resultados
     public function obterTodosFilmes() {
-      $sql = 'SELECT id, titulo, cartaz FROM tbFilmes';
+      $sql = 'SELECT id, titulo, cartaz, 
+                     (SELECT SUM(nota)/COUNT(*) FROM tbResenhas WHERE filme = F.id) as nota
+              FROM tbFilmes as F';
       
       $stmt = $this->conexao->prepare($sql);
-      if($$this->limit) {
+      if($this->limit) {
         $sql = $sql . ' LIMIT :offset, :limite;';
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':offset', $this->offset, \PDO::PARAM_INT);

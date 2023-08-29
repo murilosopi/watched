@@ -58,9 +58,9 @@ export default {
   },
   data() {
     return {
-      title: this.movie.nome,
-      rating: Number(this.movie.nota_avaliacao),
-      urlImage: this.movie.url_cartaz,
+      title: this.movie.titulo,
+      rating: Number(this.movie.nota),
+      urlImage: this.movie.cartaz,
       liked: this.movie.liked,
       saved: this.movie.saved,
       watched: this.movie.watched,
