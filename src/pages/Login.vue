@@ -54,6 +54,7 @@ import InputCustom from '@/components/InputCustom.vue';
 import Title from '@/components/Title.vue';
 import ButtonCustom from '@/components/ButtonCustom.vue';
 import router from '@/routes';
+import PageMixin from '@/mixins/PageMixin.js';
 
 export default {
   components: {
@@ -61,11 +62,16 @@ export default {
     Title,
     ButtonCustom
   },
+  mixins: [PageMixin],
   methods: {
     voltar() {
       router.go(-1)
     }
-  }
+  },
+  created() {
+    this.alterarFavicon('login-sign-up', 'svg');
+    this.alterarTitle('Entre na Sua Conta');
+  },
 }
 </script>
 

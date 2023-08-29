@@ -98,6 +98,7 @@
 import InputCustom from "@/components/InputCustom.vue";
 import Title from "@/components/Title.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
+import PageMixin from "@/mixins/PageMixin";
 import router from "@/routes";
 
 export default {
@@ -106,6 +107,7 @@ export default {
     Title,
     ButtonCustom,
   },
+  mixins: [PageMixin],
   methods: {
     voltar() {
       router.go(-1);
@@ -118,7 +120,11 @@ export default {
     return {
       usuario: {}
     }
-  }
+  },
+  created() {
+    this.alterarFavicon('login-sign-up', 'svg');
+    this.alterarTitle('Crie Sua Conta');
+  },
 };
 </script>
 
