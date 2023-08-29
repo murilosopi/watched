@@ -2,7 +2,7 @@
     <div class="line-box">
       <div class="line mb-3 w-50"></div>
       <div class="line mb-3 w-100"></div>
-      <div class="line mb-3 w-75"></div>
+      <div class="line w-75"></div>
     </div>
 </template>
 
@@ -33,9 +33,9 @@ export default {};
   background-color: var(--cor-vermelho);
 }
 
-.line-box .line:nth-child(1)::after,
-.line-box .line:nth-child(2)::after,
-.line-box .line:nth-child(3)::after {
+.line-box.line-box-error .line:nth-child(1)::after,
+.line-box.line-box-error .line:nth-child(2)::after,
+.line-box.line-box-error .line:nth-child(3)::after {
   content: "";
   display: block;
   position: absolute;
