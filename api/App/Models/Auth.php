@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
-use App\Table;
+use App\Model;
 
-class Auth extends Table {
+class Auth extends Model {
   protected string $email;
   protected string $username;
   protected string $senha;
@@ -10,7 +10,7 @@ class Auth extends Table {
 
   public function cadastroExistente() {
     $sql = "SELECT COUNT(*) AS TOTAL
-            FROM tb_usuarios 
+            FROM tbUsuarios 
             WHERE email = :email OR username = :username";
 
     $stmt = $this->conexao->prepare($sql);
@@ -28,7 +28,7 @@ class Auth extends Table {
   public function cadastrarUsuario() {
     $sql = "
       INSERT INTO 
-        tb_usuarios(nome, username, email, senha)
+        tbUsuarios(nome, username, email, senha)
       VALUES
         (:nome, :username, :email, :senha)
     ";
@@ -47,9 +47,9 @@ class Auth extends Table {
     public function obterUsuarioLogin() {
       $sql = "
         SELECT 
-          id, nome, username, sobre, foto_perfil
+          id, nome, username, sobre
         FROM 
-          tb_usuarios 
+          tbUsuarios 
         WHERE 
           (username = :username OR email = :username) AND senha = :senha
       ";

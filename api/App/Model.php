@@ -2,8 +2,10 @@
 namespace App;
 use App\Connection;
 
-class Table {
+class Model {
   protected \PDO $conexao;
+  protected $offset;
+  protected $limit;
 
   public function __construct() {
     $this->conexao = Connection::getDb();

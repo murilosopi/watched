@@ -114,23 +114,12 @@ CREATE TABLE tbPlataformasFilmes(
     FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
-CREATE TABLE tbFilmesAssistidosUsuario(
+CREATE TABLE tbFilmesUsuario(
     filme INT NOT NULL,
     usuario INT NOT NULL,
-    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
-    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
-);
-
-CREATE TABLE tbFilmesCurtidosUsuario(
-    filme INT NOT NULL,
-    usuario INT NOT NULL,
-    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
-    FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
-);
-
-CREATE TABLE tbFilmesSalvosUsuario(
-    filme INT NOT NULL,
-    usuario INT NOT NULL,
+    assistido BOOLEAN DEFAULT FALSE,
+    curtido BOOLEAN DEFAULT FALSE,
+    salvo BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (filme) REFERENCES tbFilmes (id),
     FOREIGN KEY (usuario) REFERENCES tbUsuarios (id)
 );
