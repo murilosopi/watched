@@ -1,5 +1,5 @@
 <template>
-  <button class="icon-button d-flex flex-column">
+  <button class="icon-button d-flex flex-column align-items-center">
     <slot></slot>
   </button>
 </template>
