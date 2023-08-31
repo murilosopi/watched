@@ -50,6 +50,16 @@
       return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function obterDetalhesFilme() {
+      $sql = 'SELECT * FROM tbFilmes WHERE id = :id';
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->execute();
+
+      return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
     // Retorna todos os filmes da lista de assistidos de um usuário
     public function obterFilmesPorUsuario(int $idUsuario) {
       $sql = "SELECT 

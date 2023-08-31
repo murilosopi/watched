@@ -14,6 +14,18 @@
         'action' => 'obterTodosFilmes'
       );
 
+      $routes['detalhes-filme'] = array(
+        'route' => '/detalhes-filme',
+        'controller' => 'FilmeController',
+        'action' => 'obterDetalhesFilme'
+      );
+
+      $routes['obter-nota-filme'] = array(
+        'route' => '/obter-nota-filme',
+        'controller' => 'ResenhaController',
+        'action' => 'obterNotaFilme'
+      );
+
       $routes['cadastrar-usuario'] = array(
         'route' => '/usuario/cadastrar',
         'controller' => 'AuthController',

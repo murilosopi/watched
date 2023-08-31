@@ -1,13 +1,9 @@
 <?php
   namespace App\Controllers;
   use App\Models\Filme;
-  use App\Models\Resenha;
-  use App\Models\Usuario;
-  use App\Models\Plataforma;
-  use App\Models\Genero;
-  use App\Action;
+  use App\Resources\Response;
 
-  class FilmeController extends Action {
+  class FilmeController {
 
     public function obterTodosFilmes() {
 
@@ -16,10 +12,24 @@
       $filmeModel->limit = $_GET['limit'] ?? 0;
 
       $filmes = $filmeModel->obterTodosFilmes();
-
-      $this->retornarResposta($filmes);
+      
+      $response = new Response();
+      $response->sucesso = !empty($filmes);
+      if($response->sucesso) $response->dados = $filmes;
+      $response->enviar();
     }
 
+    public function obterDetalhesFilme() {
+      $filmeModel = new Filme();
+      $filmeModel->id = $_GET['id'] ?? 0;
+      $filme = $filmeModel->obterDetalhesFilme();
+  
+      $response = new Response();
+      $response->sucesso = !empty($filme);
+      if($response->sucesso) $response->dados = $filme;
+      $response->enviar();
+    }
   }
+
 
 ?> 
