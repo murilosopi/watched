@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <main>
 
     <div class="text-center">
 
@@ -35,7 +35,7 @@
       <div class="row justify-content-center">
         <div class="col-md-10 col-lg-7 col-xl-5">
           <div class="d-flex">
-            <ButtonCustom class="me-2" @click.native="voltar">
+            <ButtonCustom class="me-2" @click.native="back">
               Voltar
             </ButtonCustom>
             <ButtonCustom variant="azul" class="ms-2">
@@ -45,7 +45,7 @@
         </div>
       </div>
     
-  </div>
+    </main>
 </template>
 
 <script>
@@ -64,13 +64,13 @@ export default {
   },
   mixins: [PageMixin],
   methods: {
-    voltar() {
+    back() {
       router.go(-1)
     }
   },
   created() {
-    this.alterarFavicon('login-sign-up', 'svg');
-    this.alterarTitle('Entre na Sua Conta');
+    this.changeFavicon('login-sign-up', 'svg');
+    this.changePageTitle('Entre na Sua Conta');
   },
 }
 </script>

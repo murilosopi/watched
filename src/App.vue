@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <PageHeader />
-    <div class="container my-auto">
-      <router-view />
-    </div>
+    <router-view class="container my-auto px-4"/>
   </div>
 </template>
 
@@ -21,6 +19,4 @@ export default {
 @import url(./assets/styles/base/colors.css);
 @import url(./assets/styles/base/fonts.css);
 @import url(./assets/styles/base/normalize.css);
-
-@import url(./assets/styles/layout/l-poster.css);
 </style>

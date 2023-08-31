@@ -1,22 +1,22 @@
 <template>
   <dl class="movie-details row">
     <div class="col-sm">
-      <div class="d-flex gap-4" v-if="movie.tituloOriginal">
+      <div class="d-flex gap-4" v-if="movie.originalTitle">
         <dt class="title h4">Original</dt>
-        <dd>{{ movie.tituloOriginal }}</dd>
+        <dd>{{ movie.originalTitle }}</dd>
       </div>
 
       <div class="d-flex gap-4">
         <dt class="title h4">Lançamento</dt>
-        <dd>{{ movie.anoLancamento }}</dd>
+        <dd>{{ movie.release }}</dd>
       </div>
 
       <div class="d-flex gap-4">
         <dt class="title h4">Elenco</dt>
         <dd>
           <ul class="list-unstyled">
-            <li v-for="(ator, idx) in movie.elenco.split(';')" :key="idx">
-              {{ ator }}
+            <li v-for="(actor, idx) in movie.cast.split(';')" :key="idx">
+              {{ actor }}
             </li>
           </ul>
         </dd>
@@ -24,29 +24,29 @@
 
       <div class="d-flex gap-4">
         <dt class="title h4">Direção</dt>
-        <dd>{{ movie.direcao }}</dd>
+        <dd>{{ movie.director }}</dd>
       </div>
 
       <div class="d-flex gap-4">
         <dt class="title h4">Roteiro</dt>
-        <dd>{{ movie.roteiro }}</dd>
+        <dd>{{ movie.screenwriter }}</dd>
       </div>
     </div>
 
     <div class="col-sm">
       <div class="d-flex gap-4">
         <dt class="title h4">Distribuição</dt>
-        <dd>{{ movie.distribuicao }}</dd>
+        <dd>{{ movie.distribution }}</dd>
       </div>
 
       <div class="d-flex gap-4">
         <dt class="title h4">Idiomas</dt>
-        <dd>{{ movie.idioma }}</dd>
+        <dd>{{ movie.language }}</dd>
       </div>
 
       <div class="d-flex gap-4">
         <dt class="title h4">País</dt>
-        <dd>{{ movie.pais }}</dd>
+        <dd>{{ movie.country }}</dd>
       </div>
     </div>
   </dl>

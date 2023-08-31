@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div>
     <Slider />
     <MoviesPanel :movies="movies"/>
   </div>
@@ -21,8 +21,8 @@ export default {
     }
   },
   created() {
-    this.alterarFavicon('home', 'svg');
-    this.alterarTitle('Explorar');
+    this.changeFavicon('home', 'svg');
+    this.changePageTitle('Explorar');
     this.searchAllMovies();
   },
   methods: {

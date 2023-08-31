@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <main>
     <div class="text-center">
       <Title class="display-3"> Crie Sua Conta </Title>
       <p>
@@ -91,7 +91,7 @@
           <ButtonCustom variant="azul" @click.native="cadastrar()"> Cadastrar </ButtonCustom>
         </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -122,8 +122,8 @@ export default {
     }
   },
   created() {
-    this.alterarFavicon('login-sign-up', 'svg');
-    this.alterarTitle('Crie Sua Conta');
+    this.changeFavicon('login-sign-up', 'svg');
+    this.changePageTitle('Crie Sua Conta');
   },
 };
 </script>
