@@ -33,7 +33,7 @@ export default {
 
       this.$api.get('/todos-filmes', { params })
       .then(response => {
-        this.movies.push(...response.data);
+        this.movies.push(...response.data.dados);
       })
       .catch(error => {
         console.log(`${error.code}: ${error.message}`);
