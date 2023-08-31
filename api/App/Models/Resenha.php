@@ -29,17 +29,17 @@
     public function registrarResenha() {
       $sql = "
         INSERT INTO 
-          tb_resenhas (id_filme, id_usuario, titulo, descricao, nota_avaliacao) 
+          tbResenhas (filme, usuario, titulo, descricao, nota) 
         VALUES
-          (:id_filme, :id_usuario, :titulo, :descricao, :nota_avaliacao);
+          (:filme, :usuario, :titulo, :descricao, :nota);
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $this->idFilme);
-      $stmt->bindValue(':id_usuario', $this->idUsuario);
+      $stmt->bindValue(':filme', $this->idFilme);
+      $stmt->bindValue(':usuario', $this->idUsuario);
       $stmt->bindValue(':titulo', $this->titulo);
       $stmt->bindValue(':descricao', $this->descricao);
-      $stmt->bindValue(':nota_avaliacao', $this->notaAvaliacao);
+      $stmt->bindValue(':nota', $this->notaAvaliacao);
 
       return $stmt->execute();
     }
@@ -48,18 +48,18 @@
     public function obterTodasResenhasPorFilme() {
       $sql = "
         SELECT 
-          r.id, r.id_usuario, r.titulo, r.descricao, r.nota_avaliacao, u.username, u.foto_perfil 
+          r.id, r.usuario, r.titulo, r.descricao, r.nota, u.username
         FROM 
-          tb_resenhas as r 
+          tbResenhas as r 
         LEFT JOIN 
-          tb_usuarios as u 
+          tbUsuarios as u 
         ON
-          (r.id_usuario = u.id) 
-        WHERE r.id_filme = :id_filme
+          (r.usuario = u.id) 
+        WHERE r.filme = :filme
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $this->idFilme);
+      $stmt->bindValue(':filme', $this->idFilme);
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -69,55 +69,52 @@
     public function obterTodasResenhasPorUsuario() {
       $sql = "
         SELECT 
-          r.id, r.id_usuario, r.titulo, r.descricao, r.nota_avaliacao, u.username 
+          r.id, r.usuario, r.titulo, r.descricao, r.nota, u.username 
         FROM 
-          tb_resenhas as r 
+          tbResenhas as r 
         LEFT JOIN 
-          tb_usuarios as u 
+          tbUsuarios as u 
         ON
-          (r.id_usuario = u.id) 
+          (r.usuario = u.id) 
         WHERE 
-          r.id_usuario = :id_usuario
+          r.usuario = :usuario
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_usuario', $this->idUsuario);
+      $stmt->bindValue(':usuario', $this->idUsuario);
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    // Retorna uma resenha utilizando os n° identificadores de filme e usuário
-    public function obterResenhaPorFilmeUsuario() {
-      $sql = "
-        SELECT 
-          *
-        FROM 
-          tb_resenhas
-        WHERE 
-          id_filme = :id_filme AND id_usuario = :id_usuario;
-      ";
-
-      $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $this->idFilme);
-      $stmt->bindValue(':id_usuario', $this->idUsuario);
-      $stmt->execute();
-
-      return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     // Exclui a resenha com um determinado n° identificador
     public function deletarResenhaPorFilmeUsuario() {
       $sql = "
         DELETE FROM 
-          tb_resenhas
+          tbResenhas
         WHERE 
-          id_filme = :id_filme AND id_usuario = :id_usuario
+          filme = :filme AND usuario = :usuario
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $this->idFilme);
-      $stmt->bindValue(':id_usuario', $this->idUsuario);
+      $stmt->bindValue(':filme', $this->idFilme);
+      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->execute();
+
+      return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function obterNotaFilme() {
+      $sql = "SELECT
+                SUM(nota)/COUNT(*) AS nota
+              FROM
+                tbResenhas
+              WHERE 
+                filme = :filme
+              ";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->idFilme);
       $stmt->execute();
 
       return $stmt->fetch(\PDO::FETCH_ASSOC);
