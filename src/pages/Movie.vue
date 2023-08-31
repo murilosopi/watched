@@ -15,7 +15,7 @@
           <h2 class="h1 title">{{ movie.title }}</h2>
           <p>{{ movie.synopsis }}</p>
           <!-- Listagem de gêneros -->
-          <BadgeList :badges="[]" />
+          <BadgeList :badges="genresBadges" />
           <div class="d-flex">
             <!-- Contagem de estrelas pela avaliação média -->
             <ul class="list-unstyled d-inline-flex gap-1 me-2">
@@ -75,7 +75,9 @@ export default {
     BadgeList,
     MovieDetails,
   },
+
   mixins: [PageMixin],
+
   filters: {
     duration(value) {
       if (value < 60) {
@@ -88,18 +90,16 @@ export default {
       return `${hours}h${minutes}min`;
     },
   },
+
   props: ["id"],
+
   data() {
     return {
       movie: {},
+      genres: []
     };
   },
-  created() {
-    this.changeFavicon("filme", "svg");
-    this.changePageTitle("Filme");
-    this.getMovieDetails();
-    this.getMovieRating();
-  },
+
   methods: {
     getMovieDetails() {
       const params = { id: this.id };
@@ -147,12 +147,44 @@ export default {
         })
         .catch(() => {});
     },
+
+    getMovieGenres() {
+      const params = { id: this.id };
+      this.$api
+        .get("/obter-generos-filme", { params })
+        .then((res) => {
+          const response = res.data.dados;
+          const success = res.data.sucesso;
+
+          if (success) {
+            this.genres = response.map(genre => genre.nome);
+          }
+        })
+        .catch(() => {});
+    }
   },
 
   computed: {
     movieHasLoaded() {
       return this.movie.title ? true : false;
+    },
+
+    genresBadges() {
+      return this.genres ? this.genres.map(genre => ({text: genre}) ) : [];
     }
+  },
+  
+  beforeRouteEnter(to, from, next) {
+    next(page => {
+      page.changeFavicon("filme", "svg");
+      page.changePageTitle("Filme");
+    })
+  },
+
+  created() {
+    this.getMovieDetails();
+    this.getMovieRating();
+    this.getMovieGenres();
   },
 };
 </script>

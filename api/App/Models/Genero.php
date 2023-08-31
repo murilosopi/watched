@@ -25,18 +25,18 @@
         SELECT
           g.nome
         FROM
-          tb_generos_filmes
+          tbGenerosFilmes
         RIGHT JOIN
-          tb_generos as g
+          tbGeneros as g
         ON 
-          (id_genero = g.id)
+          (genero = g.id)
 
         WHERE
-          id_filme = :id_filme
+          filme = :filme
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $idFilme);
+      $stmt->bindValue(':filme', $idFilme);
       $stmt->execute();
       
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);

@@ -26,9 +26,15 @@
         'action' => 'obterNotaFilme'
       );
 
+      $routes['obter-generos-filme'] = array(
+        'route' => '/obter-generos-filme',
+        'controller' => 'GenerosController',
+        'action' => 'obterGenerosFilme'
+      );
+
       $routes['cadastrar-usuario'] = array(
         'route' => '/usuario/cadastrar',
-        'controller' => 'AuthController',
+        'controller' => 'GenerosController',
         'action' => 'cadastrarUsuario'
       );
 
