@@ -1,6 +1,6 @@
 <template>
   <div class="input-group input-custom mb-3">
-    <div class="input-group-text">
+    <div class="input-group-text" v-if="icon">
         <slot name="icon"></slot>
     </div>
     <slot name="input"></slot>
@@ -8,7 +8,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    icon: {
+      type: Boolean,
+      default: true,
+    }
+  }
+};
 </script>
 
 <style>
