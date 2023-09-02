@@ -1,7 +1,8 @@
 <template>
   <div class="d-flex align-items-center">
-    <ul class="list-unstyled d-inline-flex gap-1 me-2" :style="{cursor: edit ? 'pointer' : 'auto'}">
+    <ul class="list-unstyled d-inline-flex gap-1 me-2 star-rating-list" :class="{edit}">
       <li
+        class="star-rating-item"
         v-for="v in 5"
         :key="v"
         @click="change(v)"
@@ -19,12 +20,17 @@
       </li>
     </ul>
     <!-- Avaliação média -->
-    <p class="me-auto me-sm-4">{{ value }}</p>
+    <p class="me-auto me-sm-4">{{ value | rating }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  filters: {
+    rating(value) {
+      return Number(value).toFixed(1);
+    }
+  },
   props: {
     value: [Number, String],
     edit: {
@@ -43,4 +49,15 @@ export default {
 </script>
 
 <style>
+.star-rating-list {
+  font-size: 1.15rem; 
+}
+
+.star-rating-list.edit {
+  cursor: pointer;
+}
+
+.star-rating-list.edit .star-rating-item:hover {
+  transform: scale(1.05);
+}
 </style>
