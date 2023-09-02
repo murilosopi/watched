@@ -5,17 +5,17 @@
       <div class="poster-top d-flex justify-content-between">
         <div class="d-flex flex-column gap-2">
           <!-- Curtir/descurtir -->
-          <IconButton>
+          <InteractiveIcon>
             <i
               class="bi"
               :class="{ 'bi-heart': !liked, 'bi-heart-fill': liked }"
             ></i>
-          </IconButton>
+          </InteractiveIcon>
           <!-- <button class="icon-button d-flex flex-column">
             </button> -->
 
           <!-- Marcar/desmarcar como assistido -->
-          <IconButton>
+          <InteractiveIcon>
             <i
               class="bi"
               :class="{
@@ -23,12 +23,12 @@
                 'bi-camera-reels-fill': watched,
               }"
             ></i>
-          </IconButton>
+          </InteractiveIcon>
         </div>
 
         <!-- salvar/removerSalvoFilme -->
         <div>
-          <IconButton>
+          <InteractiveIcon>
             <i
               class="bi"
               :class="{
@@ -36,7 +36,7 @@
                 ' bi-bookmark-star-fill': saved,
               }"
             ></i>
-          </IconButton>
+          </InteractiveIcon>
         </div>
       </div>
       <!-- Link para o filme -->
@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import IconButton from "@/components/IconButton.vue";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import MoviePoster from "@/components/MoviePoster.vue";
 export default {
   components: {
-    IconButton,
+    InteractiveIcon,
     MoviePoster,
   },
   props: {
