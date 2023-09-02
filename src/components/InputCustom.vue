@@ -26,7 +26,7 @@ export default {
   border-bottom: 1.5px solid white!important;
   outline: none!important;
   padding: 0.7rem!important;
-  background-color: rgba(76, 76, 76, 0.3)!important;
+  background-color: rgb(33, 33, 33) !important;
 }
 
 .input-custom .input-group-text,
