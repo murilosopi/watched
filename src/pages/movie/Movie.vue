@@ -18,15 +18,7 @@
           <BadgeList :badges="genresBadges" />
           <div class="d-flex">
             <!-- Contagem de estrelas pela avaliação média -->
-            <ul class="list-unstyled d-inline-flex gap-1 me-2">
-              <li><i class="bi bi-star-fill"></i></li>
-              <li><i class="bi bi-star-fill"></i></li>
-              <li><i class="bi bi-star-fill"></i></li>
-              <li><i class="bi bi-star-half"></i></li>
-              <li><i class="bi bi-star"></i></li>
-            </ul>
-            <!-- Avaliação média -->
-            <p class="me-auto me-sm-4">{{ movie.rating }}</p>
+            <StarRating :value="movie.rating" />
             <!-- Duração -->
             <p>
               <i class="bi bi-clock"></i>
@@ -35,45 +27,68 @@
           </div>
         </div>
       </div>
+
       <div class="order-sm-0 order-1 col-sm-2 ps-5 p-md-0 mt-2 mt-sm-0">
         <div class="d-flex flex-wrap justify-content-end gap-3">
           <!-- Curtir/descurtir -->
-          <IconButton>
+          <InteractiveIcon>
             <i class="bi bi-heart"></i>
             0
-          </IconButton>
+          </InteractiveIcon>
           <!-- Marcar/desmarcar assistido -->
-          <IconButton>
+          <InteractiveIcon>
             <i class="bi bi-camera-reels"></i>
             0
-          </IconButton>
+          </InteractiveIcon>
           <!-- salvar/removerSalvoFilme -->
-          <IconButton>
+          <InteractiveIcon>
             <i class="bi bi-bookmark-star"></i>
             0
-          </IconButton>
+          </InteractiveIcon>
         </div>
       </div>
     </DarkBox>
 
-    <MovieDetails v-if="movieHasLoaded" :movie="{...this.movie}" />
+    <div class="row">
+      <div class="col">
+        <MovieDetails v-if="movieHasLoaded" :movie="{ ...this.movie }" />
+      </div>
+
+      <div class="col-4 d-md-flex d-none px-0">
+        <DarkBox class="ms-lg-5 p-4 h-100 w-100">
+          <StreamingList :id="id" />
+        </DarkBox>
+      </div>
+    </div>
+
+    <div class="row py-5 px-2">
+      <ReviewSection />
+    </div>
   </main>
 </template>
 
 <script>
 import PageMixin from "@/mixins/PageMixin";
 import MoviePoster from "@/components/MoviePoster.vue";
-import IconButton from "@/components/IconButton.vue";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import DarkBox from "@/components/DarkBox.vue";
 import BadgeList from "@/components/BadgeList.vue";
 import MovieDetails from "@/components/MovieDetails.vue";
+import StreamingList from "@/components/StreamingList.vue";
+import StarRating from "@/components/StarRating.vue";
+import ReviewSection from '@/pages/movie/Review.vue';
+
+
 export default {
   components: {
     MoviePoster,
-    IconButton,
+    InteractiveIcon,
     DarkBox,
     BadgeList,
     MovieDetails,
+    StreamingList,
+    StarRating,
+    ReviewSection
   },
 
   mixins: [PageMixin],
@@ -96,7 +111,7 @@ export default {
   data() {
     return {
       movie: {},
-      genres: []
+      genres: [],
     };
   },
 
@@ -124,7 +139,7 @@ export default {
               distribution: response.distribuicao,
               language: response.idioma,
               country: response.pais,
-            }
+            };
           } else {
             // to do: lançar erros p/ exibir feedback visual
           }
@@ -157,10 +172,14 @@ export default {
           const success = res.data.sucesso;
 
           if (success) {
-            this.genres = response.map(genre => genre.nome);
+            this.genres = response.map((genre) => genre.nome);
           }
         })
         .catch(() => {});
+    },
+
+    submitReview() {
+      console.log(this.review);
     }
   },
 
@@ -170,15 +189,15 @@ export default {
     },
 
     genresBadges() {
-      return this.genres ? this.genres.map(genre => ({text: genre}) ) : [];
-    }
+      return this.genres ? this.genres.map((genre) => ({ text: genre })) : [];
+    },
   },
-  
+
   beforeRouteEnter(to, from, next) {
-    next(page => {
+    next((page) => {
       page.changeFavicon("filme", "svg");
       page.changePageTitle("Filme");
-    })
+    });
   },
 
   created() {
@@ -190,5 +209,5 @@ export default {
 </script>
 
 <style>
-@import url(../assets/styles/layout/l-movie.css);
+@import url(../../assets/styles/layout/l-movie.css);
 </style>
