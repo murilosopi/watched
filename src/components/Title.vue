@@ -1,11 +1,17 @@
 <template>
-  <h1 class="title mb-0">
+  <component :is="tag" class="title mb-0">
     <slot></slot>
-  </h1>
+  </component>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    tag: {
+      default: 'h1'
+    }
+  }
+};
 </script>
 
 <style>
