@@ -25,9 +25,13 @@
                 slot="input"
                 rows="10"
                 class="form-control fs-6"
+                :maxlength="800"
+                @input="verifyTextSize"
                 placeholder="Conta pra gente como foi o filme :)"
               ></textarea>
             </InputCustom>
+
+            {{ review.text.length }}/800
           </div>
           <div class="col-lg-5 order-lg-0">
             <Reaction
@@ -60,8 +64,16 @@ export default {
     return {
       review: {
         rating: 0,
-        reactions: []
+        reactions: [],
+        text: ''
       },
+    }
+  },
+  methods: {
+    verifyTextSize() {
+      if(this.review.text.length >= 800) {
+        this.review.text = this.review.text.slice(0, 800)
+      }
     }
   }
 };
