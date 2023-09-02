@@ -24,19 +24,19 @@
     public function obterPlataformasPorFilme(int $idFilme) {
       $sql = "
         SELECT 
-          p.id, p.nome, p.url_icone, p.url_link
+          p.id, p.nome, p.icone, p.url
         FROM 
-          tb_plataformas_filmes as pf
+          tbPlataformasFilmes as pf
         RIGHT JOIN
-          tb_plataformas as p
+          tbPlataformas as p
         ON
-          (pf.id_plataforma = p.id)
+          (pf.plataforma = p.id)
         WHERE 
-          pf.id_filme = :id_filme;
+          pf.filme = :filme;
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_filme', $idFilme);
+      $stmt->bindValue(':filme', $idFilme);
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);

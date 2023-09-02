@@ -32,6 +32,12 @@
         'action' => 'obterGenerosFilme'
       );
 
+      $routes['obter-plataformas-filme'] = array(
+        'route' => '/obter-plataformas-filme',
+        'controller' => 'PlataformasController',
+        'action' => 'obterPlataformasFilme'
+      );
+
       $routes['cadastrar-usuario'] = array(
         'route' => '/usuario/cadastrar',
         'controller' => 'GenerosController',
