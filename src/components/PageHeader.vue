@@ -1,7 +1,7 @@
 <template>
   <header class="py-4">
     <template v-if="!error">
-      <Navigation class="sticky-top">
+      <Navigation>
         <Title>
           <router-link to="/">
             <a class="fw-normal" href="/">Watched!</a>
