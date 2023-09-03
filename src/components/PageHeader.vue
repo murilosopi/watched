@@ -1,19 +1,16 @@
 <template>
   <header class="py-4">
     <template v-if="!error">
-      <div class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-md justify-content-between">
-          <Title>
-            <router-link to="/">
-              <a class="fw-normal" href="/">Watched!</a>
-            </router-link>
-          </Title>
-          <!-- Formulário de pesquisa -->
-          <SearchBar />
-          <!-- Navegação -->
-          <Navigation />
-        </div>
-      </div>
+      <Navigation class="sticky-top">
+        <Title>
+          <router-link to="/">
+            <a class="fw-normal" href="/">Watched!</a>
+          </router-link>
+        </Title>
+
+        <SearchBar />
+
+      </Navigation>
       <Dividers />
     </template>
     <Dividers v-else variant="error"/>
