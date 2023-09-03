@@ -1,5 +1,5 @@
 <template>
-    <div class="line-box">
+    <div class="line-box mt-4" :class="{'line-box-error': variant == 'error'}">
       <div class="line mb-3 w-50"></div>
       <div class="line mb-3 w-100"></div>
       <div class="line w-75"></div>
@@ -7,7 +7,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['variant']
+};
 </script>
 
 <style>
@@ -19,6 +21,7 @@ export default {};
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   height: 8px;
+  overflow-x: hidden !important;
 }
 
 .line-box .line:nth-child(1) {
@@ -33,14 +36,12 @@ export default {};
   background-color: var(--cor-vermelho);
 }
 
-.line-box.line-box-error .line:nth-child(1)::after,
-.line-box.line-box-error .line:nth-child(2)::after,
-.line-box.line-box-error .line:nth-child(3)::after {
+.line-box.line-box-error .line::after {
   content: "";
   display: block;
   position: absolute;
-  width: 20rem;
-  height: 20rem;
+  width: 40vw;
+  height: 40vw;
   background-repeat: no-repeat;
 }
 

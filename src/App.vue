@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <PageHeader />
-    <router-view class="container my-auto px-4"/>
+    <router-view name="header"/>
+    <router-view name="page" class="container my-auto px-4"/>
   </div>
 </template>
 
 <script>
-import PageHeader from "@/components/PageHeader.vue";
 export default {
   name: "App",
-  components: {
-    PageHeader,
-  },
 };
 </script>
 
