@@ -31,7 +31,9 @@
               ></textarea>
             </InputCustom>
 
-            {{ review.text.length }}/800
+            <p class="small text-white-50 text-end">
+              {{ review.text.length }}/800
+            </p>
           </div>
           <div class="col-lg-5 order-lg-0">
             <Reaction

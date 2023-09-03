@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center align-items-center h-75">
+  <div class="row justify-content-center align-items-center">
     <div class="col-lg-4 col-3">
       <InteractiveIcon class="mx-auto" tag="label" for="smile">
         <i class="bi fs-2 bi-emoji-smile"></i>
