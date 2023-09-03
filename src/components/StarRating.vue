@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-center">
-    <ul class="list-unstyled d-inline-flex gap-1 me-2 star-rating-list" :class="{edit}">
+    <ul class="list-unstyled d-inline-flex gap-1 me-2 star-rating-list mb-0" :class="{edit}">
       <li
         class="star-rating-item"
         v-for="v in 5"
@@ -20,7 +20,7 @@
       </li>
     </ul>
     <!-- Avaliação média -->
-    <p class="me-auto me-sm-4">{{ value | rating }}</p>
+    <p class="m-0">{{ value | rating }}</p>
   </div>
 </template>
 

@@ -16,11 +16,11 @@
           <p>{{ movie.synopsis }}</p>
           <!-- Listagem de gêneros -->
           <BadgeList :badges="genresBadges" />
-          <div class="d-flex">
+          <div class="d-flex align-items-center">
             <!-- Contagem de estrelas pela avaliação média -->
             <StarRating :value="movie.rating" />
             <!-- Duração -->
-            <p>
+            <p class="m-0 ms-md-4 ms-auto">
               <i class="bi bi-clock"></i>
               {{ movie.minutes | duration }}
             </p>
@@ -74,7 +74,7 @@ import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import DarkBox from "@/components/DarkBox.vue";
 import BadgeList from "@/components/BadgeList.vue";
 import MovieDetails from "@/components/MovieDetails.vue";
-import StreamingList from "@/components/StreamingList.vue";
+import StreamingList from "@/pages/movie/StreamingList.vue";
 import StarRating from "@/components/StarRating.vue";
 import ReviewSection from '@/pages/movie/Review.vue';
 
