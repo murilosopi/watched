@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Title from "./Title.vue";
+import Title from "@/components/Title.vue";
 export default {
   components: {
     Title,
