@@ -15,6 +15,17 @@ import Error from '@/pages/error/Error';
 
 export default new Router({
   mode: 'history',
+
+  scrollBehavior(to, from, savedPosition) {
+    const defaultScroll = {x: 0, y: 0, behavior: 'instant'};
+
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return defaultScroll;
+    }
+  },
+
   routes: [
     {
       path: '/',
