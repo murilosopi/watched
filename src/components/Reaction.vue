@@ -48,8 +48,10 @@ export default {
     };
   },
   methods: {
-    updateReactions() {
-      this.$emit("change", this.reactions);
+    updateReactions(event) {
+      if(!this.disabled || this.isReactionChecked(event.target.value)) {
+        this.$emit("change", this.reactions);
+      }
     },
 
     isReactionChecked(reaction) {
@@ -58,6 +60,11 @@ export default {
   },
   components: {
     InteractiveIcon,
+  },
+  computed: {
+    disabled() {
+      return this.value.length === 3;
+    }
   },
   updated() {
     this.reactions = this.value;
