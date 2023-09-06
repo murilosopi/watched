@@ -1,5 +1,5 @@
 <template>
-  <div class="scroller border border-danger">
+  <div class="scroller">
     
     <div class="scroller-target">
       <slot></slot>
@@ -35,7 +35,7 @@ export default {
       this.container.scrollLeft -= 250;
     }
   },
-  
+
   mounted() {
     this.container = this.$el.querySelector('.scroller-target > *');
   }
