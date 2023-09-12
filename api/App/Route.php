@@ -81,8 +81,6 @@
           die;
         }
       }
-
-      header('Location: erro');
     }
 
     // Captura a rota solicitada a partir da URL
