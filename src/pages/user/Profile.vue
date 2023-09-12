@@ -18,7 +18,11 @@
             </ButtonCustom>
           </div>
           <template v-else>
-            <p class="text-break w-100" :class="{placeholder: !alreadyLoaded}" style="white-space: pre-wrap;">
+            <p
+              class="text-break w-100"
+              :class="{ placeholder: !alreadyLoaded }"
+              style="white-space: pre-wrap"
+            >
               {{ biography }}
             </p>
             <div class="col-7">
@@ -30,9 +34,17 @@
           </template>
         </article>
 
-        <UserStats :username="username"/>
+        <UserStats :username="username" />
       </div>
     </DarkBox>
+
+    <section class="mt-5" v-if="reviews.length">
+      <Title tag="h3" class="h2">
+        Resenhas Recentes
+        <i class="bi bi-clock-history ms-2"></i>
+      </Title>
+      <UserReviews :reviews="reviews"/>
+    </section>
   </div>
 </template>
 
@@ -42,7 +54,9 @@ import DarkBox from "@/components/DarkBox.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import Title from "@/components/Title.vue";
-import UserStats from "./UserStats.vue"
+import UserStats from "./UserStats.vue";
+import UserReviews from "./UserReviews.vue";
+
 export default {
   mixins: [PageMixin],
   components: {
@@ -50,7 +64,15 @@ export default {
     UserAvatar,
     ButtonCustom,
     Title,
-    UserStats
+    UserStats,
+    UserReviews,
+  },
+
+  data() {
+    return {
+      biography: "",
+      reviews: [],
+    };
   },
 
   props: ["username"],
@@ -58,7 +80,31 @@ export default {
   computed: {
     alreadyLoaded() {
       return false;
-    }
+    },
+  },
+
+  methods: {
+    getReviews(offset = 0, limit = 0) {
+      const params = { offset, limit };
+      this.$api
+        .get("/obter-resenhas-usuario", { params })
+        .then((res) => {
+          let response = res.data;
+
+          if (response.sucesso) {
+            response.dados.forEach((review) => {
+              this.reviews.push({
+                id: review.id,
+                reaction: review.reacao,
+                movieId: review.filme,
+                movieTitle: review.tituloFilme,
+                text: review.descricao,
+              });
+            });
+          }
+        })
+        .catch(() => {});
+    },
   },
 
   beforeRouteEnter(to, from, next) {
