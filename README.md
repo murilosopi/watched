@@ -12,7 +12,7 @@ Projeto de sistema para avaliação de séries e filmes, criação de comunidade
 Para rodar o projeto em produção são necessários:
 
 ### Criação do banco de dados
-Toda a estrutura necessária para rodar o projeto está contida no script <code>database.sql</code>
+Toda a estrutura necessária para rodar o projeto está  no script <code>database.sql</code>
 
 ### Instalação das dependências:
 ```
