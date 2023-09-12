@@ -25,22 +25,7 @@
       return $this->$atributo;
     }
 
-    public function atualizarFotoPerfil() {
-      $sql = "
-        UPDATE 
-          tb_usuarios
-        SET
-          foto_perfil = :foto_perfil
-        WHERE
-          id = :id
-      ";
-
-      $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id', $this->id);
-      $stmt->bindValue(':foto_perfil', $this->fotoPerfil);
-
-      return $stmt->execute();
-    }
+   
 
     // Retorna um usuário que tenha um username ou email e senha compatíveis
     public function obterUsuarioPorId() {
