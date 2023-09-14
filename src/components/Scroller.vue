@@ -5,22 +5,20 @@
       <slot></slot>
     </div>
 
-    <div class="scroller-buttons d-flex justify-content-between7">
-      <button
-        class="scroller-prev me-auto"
-        type="button"
-        @click="prevScroll"
-      >
-        <i class="bi bi-arrow-bar-left"></i>
-      </button>
-      <button
-        class="scroller-next ms-auto"
-        type="button"
-        @click="nextScroll"
-      >
-        <i class="bi bi-arrow-bar-right"></i>
-      </button>
-    </div>
+    <button
+      class="scroller-prev me-auto"
+      type="button"
+      @click="prevScroll"
+    >
+      <i class="bi bi-chevron-compact-left"></i>
+    </button>
+    <button
+      class="scroller-next ms-auto"
+      type="button"
+      @click="nextScroll"
+    >
+      <i class="bi bi-chevron-compact-right"></i>
+    </button>
   </div>
 </template>
 
@@ -53,7 +51,7 @@ export default {
   display: flex;
   width: 100%;
   padding: 0 1rem;
-  justify-content: center;
+  justify-content: start;
   gap: 3rem 2rem;
 
   overflow-x: scroll;
@@ -68,18 +66,25 @@ export default {
 
 
 .scroller :is(.scroller-prev, .scroller-next) {
-  font-size: 1.8rem;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  font-size: 3rem;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.6);
   transition: 150ms;
 }
 
+.scroller .scroller-prev {
+  left: 0;
+}
+
+.scroller .scroller-next {
+  right: 0;
+}
 .scroller :is(.scroller-prev:not(.disabled), .scroller-next):hover {
   color: white;
 }
 
-.scroller-buttons {
-  width: 100%;
-}
 </style>
