@@ -1,7 +1,9 @@
 <template>
-  <ul class="list-unstyled l-poster flex-wrap my-5">
+  <ul class="list-unstyled l-poster py-4 overflow-visible" :class="inline ? 'flex-nowrap' : 'flex-wrap' ">
     <li v-for="movie in movies" :key="movie.id">
-      <MovieCard :movie="movie"/>
+      <div>
+        <MovieCard :movie="movie"/>
+      </div>
     </li>
   </ul>
 </template>
@@ -10,7 +12,10 @@
 import MovieCard from '@/components/MovieCard.vue'
 export default {
   props: {
-    movies: Array
+    movies: Array,
+    inline: {
+      default: false
+    }
   },
   components: {
     MovieCard
