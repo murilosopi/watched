@@ -33,7 +33,7 @@
         SELECT 
           id, nome, username, sobre, foto_perfil
         FROM 
-          tb_usuarios 
+          tbUsuarios 
         WHERE 
           id = :id
       ";
@@ -49,7 +49,7 @@
         SELECT 
           id, nome, username, sobre, foto_perfil
         FROM 
-          tb_usuarios
+          tbUsuarios
         WHERE
           email = :usuario
       ";
@@ -67,7 +67,7 @@
         SELECT
           id, nome, username, sobre, foto_perfil
         FROM 
-          tb_usuarios 
+          tbUsuarios 
         WHERE 
           username = :username
       ";
@@ -84,19 +84,19 @@
 	    	SELECT 
           s.id, s.nome, s.username, s.sobre
         FROM
-          tb_usuarios_seguidores as us
+          tbUsuariosSeguidores as us
         LEFT JOIN
-          tb_usuarios as s
+          tbUsuarios as s
         ON
-          (us.id_seguidor = s.id)
+          (us.seguidor = s.id)
           
        	LEFT JOIN
-          tb_usuarios as u
+          tbUsuarios as u
         ON
-          (us.id_usuario = u.id)
+          (us.id = u.id)
           
         WHERE
-          us.id_usuario = :id_usuario || u.username = :username
+          us.id = :id || u.username = :username
       ";
       
       $stmt = $this->conexao->prepare($sql);
@@ -112,17 +112,17 @@
 	    	SELECT 
           s.id, s.nome, s.username, s.sobre
         FROM
-          tb_usuarios_seguidores as us
+          tbUsuariosSeguidores as us
         LEFT JOIN
-          tb_usuarios as s
+          tbUsuarios as s
         ON
-          (us.id_seguidor = s.id)
+          (us.seguidor = s.id)
         WHERE
-          us.id_seguidor = :id_usuario || s.username = :username
+          us.seguidor = :id || s.username = :username
       ";
       
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_usuario', $this->id);
+      $stmt->bindValue(':usuario', $this->id);
       $stmt->bindValue(':username', $this->username);
       $stmt->execute();
 
@@ -133,14 +133,14 @@
     public function registrarSeguidor(int $idSeguidor) {
       $sql = "
         INSERT INTO 
-          tb_usuarios_seguidores (id_usuario, id_seguidor)
+          tbUsuariosSeguidores (id, seguidor)
         VALUES
-          (:id_usuario, :id_seguidor)
+          (:id, :seguidor)
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_usuario', $this->id);
-      $stmt->bindValue(':id_seguidor', $idSeguidor);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->bindValue(':seguidor', $idSeguidor);
 
       return $stmt->execute();
     }
@@ -148,14 +148,14 @@
     public function removerSeguidor(int $idSeguidor) {
       $sql = "
         DELETE FROM 
-          tb_usuarios_seguidores
+          tbUsuariosseguidores
         WHERE
-          id_usuario = :id_usuario && id_seguidor = :id_seguidor
+          id = :id && id = :id
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id_usuario', $this->id);
-      $stmt->bindValue(':id_seguidor', $idSeguidor);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->bindValue(':seguidor', $idSeguidor);
 
       return $stmt->execute();
     }
@@ -164,7 +164,7 @@
     public function alterarSobre() {
       $sql = "
         UPDATE 
-          tb_usuarios 
+          tbUsuarios 
         SET 
           sobre = :sobre WHERE id = :id
       ";
@@ -181,7 +181,7 @@
         SELECT 
           id, nome, username, sobre, foto_perfil
         FROM
-          tb_usuarios
+          tbUsuarios
         WHERE
           (nome LIKE :pesquisa || username LIKE :pesquisa) AND id != :id;
       ";
