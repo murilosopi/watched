@@ -14,6 +14,21 @@ class ResenhaController {
     if($r->sucesso) $r->dados = $nota;
     $r->enviar();
   }
+
+  public function obterResenhasPorFilme() {
+    $resenhaModel = new Resenha();
+    $resenhaModel->idFilme = $_GET['id'] ?? 0;
+    $resenhaModel->offset = $_GET['offset'] ?? 0;
+    $resenhaModel->limit = $_GET['limit'] ?? 0; 
+
+    $resenhas = $resenhaModel->obterResenhasPorFilme();
+
+    $response = new Response();
+    $response->sucesso = !empty($resenhas);
+    if ($response->sucesso) $response->dados = $resenhas;
+    $response->enviar();
+  }
+
 }
 
 ?>
