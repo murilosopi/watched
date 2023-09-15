@@ -8,14 +8,24 @@
     <button
       class="scroller-prev me-auto"
       type="button"
-      @click="prevScroll"
+      @mousedown.left="prevScrollPressing"
+      @mouseup="clearTimer"
+      @touchstart.prevent="prevScrollPressing"
+      @touchend="clearTimer"
+      @touchcancel="clearTimer"
+      v-if="scrollLeft"
+
     >
       <i class="bi bi-chevron-compact-left"></i>
     </button>
     <button
       class="scroller-next ms-auto"
       type="button"
-      @click="nextScroll"
+      @mousedown.left ="nextScrollPressing"
+      @mouseup="clearTimer"
+      @touchstart.prevent="nextScrollPressing"
+      @touchend="clearTimer"
+      @touchcancel="clearTimer"
     >
       <i class="bi bi-chevron-compact-right"></i>
     </button>
@@ -24,13 +34,43 @@
 
 <script>
 export default {
+
+  data() {
+    return {
+      timerPressing: null,
+      scrollLeft: 0
+    }
+  },
+
   methods: {
     nextScroll() {
       this.container.scrollLeft += 250;
     },
 
     prevScroll() {
-      this.container.scrollLeft -= 250;
+      const minScroll = 250;
+
+      if(this.container.scrollLeft < minScroll) {
+        this.container.scrollLeft = 0;
+      } else {
+        this.container.scrollLeft -= minScroll;
+      }
+    }, 
+    prevScrollPressing() {
+      this.container.scrollLeft -= 100
+      this.timerPressing = setInterval(() => {
+        this.container.scrollLeft -= 300
+      }, 300);
+    }, 
+    nextScrollPressing() {
+      this.container.scrollLeft += 100
+      this.timerPressing = setInterval(() => {
+        this.container.scrollLeft += 300
+      }, 300);
+    },
+
+    clearTimer() {
+      clearInterval(this.timerPressing);
     }
   },
 
