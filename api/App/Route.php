@@ -2,6 +2,7 @@
   namespace App;
 
   class Route {
+    private $routes;
     public function __construct() {
       $this->initRoutes();
       $this->run($this->getUrl());
@@ -54,6 +55,12 @@
         'route' => '/filme',
         'controller' => 'FilmeController',
         'action' => 'obterInformacoesFilme'
+      );
+
+      $routes['obter-resenhas-por-filme'] = array(
+        'route' => '/obter-resenhas-por-filme', 
+        'controller' => 'ResenhaController',
+        'action' => 'obterResenhasPorFilme'
       );
 
       $this->setRoutes($routes); 
