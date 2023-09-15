@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-unstyled l-poster py-4 overflow-visible" :class="inline ? 'flex-nowrap' : 'flex-wrap' ">
+  <ul class="list-unstyled l-poster py-4 overflow-visible" :class="inline ? 'flex-nowrap overflow-x-scroll' : 'flex-wrap' ">
     <li v-for="movie in movies" :key="movie.id">
       <div>
         <MovieCard :movie="movie"/>
