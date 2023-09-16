@@ -17,14 +17,14 @@ class ResenhaController {
 
   public function obterResenhasPorFilme() {
     $resenhaModel = new Resenha();
-    $resenhaModel->idFilme = $_GET['id'] ?? 0;
+    $resenhaModel->idFilme = $_GET['filme'] ?? 0;
     $resenhaModel->offset = $_GET['offset'] ?? 0;
     $resenhaModel->limit = $_GET['limit'] ?? 0; 
 
-    $resenhas = $resenhaModel->obterResenhasPorFilme();
+    $resenhas = $resenhaModel->obterTodasResenhasPorFilme();
 
     $response = new Response();
-    $response->sucesso = !empty($resenhas);
+    $response->sucesso = !is_array($resenhas);
     if ($response->sucesso) $response->dados = $resenhas;
     $response->enviar();
   }
