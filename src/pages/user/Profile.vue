@@ -25,11 +25,24 @@
             >
               {{ biography }}
             </p>
-            <div class="col-7">
-              <ButtonCustom>
-                Alterar
-                <i class="bi bi-pencil-square fs-5"></i>
-              </ButtonCustom>
+            <div class="col d-flex gap-3 small" :class="{placeholder: !alreadyLoaded, 'py-4': !alreadyLoaded}">
+              <template v-if="alreadyLoaded">
+                <ButtonCustom v-if="false">
+                  Alterar
+                  <i class="bi bi-pencil-square fs-5"></i>
+                </ButtonCustom>
+
+                <ButtonCustom variant="azul">
+                  <i class="bi bi-plus-lg fs-5"></i>
+                  Seguir
+                </ButtonCustom>
+
+                <ButtonCustom>
+                  <i class="bi bi-chat-left fs-5"></i>
+                  Bate-Papo
+                </ButtonCustom>
+              </template>
+
             </div>
           </template>
         </article>
@@ -43,8 +56,10 @@
         Resenhas Recentes
         <i class="bi bi-clock-history ms-2"></i>
       </Title>
-      <UserReviews :reviews="reviews"/>
+      <UserReviews :reviews="reviews" />
     </section>
+
+    <UserMovieLists :lists="lists" />
   </div>
 </template>
 
@@ -54,6 +69,7 @@ import DarkBox from "@/components/DarkBox.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import Title from "@/components/Title.vue";
+import UserMovieLists from "./UserMovieLists.vue";
 import UserStats from "./UserStats.vue";
 import UserReviews from "./UserReviews.vue";
 
@@ -66,12 +82,14 @@ export default {
     Title,
     UserStats,
     UserReviews,
+    UserMovieLists,
   },
 
   data() {
     return {
       biography: "",
       reviews: [],
+      lists: [],
     };
   },
 
@@ -105,6 +123,12 @@ export default {
         })
         .catch(() => {});
     },
+
+    getLists() {},
+
+    getUserProfile() {
+      this.changePageTitle(`@${this.username}`)
+    }
   },
 
   beforeRouteEnter(to, from, next) {
@@ -112,6 +136,10 @@ export default {
       page.changeFavicon("usuario", "svg");
     });
   },
+
+  created() {
+    this.getUserProfile();
+  }
 };
 </script>
 

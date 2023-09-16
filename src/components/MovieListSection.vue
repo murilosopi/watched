@@ -1,6 +1,6 @@
 <template>
   <section class="movie-list">
-    <Title tag="h3">
+    <Title tag="h3" class="align-items-center d-flex">
       <slot name="icon"></slot>
       {{ name }}
     </Title>
@@ -26,13 +26,13 @@ export default {
 
   props: {
     movies: {
-        type: Array,
-        default: () => []
+      type: Array,
+      default: () => [],
     },
     name: {
-        type: String,
-        required: true
-    }
+      type: String,
+      required: true,
+    },
   },
 };
 </script>
