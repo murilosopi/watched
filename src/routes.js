@@ -12,6 +12,7 @@ import Search from '@/pages/search/Search';
 import Profile from '@/pages/user/Profile';
 import Movie from '@/pages/movie/Movie';
 import Error from '@/pages/error/Error';
+import Explore from '@/pages/home/Explore.vue'
 
 export default new Router({
   mode: 'history',
@@ -32,6 +33,13 @@ export default new Router({
       components: {
         header,
         page: Home,
+      }
+    },
+    {
+      path: '/explorar',
+      components: {
+        header,
+        page: Explore,
       }
     },
     {
