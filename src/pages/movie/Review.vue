@@ -1,6 +1,6 @@
 <template>
   <section class="col">
-    <Title tag="h3" class="text-center d-none">
+    <Title tag="h3" class="text-center">
       <i class="bi bi-chat-left-text"></i>&nbsp; Que tal compartilhar abaixo a
       sua opinião? :)
     </Title>
@@ -57,7 +57,7 @@
       </form>
     </DarkBox>
 
-    <ReviewsList class="mt-5" />
+    <ReviewsList class="mt-5" :reviews="list" />
   </section>
 </template>
 
@@ -80,16 +80,20 @@ export default {
     ReviewsList,
     ButtonCustom
   },
+
+  props: ['movie'],
+
   data() {
     return {
+      list: [],
       review: {
         rating: 0,
         reactions: [],
         text: '',
-        movie: this.$route.params.id
       },
     }
   },
+
   methods: {
     verifyTextSize() {
       if(this.review.text.length >= 800) {
@@ -98,7 +102,21 @@ export default {
     },
 
     submitReview() {
-      console.log(this.review);
+      const params = {
+        ...this.review,
+        movie: this.movie
+      };
+      this.$api
+        .post('/registrar-resenha', params)
+        .then(res => {
+          const response = res.data.sucesso;
+
+          if(response) {
+            this.resetReview();
+            this.getReviews();
+            // show success message
+          }
+        })
     },
 
     resetReview() {
@@ -108,7 +126,32 @@ export default {
         text: '',
         movie: this.$route.params.id
       };
+    },
+
+    getReviews() {
+      const params = { filme: this.movie }
+      this.$api
+        .get('/obter-resenhas-por-filme', { params })
+        .then(res => {
+          const response = res.data;
+          
+          if(response.sucesso) {
+            this.list = response.dados.map((review => {
+              return {
+                user: review.username,
+                rating: Number(review.nota),
+                text: review.descricao,
+                date: '01/01/2023',
+              }
+            }));
+          }
+
+        });
     }
+  },
+  
+  created() {
+    this.getReviews();
   }
 };
 </script>

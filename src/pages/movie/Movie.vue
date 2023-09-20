@@ -59,8 +59,8 @@
       </div>
     </div>
 
-    <div class="row py-5 px-2">
-      <ReviewSection />
+    <div class="row py-5">
+      <ReviewSection :movie="id" />
     </div>
   </main>
 </template>
