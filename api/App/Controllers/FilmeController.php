@@ -12,6 +12,8 @@
       $filmeModel->limit = $_GET['limit'] ?? 0;
 
       $filmes = $filmeModel->obterTodosFilmes();
+      echo 2+5;
+      exit;
       
       $response = new Response();
       $response->sucesso = !empty($filmes);
@@ -29,7 +31,25 @@
       if($response->sucesso) $response->dados = $filme;
       $response->enviar();
     }
+
+    public function consultarInteracoes() {
+
+      $filmeModel = new Filme();
+      $filmeModel->id  = $_POST['id'] ?? 0;
+      $filme = $filmeModel->ObterFilmePorUsuario();
+      
+      $usuario1 = new Usuario();
+      $usuario1->id = $_POST['id'] ?? 0;
+      $usuario = $usuario1->ObterFilmePorUsuario();
+
+      $response = new Response();
+      $response->sucesso = !empty($filme);
+      if($response->sucesso) $response->dados = $filme;
+      $response->enviar();
+    }
   }
+
+
 
 
 ?> 
