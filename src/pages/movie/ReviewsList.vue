@@ -1,27 +1,30 @@
 <template>
-  <ul class="list-unstyled row gy-4">
-    <li v-for="(review, index) in reviews" :key="review.id" class="col-lg-6 pe-lg-5 mb-4">
-      <Comment :review="review" />
-
-      <hr class="w-75" :class="{ 'ms-auto':  index%2}">
+  <ul class="list-unstyled row">
+    <li
+      v-for="(review, index) in reviews"
+      :key="review.id"
+      class="col-lg-6 mb-4 px-0 px-lg-3"
+      :class="index%2 == 0 ? 'ps-lg-0' : 'pe-lg-0'"
+    >
+      <DarkBox class="ps-4 p-3">
+        <Comment :comment="review" />
+      </DarkBox>
     </li>
   </ul>
 </template>
 
 <script>
-import Comment from '@/components/Comment'
+import Comment from "@/components/Comment";
+import DarkBox from '@/components/DarkBox.vue';
 export default {
   components: {
-    Comment
+    Comment,
+    DarkBox
   },
-  data() {
-    return {
-      reviews: []
-    }
-  }
-}
+  props: {
+    reviews: Array,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
