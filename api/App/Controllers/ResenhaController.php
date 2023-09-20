@@ -24,11 +24,33 @@ class ResenhaController {
     $resenhas = $resenhaModel->obterTodasResenhasPorFilme();
 
     $response = new Response();
-    $response->sucesso = !is_array($resenhas);
+    $response->sucesso = !empty($resenhas);
     if ($response->sucesso) $response->dados = $resenhas;
     $response->enviar();
   }
 
+  public function registrarResenha() {
+
+    $_SESSION['usuario'] = [ 'id' => 1 ];
+
+    $response = new Response();
+
+    if(empty($_SESSION['usuario'])) {
+      $response->sucesso = false;
+      $response->enviar();
+    }
+
+    $resenha = new Resenha();
+    $resenha->idFilme = $_POST['movie'] ?? 0;
+    $resenha->idUsuario = $_SESSION['usuario']['id'];
+    $resenha->titulo = $_POST['title'] ?? null;
+    $resenha->descricao = $_POST['text'] ?? null;
+    $resenha->notaAvaliacao = $_POST['rating'] ?? null;
+   
+    $response->sucesso = $resenha->registrarResenha();
+    $response->enviar();
+
+  }
 }
 
 ?>

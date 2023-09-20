@@ -63,6 +63,12 @@
         'action' => 'obterResenhasPorFilme'
       );
 
+      $routes['registrar-resenha'] = array(
+        'route' => '/registrar-resenha', 
+        'controller' => 'ResenhaController',
+        'action' => 'registrarResenha'
+      );
+
       $this->setRoutes($routes); 
     }
 
