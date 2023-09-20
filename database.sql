@@ -65,6 +65,14 @@ CREATE TABLE tbReacoes(
     descricao VARCHAR(50)
 );
 
+CREATE TABLE tbReacoesResenha(
+    resenha INT NOT NULL,
+    reacao INT NOT NULL,
+
+    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
+    FOREIGN KEY (resenha) REFERENCES tbResenhas (id)
+);
+
 CREATE TABLE tbResenhas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filme INT NOT NULL,
@@ -75,8 +83,7 @@ CREATE TABLE tbResenhas (
     dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
     reacao INT,
     FOREIGN KEY (usuario) REFERENCES tbUsuarios (id),
-    FOREIGN KEY (filme) REFERENCES tbFilmes (id),
-    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
+    FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
 /*Chat: */
