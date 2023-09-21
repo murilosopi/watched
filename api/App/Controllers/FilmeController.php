@@ -6,7 +6,6 @@
   class FilmeController {
 
     public function obterTodosFilmes() {
-      print_r($_SESSION);exit;
       $filmeModel = new Filme();
       $filmeModel->offset = $_GET['offset'] ?? 0;
       $filmeModel->limit = $_GET['limit'] ?? 0;
