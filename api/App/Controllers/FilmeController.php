@@ -30,18 +30,17 @@
     }
 
     public function consultarInteracoes() {
-
-      $filmeModel = new Filme();
-      $filmeModel->id  = $_POST['id'] ?? 0;
-      $filme = $filmeModel->ObterFilmePorUsuario();
       
-      $usuario1 = new Usuario();
-      $usuario1->id = $_POST['id'] ?? 0;
-      $usuario = $usuario1->ObterFilmePorUsuario();
+      $filmeModel = new Filme();
+      $filmeModel->id  = $_POST['filme'] ?? 0;
+
+      $usuario = $_POST['usuario'] ??NULL;
+
+      $interacoesFilme = $filmeModel->ObterFilmePorUsuario($usuario);
 
       $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
+      $response->sucesso = !empty($interacoesFilme);
+      if($response->sucesso) $response->dados = $interacoesFilme;
       $response->enviar();
     }
 
