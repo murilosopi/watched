@@ -48,15 +48,13 @@
         ->__set('senha', $senha);
         
         
-        $usuario = $this->authModel->obterUsuarioLogin();
-      } else {
-        $usuario = $_SESSION['usuario'] ?? NULL;
+        $_SESSION['usuario'] = $this->authModel->obterUsuarioLogin();
       }
 
       $response = new Response();
-      $response->sucesso = !empty($usuario);
+      $response->sucesso = !empty($_SESSION['usuario']);
       
-      if($response->sucesso) $response->dados = $usuario;
+      if($response->sucesso) $response->dados = $_SESSION['usuario'];
       $response->enviar();
     }
 
