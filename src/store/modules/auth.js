@@ -30,12 +30,14 @@ export default {
         senha: payload.password
       };
 
-      this._vm.$api.post('/usuario/login', params).then(res => {
+      return this._vm.$api.post('/usuario/login', params).then(res => {
         const response = res.data;
 
         if(response.sucesso) {
           dispatch('setUser', response.dados)
         }
+
+        return response.sucesso || false;
       });
     }
   }

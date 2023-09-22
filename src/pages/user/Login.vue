@@ -15,12 +15,12 @@
     </div>
 
           
-      <form @submit.prevent="login">
+      <form @submit.prevent="submit">
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-7 col-xl-5">
             <InputCustom>
               <i class="bi bi-person-circle" slot="icon"></i>
-              <input type="text" placeholder="Usuário" slot="input" class="form-control" v-model="username">
+              <input type="text" placeholder="Usuário" slot="input" class="form-control" v-model="username" @keypress.enter.prevent>
             </InputCustom>
           </div>
         </div>
@@ -28,7 +28,7 @@
           <div class="col-md-10 col-lg-7 col-xl-5">
             <InputCustom>
               <i class="bi bi-lock-fill" slot="icon"></i>
-              <input type="password" placeholder="Senha" slot="input" class="form-control" v-model="password">
+              <input type="password" placeholder="Senha" slot="input" class="form-control" v-model="password" @keypress.enter.prevent="submit">
             </InputCustom>
           </div>
         </div>
@@ -38,7 +38,7 @@
               <ButtonCustom class="me-2" @click.native="back">
                 Voltar
               </ButtonCustom>
-              <ButtonCustom variant="azul" class="ms-2">
+              <ButtonCustom variant="azul" class="ms-2" type="submit">
                 Entrar
               </ButtonCustom>
             </div>
@@ -72,12 +72,55 @@ export default {
   },
   mixins: [PageMixin],
   methods: {
-    ...mapActions('auth', ['doLogin']),
+    ...mapActions('auth', {
+      auth: 'doLogin'
+    }),
+    
+    ...mapActions('notification', {
+      notifyUser: 'addNotification'
+    }),
+
     back() {
       router.go(-1)
     },
+
+    submit() {
+      if(this.isValid) {
+        this.login();
+      } else {
+        this.notifyUser({
+          icon: 'exclamation-diamond',
+          title: 'Atenção',
+          text: "preencha os campos necessários...",
+          class: 'warning'
+        })
+      }
+    },
+
     login() {
-      this.doLogin({ username: this.username, password: this.password });
+      this.auth({ username: this.username, password: this.password })
+          .then(success => {
+            if(success) {
+              this.notifyUser({
+                icon: 'box-arrow-in-left',
+                text: "Login realizado com sucesso!",
+                class: 'success'
+              })
+            } else {
+              this.notifyUser({
+                icon: 'x-circle',
+                tite: 'Ops!',
+                text: "As credenciais estão incorretas...",
+                class: 'danger'
+              })
+            }
+          })
+    }
+  },
+
+  computed: {
+    isValid() {
+      return this.username.length && this.password.length;
     }
   },
   created() {
