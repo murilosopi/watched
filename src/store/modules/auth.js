@@ -30,7 +30,7 @@ export default {
 
     doLogout({ dispatch }) {
 
-      this._vm.$api.delete('/usuario/logout')
+      this._vm.$api.post('/usuario/logout')
         .then(res => {
           const response = res.data;
           
