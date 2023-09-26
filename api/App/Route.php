@@ -33,6 +33,24 @@
         'action' => 'obterNotaFilme'
       );
 
+      $routes['registrar-resenha'] = array(
+        'route' => '/registrar-resenha',
+        'controller' => 'ResenhaController',
+        'action' => 'registrarResenha'
+      );
+
+      $routes['obter-resenhas-por-filme'] = array(
+        'route' => '/obter-resenhas-por-filme',
+        'controller' => 'ResenhaController',
+        'action' => 'obterResenhasPorFilme'
+      );
+
+      $routes['usuario/checar-acesso'] = array(
+        'route' => '/usuario/checar-acesso',
+        'controller' => 'AuthController',
+        'action' => 'checarAcessoUsuario'
+      );
+
       $routes['obter-generos-filme'] = array(
         'route' => '/obter-generos-filme',
         'controller' => 'GenerosController',
@@ -57,16 +75,17 @@
         'action' => 'autenticarUsuario'
       );
 
-      $routes['consultar-interacoes'] = array(
-        'route' => '/filme/consultar-interacoes',
-        'controller' => 'FilmeController',
-        'action' => 'consultarInteracoes'
-      );
       
       $routes['logout-usuario'] = array(
         'route' => '/usuario/logout', 
         'controller' => 'AuthController',
         'action' => 'logoutUsuario'
+      );
+
+      $routes['consultar-interacoes'] = array(
+        'route' => '/filme/consultar-interacoes',
+        'controller' => 'FilmeController',
+        'action' => 'consultarInteracoes'
       );
 
       $this->setRoutes($routes); 
