@@ -7,6 +7,11 @@ export default {
       tag: '',
     }
   },
+  getters: {
+    isLogged(state) {
+      return Object.values(state.user).every(value => !value);
+    }
+  },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
