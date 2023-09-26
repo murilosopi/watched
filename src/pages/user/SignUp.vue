@@ -98,7 +98,6 @@ import Title from "@/components/Title.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import PageMixin from "@/mixins/PageMixin";
 import NotificationMixin from "@/mixins/NotificationMixin";
-import AuthMixin from "@/mixins/AuthMixin";
 import router from "@/routes";
 
 export default {
@@ -107,7 +106,7 @@ export default {
     Title,
     ButtonCustom,
   },
-  mixins: [PageMixin, NotificationMixin, AuthMixin],
+  mixins: [PageMixin, NotificationMixin],
   data() {
     return {
       name: "",

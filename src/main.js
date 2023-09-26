@@ -5,8 +5,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './plugins/axios'
 import store from './store';
+import AuthMixin from './mixins/AuthMixin';
 
 Vue.config.productionTip = false
+
+Vue.mixin(AuthMixin);
 
 new Vue({
   render: h => h(App),
