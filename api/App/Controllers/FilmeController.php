@@ -12,9 +12,7 @@
       $filmeModel->limit = $_GET['limit'] ?? 0;
 
       $filmes = $filmeModel->obterTodosFilmes();
-      echo 2+5;
-      exit;
-      
+
       $response = new Response();
       $response->sucesso = !empty($filmes);
       if($response->sucesso) $response->dados = $filmes;
@@ -36,7 +34,10 @@
 
       $filmeModel = new Filme();
       $filmeModel->id  = $_POST['id'] ?? 0;
-      $filme = $filmeModel->ObterFilmePorUsuario();
+
+      $usuario = $_POST['usuario'] ?? 0;
+      
+      $filme = $filmeModel->ObterFilmePorUsuario($usuario);
       
       $response = new Response();
       $response->sucesso = !empty($filme);
