@@ -35,7 +35,7 @@
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-7 col-xl-5">
             <div class="d-flex">
-              <ButtonCustom class="me-2" @click.native="back">
+              <ButtonCustom class="me-2" @click.native="back" type="button">
                 Voltar
               </ButtonCustom>
               <ButtonCustom variant="azul" class="ms-2" type="submit">

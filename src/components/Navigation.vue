@@ -1,7 +1,6 @@
 <template>
   <div class="navbar navbar-expand-lg navbar-dark">
     <div class="container-md justify-content-between">
-      
       <slot></slot>
 
       <button
@@ -27,27 +26,25 @@
             <i class="bi bi-search"></i>
             Pesquisar
           </a>
-          <template v-if="usuarioLogado">
-              <router-link to="/meu-perfil">
-                <a class="nav-link fw-bold">
-                  <i class="bi bi-person-circle"></i>
-                  Meu perfil
-                </a>
-              </router-link>
-              <router-link to="/logout">
-                <a class="nav-link fw-bold">
-                  <i class="bi bi-box-arrow-left"></i>
-                  Sair
-                </a>
-              </router-link>
+          <template v-if="userLogged">
+            <router-link to="/meu-perfil">
+              <a class="nav-link fw-bold">
+                <i class="bi bi-person-circle"></i>
+                Meu perfil
+              </a>
+            </router-link>
+            <a class="nav-link fw-bold" href="/logout" @click.prevent="logout">
+              <i class="bi bi-box-arrow-left"></i>
+              Sair
+            </a>
           </template>
           <template v-else>
-              <router-link to="/login">
-                <a class="nav-link fw-bold">
-                  <i class="bi bi-box-arrow-in-right"></i>
-                  Entre na sua conta!
-                </a>
-              </router-link>
+            <router-link to="/login">
+              <a class="nav-link fw-bold">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Entre na sua conta!
+              </a>
+            </router-link>
           </template>
         </nav>
       </div>
@@ -56,12 +53,19 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
-    data() {
-        return {
-            usuarioLogado: false
-        }
+  computed: {
+    ...mapGetters('auth', {
+      userLogged: 'isLogged'
+    })
+  },
+  methods: {
+    ...mapActions('auth', ['doLogout']),
+    logout() {
+      this.doLogout();
     }
+  }
 };
 </script>
 

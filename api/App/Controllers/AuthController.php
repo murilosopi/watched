@@ -58,7 +58,7 @@
       $response->enviar();
     }
 
-    public function logout() {
+    public function logoutUsuario() {
       unset($_SESSION['usuario']);
 
       $response = new Response();

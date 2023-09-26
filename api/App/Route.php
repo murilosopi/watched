@@ -56,6 +56,12 @@
         'controller' => 'FilmeController',
         'action' => 'consultarInteracoes'
       );
+      
+      $routes['logout-usuario'] = array(
+        'route' => '/usuario/logout', 
+        'controller' => 'AuthController',
+        'action' => 'logoutUsuario'
+      );
 
       $this->setRoutes($routes); 
     }

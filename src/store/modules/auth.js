@@ -7,6 +7,11 @@ export default {
       tag: '',
     }
   },
+  getters: {
+    isLogged(state) {
+      return Object.values(state.user).every(value => value);
+    }
+  },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
@@ -21,6 +26,16 @@ export default {
       }
 
       commit('setUser', user);
+    },
+
+    doLogout({ dispatch }) {
+
+      this._vm.$api.delete('/usuario/logout')
+        .then(res => {
+          const response = res.data;
+          
+          if(response.sucesso) dispatch('setUser', { id: '', name: '', tag: '' });
+        });
     },
 
     doLogin({ dispatch }, payload) {
