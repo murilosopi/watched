@@ -58,6 +58,13 @@
       $response->enviar();
     }
 
+    public function checarAcessoUsuario() {
+      $response = new Response();
+      $response->sucesso = !empty($_SESSION['usuario']);      
+      if($response->sucesso) $response->dados = $_SESSION['usuario'];
+      $response->enviar();
+    }
+
     public function logoutUsuario() {
       unset($_SESSION['usuario']);
 
