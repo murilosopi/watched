@@ -8,10 +8,15 @@
 
 <script>
 import NotificationList from './components/NotificationList.vue';
+import AuthMixin from './mixins/AuthMixin';
 export default {
   name: "App",
   components: {
     NotificationList
+  },
+  mixins: [AuthMixin],
+  created() {
+    this.checkAuth();
   }
 };
 </script>

@@ -54,6 +54,18 @@ export default {
 
         return response.sucesso || false;
       });
+    },
+
+    doCheck({ dispatch }) {
+      return this._vm.$api.post('/usuario/checar-acesso').then(res => {
+        const response = res.data;
+
+        if(response.sucesso) {
+          dispatch('setUser', response.dados)
+        }
+
+        return response.sucesso || false;
+      });
     }
   }
   
