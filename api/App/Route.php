@@ -50,6 +50,12 @@
         'action' => 'autenticarUsuario'
       );
 
+      $routes['consultar-interacoes'] = array(
+        'route' => '/filme/consultar-interacoes',
+        'controller' => 'FilmeController',
+        'action' => 'consultarInteracoes'
+      );
+
       $this->setRoutes($routes); 
     }
 
