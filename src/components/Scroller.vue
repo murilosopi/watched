@@ -13,8 +13,6 @@
       @touchstart.prevent="prevScrollPressing"
       @touchend="clearTimer"
       @touchcancel="clearTimer"
-      v-if="scrollLeft"
-
     >
       <i class="bi bi-chevron-compact-left"></i>
     </button>
