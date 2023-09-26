@@ -54,10 +54,11 @@
 import InputCustom from '@/components/InputCustom.vue';
 import Title from '@/components/Title.vue';
 import ButtonCustom from '@/components/ButtonCustom.vue';
-import router from '@/routes';
 import PageMixin from '@/mixins/PageMixin.js';
 import NotificationMixin from '@/mixins/NotificationMixin';
-import { mapActions  } from 'vuex';
+import AuthMixin from '@/mixins/AuthMixin';
+import router from '@/routes';
+
 export default {
   components: {
     InputCustom,
@@ -70,12 +71,8 @@ export default {
       password: '',
     }
   },
-  mixins: [PageMixin, NotificationMixin],
+  mixins: [PageMixin, NotificationMixin, AuthMixin],
   methods: {
-    ...mapActions('auth', {
-      auth: 'doLogin'
-    }),
-
     back() {
       router.go(-1)
     },
@@ -101,7 +98,8 @@ export default {
                 icon: 'box-arrow-in-left',
                 text: "Login realizado com sucesso!",
                 class: 'success'
-              })
+              })              
+              router.push('/explorar');
             } else {
               this.notifyUser({
                 icon: 'x-circle',

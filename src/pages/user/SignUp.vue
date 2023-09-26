@@ -98,6 +98,7 @@ import Title from "@/components/Title.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import PageMixin from "@/mixins/PageMixin";
 import NotificationMixin from "@/mixins/NotificationMixin";
+import AuthMixin from "@/mixins/AuthMixin";
 import router from "@/routes";
 
 export default {
@@ -106,7 +107,7 @@ export default {
     Title,
     ButtonCustom,
   },
-  mixins: [PageMixin, NotificationMixin],
+  mixins: [PageMixin, NotificationMixin, AuthMixin],
   data() {
     return {
       name: "",
@@ -121,17 +122,50 @@ export default {
       router.go(-1);
     },
     signUp() {
-      this.validate();
+      if(this.validate()) {
+        const params = {
+          nome: this.name,
+          user: this.tag,
+          email: this.email,
+          senha : this.password
+        }
+
+        this.$api.post('/usuario/cadastrar', params)
+          .then(res => {
+            const response = res.data;
+            
+            if(response.sucesso) {
+              this.notifyUser({
+                icon: "check",
+                title: "Sucesso",
+                text: "usuário cadastro!",
+                class: "success",
+              });
+
+              this.auth({ username: this.tag, password: this.password })
+                .then(success => {
+                  if(success) {
+                    router.push('/explorar');
+                  }
+                });
+            } else {
+              this.notifyUser({
+                icon: "x",
+                title: "Erro",
+                text: "não foi possível efetuar o cadastro...",
+                class: "error",
+              });
+            }
+          });
+      }
     },
     validate() {
       if (
-        !this.name ||
         !this.tag ||
         !this.name ||
         !this.email ||
         !this.password ||
-        !this.tag ||
-        this.passwordConfirmation
+        !this.passwordConfirmation
       ) {
         this.notifyUser({
           icon: "exclamation-diamond",
@@ -139,7 +173,7 @@ export default {
           text: "os campos não foram preenchidos corretamente!",
           class: "warning",
         });
-        return;
+        return false;
       }
 
       if (this.password != this.passwordConfirmation) {
@@ -149,9 +183,18 @@ export default {
           text: "as senhas passadas são diferentes!",
           class: "warning",
         });
-        return;
+        return false;
       }
+
+      return true;
     },
+    // reset() {
+    //   this.tag = '';
+    //   this.name = '';
+    //   this.email = '';
+    //   this.password = '';
+    //   this.passwordConfirmation = '';
+    // }
   },
   created() {
     this.changeFavicon("login-sign-up", "svg");
