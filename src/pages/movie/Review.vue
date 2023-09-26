@@ -5,7 +5,7 @@
       sua opinião? :)
     </Title>
     <hr class="w-25 mx-auto" />
-    <DarkBox variant="gray" class="row px-md-5 px-3 py-5">
+    <DarkBox variant="gray" class="row px-md-5 px-3 py-5" v-if="userLogged">
       <form @submit.prevent="submitReview">
         <div class="row text-center justify-content-center">
           <div class="col-lg order-lg-1">
