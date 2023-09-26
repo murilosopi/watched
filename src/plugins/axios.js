@@ -4,7 +4,7 @@ import Axios from 'axios'
 Vue.use({
   install(Vue) {
     Vue.prototype.$api = Axios.create({
-      baseURL: 'https://watched.epizy.com/api/',
+      baseURL: 'http://localhost',
       withCredentials: true
     });
 
