@@ -19,6 +19,17 @@
       $response->enviar();
     }
 
+    public function obterInformacoesFilme() {
+      $filmeModel = new Filme();
+      $filmeModel->id = $_GET['id'] ?? 0;
+      $filme = $filmeModel->obterInformacoesFilme();
+  
+      $response = new Response();
+      $response->sucesso = !empty($filme);
+      if($response->sucesso) $response->dados = $filme;
+      $response->enviar();
+    }
+
     public function obterDetalhesFilme() {
       $filmeModel = new Filme();
       $filmeModel->id = $_GET['id'] ?? 0;

@@ -21,6 +21,12 @@
         'action' => 'obterDetalhesFilme'
       );
 
+      $routes['info-filme'] = array(
+        'route' => '/filme',
+        'controller' => 'FilmeController',
+        'action' => 'obterInformacoesFilme'
+      );
+
       $routes['obter-nota-filme'] = array(
         'route' => '/obter-nota-filme',
         'controller' => 'ResenhaController',
@@ -41,7 +47,7 @@
 
       $routes['cadastrar-usuario'] = array(
         'route' => '/usuario/cadastrar',
-        'controller' => 'GenerosController',
+        'controller' => 'AuthController',
         'action' => 'cadastrarUsuario'
       );
 
