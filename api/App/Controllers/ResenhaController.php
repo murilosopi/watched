@@ -30,13 +30,11 @@ class ResenhaController {
   }
 
   public function registrarResenha() {
-
-    $_SESSION['usuario'] = [ 'id' => 1 ];
-
     $response = new Response();
 
     if(empty($_SESSION['usuario'])) {
       $response->sucesso = false;
+      $response->descricao = "É necessário estar logado para registrar uma resenha.";
       $response->enviar();
     }
 
