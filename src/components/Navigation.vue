@@ -33,12 +33,10 @@
                 Meu perfil
               </a>
             </router-link>
-            <router-link to="/logout">
-              <a class="nav-link fw-bold">
-                <i class="bi bi-box-arrow-left"></i>
-                Sair
-              </a>
-            </router-link>
+            <a class="nav-link fw-bold" href="/logout" @click.prevent="logout">
+              <i class="bi bi-box-arrow-left"></i>
+              Sair
+            </a>
           </template>
           <template v-else>
             <router-link to="/login">
@@ -55,13 +53,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   computed: {
     ...mapGetters('auth', {
       userLogged: 'isLogged'
     })
   },
+  methods: {
+    ...mapActions('auth', ['doLogout']),
+    logout() {
+      this.doLogout();
+    }
+  }
 };
 </script>
 
