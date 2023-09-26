@@ -56,8 +56,8 @@ import Title from '@/components/Title.vue';
 import ButtonCustom from '@/components/ButtonCustom.vue';
 import router from '@/routes';
 import PageMixin from '@/mixins/PageMixin.js';
-import { mapActions } from 'vuex';
-
+import NotificationMixin from '@/mixins/NotificationMixin';
+import { mapActions  } from 'vuex';
 export default {
   components: {
     InputCustom,
@@ -70,14 +70,10 @@ export default {
       password: '',
     }
   },
-  mixins: [PageMixin],
+  mixins: [PageMixin, NotificationMixin],
   methods: {
     ...mapActions('auth', {
       auth: 'doLogin'
-    }),
-    
-    ...mapActions('notification', {
-      notifyUser: 'addNotification'
     }),
 
     back() {
