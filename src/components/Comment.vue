@@ -14,7 +14,7 @@
       <div class="col d-flex">
         <StarRating :value="comment.rating" class="ms-auto me-3" />
 
-        <InteractiveIcon title="Denunciar">
+        <InteractiveIcon title="Denunciar" v-if="userLogged">
           <i class="bi bi-flag text-danger fs-6"></i>
         </InteractiveIcon>
       </div>
