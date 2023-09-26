@@ -1,11 +1,11 @@
 <template>
-  <div class="streaming-list">
+  <DarkBox class="streaming-list ms-lg-5 p-4 h-100 w-100" :class="{placeholder: !platforms.length}">
     <Title class="h4 text-center mb-4">
       Onde Assistir
       <i class="bi bi-play"></i>
     </Title>
 
-    <nav v-if="platforms.length">
+    <nav :class="{placeholder: !platforms.length}">
       <ul class="list-unstyled">
         <li class="mb-3 row align-items-center" v-for="platform in platforms" :key="platform.id">
           <a :href="platform.url" class="text-light fw-normal d-flex align-items-center" target="_blank">
@@ -15,14 +15,16 @@
         </li>
       </ul>
     </nav>
-  </div>
+  </DarkBox>
 </template>
 
 <script>
 import Title from "@/components/Title.vue";
+import DarkBox from "@/components/DarkBox.vue";
 export default {
   components: {
     Title,
+    DarkBox
   },
 
   props: {

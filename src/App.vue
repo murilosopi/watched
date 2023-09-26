@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <router-view name="header"/>
-    <router-view name="page" class="container my-auto px-4"/>
+    <NotificationList />
+    <router-view name="page" class="container my-auto px-4 placeholder-glow"/>
   </div>
 </template>
 
 <script>
+import NotificationList from './components/NotificationList.vue';
 export default {
   name: "App",
+  components: {
+    NotificationList
+  }
 };
 </script>
 

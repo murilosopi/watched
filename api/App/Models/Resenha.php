@@ -1,29 +1,15 @@
 <?php
   namespace App\Models;
-  use App\Connection;
+  use App\Model;
 
-  class Resenha {
-    private $id;
-    private $idFilme;
-    private $idUsuario;
-    private $titulo;
-    private $descricao;
-    private $notaAvaliacao;
-    private $dataHora;
-    private $conexao;
-
-    public function __construct() {
-      $this->conexao = Connection::getDb();
-    }
-    
-    public function __get($atributo) {
-      return $this->$atributo;
-    }
-
-    public function __set($atributo, $valor) {
-      $this->$atributo = $valor;
-      return $this->$atributo;
-    }
+  class Resenha extends Model {
+    protected $id;
+    protected $idFilme;
+    protected $idUsuario;
+    protected $titulo;
+    protected $descricao;
+    protected $notaAvaliacao;
+    protected $dataHora;
 
     // Registra a resenha na base de dados
     public function registrarResenha() {

@@ -5,6 +5,7 @@ Vue.use({
   install(Vue) {
     Vue.prototype.$api = Axios.create({
       baseURL: 'http://localhost',
+      withCredentials: true
     });
 
     Vue.prototype.$api.interceptors.request.use(config => {

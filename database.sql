@@ -59,6 +59,20 @@ CREATE TABLE tbPlataformas(
     url TEXT NOT NULL
 );    
 
+CREATE TABLE tbReacoes(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    icone VARCHAR(50),
+    descricao VARCHAR(50)
+);
+
+CREATE TABLE tbReacoesResenha(
+    resenha INT NOT NULL,
+    reacao INT NOT NULL,
+
+    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
+    FOREIGN KEY (resenha) REFERENCES tbResenhas (id)
+);
+
 CREATE TABLE tbResenhas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filme INT NOT NULL,
@@ -67,11 +81,10 @@ CREATE TABLE tbResenhas (
     descricao TEXT NOT NULL,
     nota DECIMAL(2, 1) DEFAULT 0.0,
     dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
-    reacao CHAR(1),
+    reacao INT,
     FOREIGN KEY (usuario) REFERENCES tbUsuarios (id),
     FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
-
 
 /*Chat: */
 CREATE TABLE tbChats(
@@ -157,13 +170,13 @@ VALUES
 
 INSERT INTO tbPlataformas (nome, icone, url)
 VALUES 
-    ("Amazon Prime", "assets/img/icons/amazon-icon.svg", "https://www.primevideo.com/"),
-    ("Apple TV+", "assets/img/icons/apple-icon.svg", "https://www.apple.com/br/apple-tv-plus/"),
-    ("Disney +", "assets/img/icons/disney-icon.svg", "https://www.disneyplus.com/"),
-    ("HBO Go", "assets/img/icons/hbo-icon.svg", "https://www.hbomax.com/"),
-    ("Netflix", "assets/img/icons/netflix-icon.svg", "https://www.netflix.com"),
-    ("Youtube", "assets/img/icons/yt-icon.svg", "https://www.youtube.com/feed/storefront"),
-    ("Star +", "assets/img/icons/star-plus-icon.svg", "https://www.starplus.com");
+    ("Amazon Prime", "/assets/img/icons/amazon-icon.svg", "https://www.primevideo.com/"),
+    ("Apple TV+", "/assets/img/icons/apple-icon.svg", "https://www.apple.com/br/apple-tv-plus/"),
+    ("Disney +", "/assets/img/icons/disney-icon.svg", "https://www.disneyplus.com/"),
+    ("HBO Go", "/assets/img/icons/hbo-icon.svg", "https://www.hbomax.com/"),
+    ("Netflix", "/assets/img/icons/netflix-icon.svg", "https://www.netflix.com"),
+    ("Youtube", "/assets/img/icons/yt-icon.svg", "https://www.youtube.com/feed/storefront"),
+    ("Star +", "/assets/img/icons/star-plus-icon.svg", "https://www.starplus.com");
 
 
 -- Registro dos gêneros

@@ -2,6 +2,7 @@
   namespace App;
 
   class Route {
+    private $routes;
     public function __construct() {
       $this->initRoutes();
       $this->run($this->getUrl());
@@ -81,8 +82,6 @@
           die;
         }
       }
-
-      header('Location: erro');
     }
 
     // Captura a rota solicitada a partir da URL

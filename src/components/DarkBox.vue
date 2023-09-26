@@ -1,13 +1,16 @@
 <template>
-  <div class="dark-box" :class="`${variant}`">
+  <component :is="tag" class="dark-box rounded" :class="`${variant}`">
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <script>
 export default {
   props: {
-    variant: String
+    variant: String,
+    tag: {
+      default: 'div'
+    }
   }
 }
 </script>
