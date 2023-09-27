@@ -1,10 +1,16 @@
-import { mapActions  } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   methods: {
     ...mapActions('auth', {
       auth: 'doLogin',
-      checkAuth: 'doCheck'
+      checkAuth: 'doCheck',
+      logout: 'doLogout'
     }),
+  },
+  computed: {
+    ...mapGetters('auth', {
+      userLogged: 'isLogged'
+    })
   }
 }

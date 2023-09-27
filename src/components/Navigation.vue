@@ -53,20 +53,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-export default {
-  computed: {
-    ...mapGetters('auth', {
-      userLogged: 'isLogged'
-    })
-  },
-  methods: {
-    ...mapActions('auth', ['doLogout']),
-    logout() {
-      this.doLogout();
-    }
-  }
-};
+export default {};
 </script>
 
 <style></style>
