@@ -10,6 +10,9 @@ export default {
   getters: {
     isLogged(state) {
       return Object.values(state.user).every(value => value);
+    },
+    getData(state) {
+      return state.user;
     }
   },
   mutations: {

@@ -5,12 +5,13 @@ export default {
     ...mapActions('auth', {
       auth: 'doLogin',
       checkAuth: 'doCheck',
-      logout: 'doLogout'
+      logout: 'doLogout',
     }),
   },
   computed: {
     ...mapGetters('auth', {
-      userLogged: 'isLogged'
+      userLogged: 'isLogged',
+      loggedData: 'getData'
     })
   }
 }
