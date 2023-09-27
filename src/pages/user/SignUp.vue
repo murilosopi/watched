@@ -97,7 +97,6 @@ import InputCustom from "@/components/InputCustom.vue";
 import Title from "@/components/Title.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import PageMixin from "@/mixins/PageMixin";
-import NotificationMixin from "@/mixins/NotificationMixin";
 import router from "@/routes";
 
 export default {
@@ -106,7 +105,7 @@ export default {
     Title,
     ButtonCustom,
   },
-  mixins: [PageMixin, NotificationMixin],
+  mixins: [PageMixin],
   data() {
     return {
       name: "",
@@ -149,7 +148,7 @@ export default {
                 });
             } else {
               this.notifyUser({
-                icon: "x",
+                icon: "x-octagon",
                 title: "Erro",
                 text: "não foi possível efetuar o cadastro...",
                 class: "error",
