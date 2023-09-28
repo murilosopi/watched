@@ -6,7 +6,7 @@
         <div class="d-flex flex-column gap-2">
           <!-- Curtir/descurtir -->
           <InteractiveIcon>
-            <i
+            <i @click="captureLiked"
               class="bi"
               :class="{ 'bi-heart': !liked, 'bi-heart-fill': liked }"
             ></i>
@@ -16,7 +16,7 @@
 
           <!-- Marcar/desmarcar como assistido -->
           <InteractiveIcon>
-            <i
+            <i @click="captureWatched"
               class="bi"
               :class="{
                 'bi-camera-reels': !watched,
@@ -29,7 +29,7 @@
         <!-- salvar/removerSalvoFilme -->
         <div>
           <InteractiveIcon>
-            <i
+            <i @click="captureSaved"
               class="bi"
               :class="{
                 ' bi-bookmark-star': !saved,
@@ -58,7 +58,10 @@
 <script>
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import MoviePoster from "@/components/MoviePoster.vue";
+import AuthMixin from "@/mixins/AuthMixin";
+import NotificationMixin from "@/mixins/NotificationMixin";
 export default {
+  mixins: [AuthMixin, NotificationMixin],
   components: {
     InteractiveIcon,
     MoviePoster,
@@ -77,6 +80,47 @@ export default {
       id: this.movie.id,
     };
   },
+  methods: {
+    captureLiked: function() {
+      if(this.userLogged){
+        this.liked = true
+      }
+      else{
+        this.notifyUser({
+                icon: 'x-circle',
+                title: 'Ops!',
+                text: "Você não está logado...",
+                class: 'danger'
+              })
+      }
+    },
+    captureWatched: function() {
+      if(this.userLogged){
+        this.watched = true
+      }
+      else{
+        this.notifyUser({
+                icon: 'x-circle',
+                title: 'Ops!',
+                text: "Você não está logado...",
+                class: 'danger'
+              })
+      }
+    },
+    captureSaved: function() {
+      if(this.userLogged){
+        this.saved = true
+      }
+      else{
+        this.notifyUser({
+                icon: 'x-circle',
+                title: 'Ops!',
+                text: "Você não está logado...",
+                class: 'danger'
+              })
+      }
+    }
+  }
 };
 </script>
 
