@@ -6,9 +6,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './plugins/axios'
 import store from './store';
 import AuthMixin from './mixins/AuthMixin';
+import NotificationMixin from './mixins/NotificationMixin';
 
 Vue.config.productionTip = false
 
+Vue.mixin(NotificationMixin);
 Vue.mixin(AuthMixin);
 
 new Vue({

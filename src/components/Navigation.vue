@@ -53,13 +53,7 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    logout() {
-      this.doLogout();
-    }
-  }
-};
+export default {};
 </script>
 
 <style></style>

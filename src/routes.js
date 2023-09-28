@@ -2,17 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router);
+const header = () => import('@/components/PageHeader');
 
-import header from '@/components/PageHeader';
+const Home = () => import('@/pages/home/Home');
+const Login = () => import('@/pages/user/Login');
+const SignUp = () => import('@/pages/user/SignUp');
+const Search = () => import('@/pages/search/Search');
+const Profile = () => import('@/pages/user/Profile');
+const Movie = () => import('@/pages/movie/Movie');
+const Error = () => import('@/pages/error/Error');
+const Explore = () => import('@/pages/home/Explore.vue');
 
-import Home from '@/pages/home/Home';
-import Login from '@/pages/user/Login';
-import SignUp from '@/pages/user/SignUp';
-import Search from '@/pages/search/Search';
-import Profile from '@/pages/user/Profile';
-import Movie from '@/pages/movie/Movie';
-import Error from '@/pages/error/Error';
-import Explore from '@/pages/home/Explore.vue'
 
 export default new Router({
   mode: 'history',
