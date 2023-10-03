@@ -55,7 +55,6 @@ import InputCustom from '@/components/InputCustom.vue';
 import Title from '@/components/Title.vue';
 import ButtonCustom from '@/components/ButtonCustom.vue';
 import PageMixin from '@/mixins/PageMixin.js';
-import NotificationMixin from '@/mixins/NotificationMixin';
 import router from '@/routes';
 
 export default {
@@ -70,7 +69,7 @@ export default {
       password: '',
     }
   },
-  mixins: [PageMixin, NotificationMixin],
+  mixins: [PageMixin],
   methods: {
     back() {
       router.go(-1)
