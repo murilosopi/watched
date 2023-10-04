@@ -15,7 +15,7 @@
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':usuario', $usuario);
         $stmt->bindValue(':assistido', $assistido);
-        $stmt->bindValue(':filme', $this->id);
+        $stmt->bindValue(':filme', $filme);
     
         return $stmt-execute();
       }
@@ -26,19 +26,19 @@
     
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':usuario', $usuario);
-        $stmt->bindValue(':curtido', $this->curtido);
-        $stmt->bindValue(':filme', $this->id);
+        $stmt->bindValue(':curtido', $curtido);
+        $stmt->bindValue(':filme', $filme);
     
         return $stmt-execute();
       }
 
-      public function InteracoesModel(int $usuario) {
+      public function InteracoesSalvo(int $usuario) {
         $sql = "UPDATE tbFilmesUsuario SET salvo = :salvo WHERE usuario AND filme =:filme";
     
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':usuario', $usuario);
-        $stmt->bindValue(':salvo', $this->salvo);
-        $stmt->bindValue(':filme', $this->id);
+        $stmt->bindValue(':salvo', $salvo);
+        $stmt->bindValue(':filme', $filme);
     
         return $stmt-execute();
       }

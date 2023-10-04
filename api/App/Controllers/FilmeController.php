@@ -41,12 +41,12 @@
       $response->enviar();
     }
 
-    public function consultarInteracoes() {
+    public function obterConsultarInteracoes() {
 
       $filmeModel = new Filme();
       $filmeModel->id  = $_POST['id'] ?? 0;
 
-      $usuario = $_POST['usuario'] ?? 0;
+      $idUsuario = $_POST['usuario'] ?? 0;
       
       $filme = $filmeModel->ObterFilmePorUsuario($usuario);
       

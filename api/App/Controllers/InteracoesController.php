@@ -6,14 +6,15 @@
 
  class InteracoesController {
 
-    public function InteracoesAssistido() {
-      $InteracoesModel = new Filme();
-      $InteracoesModel->id = $_POST['id'] ?? 0;
+    public function obterAssistidoPorFilme() {
+      
+      $InteracoesModel = new Interacoes();
+      $InteracoesModel->filme = $_POST['filme'] ?? 0;
 
       $usuario = $_POST['usuario'] ?? 0;
       $assistido = $_POST['assistido'] ?? 0;
 
-      $Interacoes = $InteracoesModel->InteracoesAssistido();
+      $Interacoes = $InteracoesModel->InteracoesAssistido($usuario);
 
       $response = new Response();
       $response->sucesso = !empty($filme);
@@ -21,35 +22,35 @@
       $response->enviar();
     }
 
-    public function InteracoesCurtido() {
-        $InteracoesModel = new Filme();
-        $InteracoesModel->id = $_POST['id'] ?? 0;
+     public function obterCurtiidoPorFilme() {
+      $InteracoesModel = new Interacoes();
+      $InteracoesModel->filme = $_POST['filme'] ?? 0;
   
-        $usuario = $_POST['usuario'] ?? 0;
-        $curtido = $_POST['curtido'] ?? 0;
+      $usuario = $_POST['usuario'] ?? 0;
+      $curtido = $_POST['curtido'] ?? 0;
 
   
-        $Interacoes = $InteracoesModel->InteracoesCurtido();
+      $Interacoes = $InteracoesModel->InteracoesCurtido($usuario);
   
-        $response = new Response();
-        $response->sucesso = !empty($filme);
-        if($response->sucesso) $response->dados = $filme;
-        $response->enviar();
+      $response = new Response();
+      $response->sucesso = !empty($filme);
+      if($response->sucesso) $response->dados = $filme;
+      $response->enviar();
       }
 
-      public function InteracoesSalvo() {
-        $InteracoesModel = new Filme();
-        $InteracoesModel->id = $_POST['id'] ?? 0;
+      public function obterSalvoPorFilme() {
+      $InteracoesModel = new Interacoes();
+      $InteracoesModel->filme = $_POST['filme'] ?? 0;
   
-        $usuario = $_POST['usuario'] ?? 0;
-        $salvo = $_POST['salvo'] ?? 0;
+      $usuario = $_POST['usuario'] ?? 0;
+      $salvo = $_POST['salvo'] ?? 0;
   
-        $Interacoes = $InteracoesModel->InteracoesSalvo();
+      $Interacoes = $InteracoesModel->InteracoesSalvo($usuario);
   
-        $response = new Response();
-        $response->sucesso = !empty($filme);
-        if($response->sucesso) $response->dados = $filme;
-        $response->enviar();
+      $response = new Response();
+      $response->sucesso = !empty($filme);
+      if($response->sucesso) $response->dados = $filme;
+      $response->enviar();
       }
 
 
