@@ -165,8 +165,28 @@ VALUES
     ("A Nova Onda do Imperador", "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQCsKA1RQh59O3CUu_h7Q3UBqG90RfN7MfgOxtAnTQwCNQN-0ag", "O jovem e arrogante Imperador Kuzco é transformado em uma lhama por sua poderosa mentora chamada Yzma. Perdido na floresta, a única chance de Kuzco recuperar seu trono é com a ajuda de Pacha, um humilde camponês. Juntos, eles precisam enfrentar a bruxa Yzma antes de concluir sua jornada.", 78, 2000, "Mark Dindal", "Stephen J. Anderson, Don Hall", "Buena Vista Pictures", "Inglês", "Estados Unidos", "The Emperor's New Groove", "David Spade;John Goodman;Patrick Warburton;Eartha Kitt"),
     ("As Vantagens de Ser Invisível", "https://br.web.img3.acsta.net/medias/nmedia/18/90/78/52/20295598.jpg", "Um jovem tímido se esconde em seu próprio mundo até conhecer dois irmãos que o ajudam a viver novas experiências. Embora esteja feliz nessa nova fase, ele não esquece as tristezas do passado, que têm origem em uma chocante revelação.", 105, 2012, "Stephen Chbosky", "Stephen Chbosky, Stephen Chbosky", "Summit Entertainment", "Inglês", "Estados Unidos", "The Perks of Being a Wallflower", "Logan Lerman;Emma Watson;Ezra Miller;Erin Wilhelmi"),
     ("O Castelo Animado", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKZ7FR5KMc8sY9rMJ520kSC1C_o6IxYl-vs5vKzglEhcEA755p", "Uma bruxa lança uma terrível maldição sobre a jovem Sophie transformando-a numa velha de 90 anos. Desesperada, ela embarca numa odisseia em busca do Castelo Andante, onde reside um misterioso feiticeiro que poderá ajudá-la a reverter o feitiço.", 99, 2004, "Hayao Miyazaki", "Diana Wynne Jones, Hayao Miyazaki", "Toho", "Japonês", "Japão", "Hauru no Ugoku Shiro", "Chieko Baishô;Takuya Kimura;Ryûnosuke Kamiki;Mitsunori Isaki"),
-    ("O Homem de Palha", "https://blogdokira250242846.files.wordpress.com/2020/08/homem.jpg", "Uma jovem desaparece misteriosamente. Para investigar o desaparecimento, o Sargento Howie viaja para uma remota ilha escocesa onde conhece o esquisito Lord Summerisle, um líder religioso da pequena comunidade que realiza estranhos rituais pagãos.", 92, 1973, "Robin Hardy", "Anthony Shaffer", "British Lion Films", "Inglês", "Reino Unido", "The Wicker Man", "Edward Woodward;Diane Cilento;Ingrid Pitt;Chrisstopher Lee");
+    ("O Homem de Palha", "https://blogdokira250242846.files.wordpress.com/2020/08/homem.jpg", "Uma jovem desaparece misteriosamente. Para investigar o desaparecimento, o Sargento Howie viaja para uma remota ilha escocesa onde conhece o esquisito Lord Summerisle, um líder religioso da pequena comunidade que realiza estranhos rituais pagãos.", 92, 1973, "Robin Hardy", "Anthony Shaffer", "British Lion Films", "Inglês", "Reino Unido", "The Wicker Man", "Edward Woodward;Diane Cilento;Ingrid Pitt;Chrisstopher Lee"),
+    ("Oppenheimer", "https://uploads.jovemnerd.com.br/wp-content/uploads/2022/07/oppenheimer_poster_1__o1a073.jpg", "O físico J. Robert Oppenheimer trabalha com uma equipe de cientistas durante o Projeto Manhattan, levando ao desenvolvimento da bomba atômica.", 180, 2023, "Christopher Nolan", "Christopher Nolan", "Universal Studios", "Inglês", "Estados Unidos", "Oppenheimer", "Cillian Murphy;Florence Pugh;Robert Downey Jr;Emily Blunt"),
+    ("Barbie", "https://s2-vogue.glbimg.com/XzSoRntJ3C_YdnlfaW21juqM4Ck=/0x0:480x600/1000x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_5dfbcf92c1a84b20a5da5024d398ff2f/internal_photos/bs/2023/x/C/jqAddPQOijfNlCNKNEFg/339277575-166477655924790-1364217602656200753-n.jpeg", "Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.", 114, 2023, "Greta Gerwig", "Greta Gerwig, Noah Baumbach", "Warner Bros. Pictures", "Inglês", "Reino Unido", "Barbie", "Margot Robbie;Ryan Gosling;Will Ferrell;Emma Mackey"),
 
+    ("Matrix", "https://img.elo7.com.br/product/main/2679A20/big-poster-filme-matrix-lo03-tamanho-90x60-cm-geek.jpg", "Um programador de computador descobre que a realidade que ele conhece não passa de uma simulação criada por máquinas para escravizar a humanidade. Ele se junta a um grupo de rebeldes para combater as máquinas e libertar a humanidade.", 136, 1999, "Lana Wachowski, Lilly Wachowski", "Lana Wachowski, Lilly Wachowski", "Warner Bros.", "Inglês", "Estados Unidos", "The Matrix", "Keanu Reeves;Laurence Fishburne;Carrie-Anne Moss;Hugo Weaving"),
+    ("Era uma Vez no Oeste", "https://leiturafilmica.com.br/wp-content/webp-express/webp-images/uploads/2017/05/era-uma-vez-no-oeste-poster-1.jpg.webp", "A história de um misterioso forasteiro, um homem sem nome, que chega a uma pequena cidade fronteiriça do Velho Oeste. Ele está determinado a proteger uma mulher, que está sendo ameaçada por um magnata da ferrovia, que quer tomar suas terras.", 175, 1968, "Sergio Leone", "Sergio Leone, Sergio Donati", "Paramount Pictures", "Inglês", "Itália e Estados Unidos", "Once Upon a Time in the West", "Henry Fonda;Charles Bronson;Claudia Cardinale;Jason Robards"),
+    ("O Senhor dos Anéis: A Sociedade do Anel", "https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/92/91/32/20224832.jpg", "Um jovem hobbit chamado Frodo recebe uma missão: destruir um anel mágico que pode trazer a destruição do mundo. Ele parte em uma jornada épica, acompanhado de um grupo de amigos e aliados, para cumprir essa tarefa.", 178, 2001, "Peter Jackson", "J.R.R. Tolkien, Fran Walsh, Philippa Boyens, Peter Jackson", "New Line Cinema", "Inglês", "Estados Unidos e Nova Zelândia", "The Lord of the Rings: The Fellowship of the Ring", "Elijah Wood;Ian McKellen;Viggo Mortensen;Sean Astin"),
+    ("Os Infiltrados", "https://br.web.img2.acsta.net/c_310_420/medias/nmedia/18/90/18/94/20085052.jpg", "Dois policiais, um infiltrado na máfia e outro como um espião na polícia, tentam descobrir a identidade um do outro enquanto enfrentam o crime organizado em Boston. Um jogo mortal de gato e rato se desenrola.", 151, 2006, "Martin Scorsese", "William Monahan", "Warner Bros.", "Inglês", "Estados Unidos", "The Departed", "Leonardo DiCaprio;Matt Damon;Jack Nicholson;Mark Wahlberg"),
+    ("Gladiador", "https://multiversonoticias.com.br/wp-content/uploads/2021/09/gladiador-2-poster.jpg", "Um general romano é traído e sua família é assassinada. Ele se torna um escravo e é forçado a lutar como gladiador para vingar a morte de sua família e recuperar sua honra.", 155, 2000, "Ridley Scott", "David Franzoni, John Logan, William Nicholson", "DreamWorks Pictures", "Inglês", "Estados Unidos e Reino Unido", "Gladiator", "Russell Crowe;Joaquin Phoenix;Connie Nielsen;Oliver Reed"),
+    ("O Poderoso Chefão", "https://macabra.tv/wp-content/uploads/2019/05/the-godfather-macabra-poster-380x568.jpg", "A saga de uma família ítalo-americana envolvida no mundo do crime organizado nos Estados Unidos. O patriarca da família, Vito Corleone, tenta passar o controle dos negócios para seu filho Michael, mas uma série de eventos violentos o impedem de fazer isso.", 175, 1972, "Francis Ford Coppola", "Mario Puzo, Francis Ford Coppola", "Paramount Pictures", "Inglês", "Estados Unidos", "The Godfather", "Marlon Brando;Al Pacino;James Caan;Robert Duvall"),
+    ("Forrest Gump", "https://upload.wikimedia.org/wikipedia/pt/thumb/c/c0/ForrestGumpPoster.jpg/240px-ForrestGumpPoster.jpg", "A história da vida de Forrest Gump, um homem comum com baixo QI que acidentalmente se envolve em alguns dos eventos mais significativos da história dos Estados Unidos, enquanto busca o amor de sua vida.", 142, 1994, "Robert Zemeckis", "Winston Groom, Eric Roth", "Paramount Pictures", "Inglês", "Estados Unidos", "Forrest Gump", "Tom Hanks;Robin Wright;Gary Sinise;Sally Field"),
+    ("Vingadores: Ultimato", "https://img.elo7.com.br/product/main/2678F78/cartaz-poster-vingadores-4-ultimato-filme-marvel-avengers-colecionador.jpg", "Os Vingadores se reúnem para uma última missão: derrotar Thanos, um vilão poderoso que quer destruir metade do universo. Eles viajam no tempo e enfrentam desafios épicos para salvar o mundo.", 181, 2019, "Anthony Russo, Joe Russo", "Christopher Markus, Stephen McFeely", "Marvel Studios", "Inglês", "Estados Unidos", "Avengers: Endgame", "Robert Downey Jr.;Chris Evans;Mark Ruffalo;Chris Hemsworth"),
+    ("Pulp Fiction: Tempo de Violência", "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg", "Uma série de histórias interligadas envolvendo criminosos, gangsters, boxeadores e outros personagens peculiares em Los Angeles. A narrativa segue uma estrutura não linear e é repleta de diálogos memoráveis.", 154, 1994, "Quentin Tarantino", "Quentin Tarantino", "Miramax Films", "Inglês", "Estados Unidos", "Pulp Fiction", "John Travolta;Samuel L. Jackson;Uma Thurman;Bruce Willis"),
+    ("O Resgate do Soldado Ryan", "https://image.tmdb.org/t/p/original/hMLxNLCXRDd62acfCBn6mIyW1HU.jpg", "Durante a Segunda Guerra Mundial, um grupo de soldados americanos é enviado para resgatar um soldado cujos irmãos foram mortos em combate. A missão é perigosa e repleta de ação.", 169, 1998, "Steven Spielberg", "Robert Rodat", "Paramount Pictures", "Inglês", "Estados Unidos", "Saving Private Ryan", "Tom Hanks;Matt Damon;Tom Sizemore;Edward Burns"),
+    ("Interestelar", "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png", "Em um futuro distante, a Terra enfrenta um colapso ambiental. Um grupo de astronautas embarca em uma jornada interestelar para encontrar um novo lar para a humanidade. Eles enfrentam desafios cósmicos e temporais em sua busca desesperada.", 169, 2014, "Christopher Nolan", "Jonathan Nolan, Christopher Nolan", "Warner Bros.", "Inglês", "Estados Unidos e Reino Unido", "Interstellar", "Matthew McConaughey;Anne Hathaway;Jessica Chastain;Michael Caine"),
+    ("O Silêncio dos Inocentes", "https://upload.wikimedia.org/wikipedia/pt/0/0a/Silence_of_the_lambs.png", "Uma agente do FBI busca a ajuda de um famoso psiquiatra canibal para capturar um serial killer que está à solta. O psiquiatra, Hannibal Lecter, é brilhante, mas também perigoso.", 118, 1991, "Jonathan Demme", "Thomas Harris, Ted Tally", "Orion Pictures", "Inglês", "Estados Unidos", "The Silence of the Lambs", "Jodie Foster;Anthony Hopkins;Scott Glenn;Ted Levine"),
+    ("Cidade de Deus", "https://www1.folha.uol.com.br/folha/especial/2002/cidadededeus/images/promocao-premios-200x265.jpg", "A história de dois jovens que crescem em uma favela violenta no Rio de Janeiro. Um deles se torna um fotógrafo, enquanto o outro se envolve no crime organizado. Suas vidas se entrelaçam de maneira surpreendente.", 130, 2002, "Fernando Meirelles, Kátia Lund", "Paulo Lins, Bráulio Mantovani", "Miramax Films", "Português", "Brasil", "Cidade de Deus", "Alexandre Rodrigues;Leandro Firmino;Phellipe Haagensen;Douglas Silva"),
+    ("A Origem", "https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/87/32/31/20028688.jpg", "Em um mundo onde é possível entrar nos sonhos das pessoas e roubar informações, um ladrão especializado em invadir mentes é contratado para implantar uma ideia na mente de um empresário. Ele enfrenta desafios complexos em camadas de realidade.", 148, 2010, "Christopher Nolan", "Christopher Nolan", "Warner Bros.", "Inglês", "Estados Unidos e Reino Unido", "Inception", "Leonardo DiCaprio;Joseph Gordon-Levitt;Ellen Page;Tom Hardy"),
+    ("O Senhor dos Anéis: As Duas Torres", "https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/92/34/89/20194741.jpg", "A segunda parte da trilogia O Senhor dos Anéis, onde a sociedade do anel se separa e enfrenta desafios em diferentes partes da Terra-média, enquanto Frodo e Sam continuam sua jornada para destruir o Um Anel.", 179, 2002, "Peter Jackson", "J.R.R. Tolkien, Fran Walsh, Philippa Boyens, Peter Jackson", "New Line Cinema", "Inglês", "Estados Unidos e Nova Zelândia", "The Lord of the Rings: The Two Towers", "Elijah Wood;Ian McKellen;Viggo Mortensen;Sean Astin"),
+    ("O Labirinto do Fauno", "https://br.web.img3.acsta.net/r_1920_1080/pictures/16/02/25/16/13/277742.jpg", "No pós-Guerra Civil Espanhola, uma jovem garota se muda com sua mãe para o campo, onde ela descobre um mundo mágico habitado por criaturas místicas e enfrenta desafios perigosos.", 118, 2006, "Guillermo del Toro", "Guillermo del Toro", "Warner Bros.", "Espanhol", "Espanha", "El Laberinto del Fauno", "Ivana Baquero;Sergi López;Maribel Verdú;Doug Jones"),
+    ("A Viagem de Chihiro", "https://media.fstatic.com/jw3LjzagsuxKP9jjg-Fs8-TR4CM=/210x312/smart/filters:format(webp)/media/movies/covers/2018/11/MV5BOGJjNzZmMmUtMjljNC00ZjU5LWJiODQtZmEzZTU0MjBlNzgxL2ltYWdlXkEyXk_kisQANO.jpg", "Chihiro, uma jovem garota, entra em um mundo mágico repleto de espíritos e deuses japoneses. Para salvar seus pais transformados em porcos, ela embarca em uma jornada extraordinária.", 125, 2001, "Hayao Miyazaki", "Hayao Miyazaki", "Studio Ghibli", "Japonês", "Japão", "Sen to Chihiro no Kamikakushi", "Rumi Hiiragi;Miyu Irino;Mari Natsuki;Takeshi Naito"),
+    ("O Quinto Elemento", "https://br.web.img2.acsta.net/pictures/14/02/07/20/09/270960.jpg", "No século 23, um motorista de táxi do Brooklyn se envolve em uma missão para salvar o mundo quando descobre que uma jovem é a chave para evitar a destruição iminente.", 126, 1997, "Luc Besson", "Luc Besson", "Columbia Pictures", "Inglês", "França", "The Fifth Element", "Bruce Willis;Milla Jovovich;Gary Oldman;Ian Holm");
 
 INSERT INTO tbPlataformas (nome, icone, url)
 VALUES 
@@ -246,8 +266,67 @@ VALUES
     (19, 11), (19, 3), (19, 6), (19, 8), (19, 13),
 
     -- O homem de palha
-    (20, 7), (20, 6), (20, 10);
+    (20, 7), (20, 6), (20, 10),
 
+    -- Oppenheimer
+    (21, 3), (21, 10),
+
+    -- Barbie
+    (22, 2), (22, 6),
+
+    -- Matrix
+    (23, 1), (23, 9),
+
+    -- Era uma Vez no Oeste
+    (24, 1), (24, 3), (24, 13),
+
+    -- O Senhor dos Anéis: A Sociedade do Anel
+    (25, 1), (25, 6), (25, 13), 
+
+    -- Os Infiltrados
+    (26, 3), (26, 10),
+
+    -- Gladiador
+    (27, 1), (27, 3),
+
+    -- O Poderoso Chefão 
+    (28, 3),
+
+    -- Forrest Gump
+    (29, 2), (29, 3),
+
+    -- Vingadores: Ultimato
+    (30, 1), (30, 6), (30, 13), 
+
+    -- Pulp Fiction: Tempo de Violência
+    (31, 2), (31, 3), (31, 10),
+
+    -- O Resgate do Soldado Ryan
+    (32, 1), (32, 3), (32, 13),
+
+    -- Interestelar
+    (33, 3), (33, 9), (33, 13),
+
+    -- O Silêncio dos Inocentes
+    (34, 3), (34, 7), (34, 10), 
+
+    -- Cidade de Deus
+    (35, 3), (35, 10),
+
+    -- A Origem
+    (36, 1), (36, 9), (36, 13),
+
+    -- O Senhor dos Anéis: As Duas Torres
+    (37, 1), (37, 6), (37, 13),
+
+    -- O Labirinto do Fauno
+    (38, 3), (38, 6),
+
+    -- A Viagem de Chihiro
+    (39, 6), (39, 11), (39, 13),
+
+    -- O Quinto Elemento
+    (40, 1), (40, 9), (40, 13);
 
 INSERT INTO tbPlataformasFilmes (plataforma, filme)
 VALUES 
@@ -306,4 +385,61 @@ VALUES
     (1, 18), (2, 18), (4, 18), (5, 18), (6, 18),
 
     -- O castelo animado
-    (5, 19);
+    (5, 19),
+
+    -- Barbie
+    (1, 22), (2, 22), (6, 22) ,
+
+    -- Matrix
+    (1, 23), (2, 23), (4, 23), (6, 23),
+
+    -- Era uma Vez no Oeste
+    (1, 24), (2, 24), (6, 24),
+
+    -- O Senhor dos Anéis: A Sociedade do Anel
+    (1, 25), (2, 25), (4, 25), (6, 25),  
+
+    -- Os Infiltrados
+    (1, 26), (2, 26), (4, 26), (6, 26),
+
+    -- Gladiador 
+    (1, 27), (2, 27), (5, 27), (6, 27), (7, 27),
+
+    -- O Poderoso Chefão 
+    (1, 28), (2, 28), (5, 28), (7, 28),
+
+    -- Forrest Gump
+    (1, 29), (2, 29), (6, 29),
+
+    -- Vingadores: Ultimato
+    (3, 30),
+    
+    -- Pulp Fiction: Tempo de Violência
+    (1, 31), (2, 31), (6, 31),
+
+    -- O Resgate do Soldado Ryan
+    (1, 32), (2, 32), (5, 32), (6, 32),
+
+    -- Interestelar
+    (1, 33), (2, 33), (4, 33), (6, 33),
+
+    -- O Silêncio dos Inocentes
+    (1, 34), (2, 34), (6, 34), 
+
+    -- Cidade de Deus
+    (1, 35), (5, 35), (6, 35),
+
+    -- A Origem
+    (1, 36), (2, 36), (6, 36),
+
+    -- O Senhor dos Anéis: As Duas Torres
+    (1, 37), (2, 37), (4, 37), (6, 37)
+
+    -- O Labirinto do Fauno
+    (1, 38), 
+
+    -- A Viagem de Chihiro
+    (5, 39),
+
+    -- O Quinto Elemento
+    (1, 40);
