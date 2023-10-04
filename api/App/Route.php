@@ -82,10 +82,22 @@
         'action' => 'logoutUsuario'
       );
 
-      $routes['consultar-interacoes'] = array(
-        'route' => '/filme/consultar-interacoes',
-        'controller' => 'FilmeController',
-        'action' => 'consultarInteracoes'
+      $routes['alterar-curtida-filme'] = array(
+        'route' => '/alterar-curtida-filme',
+        'controller' => 'InteracoesController',
+        'action' => 'alterarFilmeCurtido'
+      );
+
+      $routes['alterar-salvo-filme'] = array(
+        'route' => '/alterar-salvo-filme',
+        'controller' => 'InteracoesController',
+        'action' => 'alterarFilmeSalvo'
+      );
+
+      $routes['alterar-assistido-filme'] = array(
+        'route' => '/alterar-assistido-filme',
+        'controller' => 'InteracoesController',
+        'action' => 'alterarFilmeAssistido'
       );
 
       $this->setRoutes($routes); 
