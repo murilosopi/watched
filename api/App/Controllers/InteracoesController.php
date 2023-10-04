@@ -1,59 +1,79 @@
 <?php
 
- namespace App\Controllers;
- use App\Models\Filme;
- use App\Resources\Response;
+namespace App\Controllers;
 
- class InteracoesController {
+use App\Models\Interacoes;
+use App\Resources\Response;
 
-    public function obterAssistidoPorFilme() {
-      
-      $InteracoesModel = new Interacoes();
-      $InteracoesModel->filme = $_POST['filme'] ?? 0;
+class InteracoesController
+{
 
-      $usuario = $_POST['usuario'] ?? 0;
-      $assistido = $_POST['assistido'] ?? 0;
+  public function alterarFilmeAssistido()
+  {
 
-      $Interacoes = $InteracoesModel->InteracoesAssistido($usuario);
+    $model = new Interacoes();
+    $model->filme = $_POST['filme'] ?? 0;
+    $model->usuario = $_POST['usuario'] ?? 0;
 
-      $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
-      $response->enviar();
+    $interacoes = $model->consultarInteracoesFilme();
+
+    if(empty($interacoes)) {
+      $model->assistido = true;
+
+      $model->registrarInteracaoFilme();
+    } else {
+      $model->alterarFilmeAssistido();
     }
 
-     public function obterCurtiidoPorFilme() {
-      $InteracoesModel = new Interacoes();
-      $InteracoesModel->filme = $_POST['filme'] ?? 0;
-  
-      $usuario = $_POST['usuario'] ?? 0;
-      $curtido = $_POST['curtido'] ?? 0;
 
-  
-      $Interacoes = $InteracoesModel->InteracoesCurtido($usuario);
-  
-      $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
-      $response->enviar();
-      }
+    $response = new Response();
+    $response->sucesso = !empty($filme);
+    $response->enviar();
+  }
 
-      public function obterSalvoPorFilme() {
-      $InteracoesModel = new Interacoes();
-      $InteracoesModel->filme = $_POST['filme'] ?? 0;
-  
-      $usuario = $_POST['usuario'] ?? 0;
-      $salvo = $_POST['salvo'] ?? 0;
-  
-      $Interacoes = $InteracoesModel->InteracoesSalvo($usuario);
-  
-      $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
-      $response->enviar();
-      }
+  public function alterarFilmeCurtido()
+  {
 
+    $model = new Interacoes();
+    $model->filme = $_POST['filme'] ?? 0;
+    $model->usuario = $_POST['usuario'] ?? 0;
 
+    $interacoes = $model->consultarInteracoesFilme();
+
+    if(empty($interacoes)) {
+      $model->curtido = true;
+
+      $model->registrarInteracaoFilme();
+    } else {
+      $model->alterarFilmeCurtido();
     }
-    
 
+
+    $response = new Response();
+    $response->sucesso = !empty($filme);
+    $response->enviar();
+  }
+
+  public function alterarFilmeSalvo()
+  {
+
+    $model = new Interacoes();
+    $model->filme = $_POST['filme'] ?? 0;
+    $model->usuario = $_POST['usuario'] ?? 0;
+
+    $interacoes = $model->consultarInteracoesFilme();
+
+    if(empty($interacoes)) {
+      $model->salvo = true;
+
+      $model->registrarInteracaoFilme();
+    } else {
+      $model->alterarFilmeSalvo();
+    }
+
+
+    $response = new Response();
+    $response->sucesso = !empty($filme);
+    $response->enviar();
+  }
+}
