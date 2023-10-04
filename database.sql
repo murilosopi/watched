@@ -59,20 +59,6 @@ CREATE TABLE tbPlataformas(
     url TEXT NOT NULL
 );    
 
-CREATE TABLE tbReacoes(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    icone VARCHAR(50),
-    descricao VARCHAR(50)
-);
-
-CREATE TABLE tbReacoesResenha(
-    resenha INT NOT NULL,
-    reacao INT NOT NULL,
-
-    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
-    FOREIGN KEY (resenha) REFERENCES tbResenhas (id)
-);
-
 CREATE TABLE tbResenhas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filme INT NOT NULL,
