@@ -13,8 +13,8 @@ CREATE TABLE tbUsuarios(
     senha CHAR(32) NOT NULL,
     privado BOOLEAN DEFAULT FALSE,
     assinante BOOLEAN DEFAULT FALSE,
-    ultimoAcesso DATE,
-    dataCadastro DATE DEFAULT CURRENT_TIMESTAMP
+    ultimoAcesso DATETIME,
+    dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE tbAdministradores(
@@ -76,7 +76,7 @@ CREATE TABLE tbResenhas (
 CREATE TABLE tbChats(
     id INT PRIMARY KEY AUTO_INCREMENT,
     tipo CHAR(1) NOT NULL, -- I: individual | G: grupo,
-    data DATE DEFAULT CURRENT_TIMESTAMP,
+    data DATETIME DEFAULT CURRENT_TIMESTAMP,
     descricao VARCHAR(1000)
 );
 
@@ -84,8 +84,8 @@ CREATE TABLE tbParticipantesChat(
     chat INT NOT NULL,
     participante INT NOT NULL,
     adm BOOLEAN DEFAULT FALSE,
-    entrada DATE DEFAULT CURRENT_TIMESTAMP,
-    saida DATE,
+    entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+    saida DATETIME,
     expulso BOOLEAN
 );
 
@@ -419,7 +419,7 @@ VALUES
     (1, 36), (2, 36), (6, 36),
 
     -- O Senhor dos Anéis: As Duas Torres
-    (1, 37), (2, 37), (4, 37), (6, 37)
+    (1, 37), (2, 37), (4, 37), (6, 37),
 
     -- O Labirinto do Fauno
     (1, 38), 
