@@ -106,6 +106,12 @@
         'action' => 'alterarFilmeAssistido'
       );
 
+      $routes['obter-informacoes-perfil'] = array(
+        'route' => '/obter-informacoes-perfil',
+        'controller' => 'UsuarioController',
+        'action' => 'obterInformacoesPerfil'
+      );
+
       $routes['obter-estatiscas-perfil'] = array(
         'route' => '/obter-estatiscas-perfil',
         'controller' => 'UsuarioController',
