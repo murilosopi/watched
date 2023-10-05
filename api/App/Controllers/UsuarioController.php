@@ -14,7 +14,7 @@ class UsuarioController
   public function obterInformacoesPerfil()
   {
     $model = new Usuario();
-    $model->username = $_POST['username'] ?? 0;
+    $model->username = $_GET['username'] ?? '';
 
     $usuario = $model->obterUsuarioPorUsername();
 
@@ -35,7 +35,7 @@ class UsuarioController
 
     $interacoesModel = new Interacoes();
     $interacoesModel->usuario = $_GET['uid'] ?? 0;
-    $interacoesModel->filme = $_GET['movie'] ?? 0;
+
 
     $totais = [
       'seguidores' => (int)$usuarioModel->obterTotalSeguidores(),
@@ -44,7 +44,7 @@ class UsuarioController
     ];
     
     $response = new Response();
-    $response->sucesso = !empty($_GET['uid']) && !empty($_GET['movie']);
+    $response->sucesso = !empty($_GET['uid']);
 
     if($response->sucesso) $response->dados = $totais;
 
