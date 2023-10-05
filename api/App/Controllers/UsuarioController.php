@@ -39,6 +39,7 @@ class UsuarioController
 
     $totais = [
       'seguidores' => (int)$usuarioModel->obterTotalSeguidores(),
+      'seguindo' => (int)$usuarioModel->obterTotalSeguindo(),
       'resenhas' => (int)$resenhaModel->obterTotalResenhasUsuario(),
       'assistidos' => (int)$interacoesModel->consultarTotalAssistidosUsuario()
     ];

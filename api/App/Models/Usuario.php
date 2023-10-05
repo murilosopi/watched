@@ -146,6 +146,23 @@
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function obterTotalSeguindo() {
+      $sql = "
+	    	SELECT 
+          count(*)
+        FROM
+          tbUsuariosSeguidores as us          
+        WHERE
+          us.seguidor = :id
+      ";
+      
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
+    }
+
     // Registra um seguidor ao usuário
     public function registrarSeguidor(int $idSeguidor) {
       $sql = "
