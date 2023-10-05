@@ -17,7 +17,7 @@ class Interacoes extends Model
 
     $stmt = $this->conexao->prepare($sql);
     $stmt->bindValue(':usuario', $this->usuario);
-    $stmt->bindValue(':assistido', $this->assistido);
+    $stmt->bindValue(':filme', $this->filme);
     $stmt->execute();
 
     return $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -77,6 +77,46 @@ class Interacoes extends Model
     $stmt->bindValue(':filme', $this->filme);
 
     return $stmt->execute();
+  }
+
+  public function consultarTotalAssistidosUsuario() {
+    $sql = 
+      "SELECT 
+        count(*) 
+      FROM 
+        tbFilmesUsuario 
+      WHERE 
+        usuario = :usuario AND filme = :filme";
+
+
+      $stmt = $this->conexao->prepare($sql);
+
+      $stmt->bindValue(':usuario', $this->usuario);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
+  }
+
+  public function obterFilmesInteracoesUsuario() {
+    $sql = "SELECT 
+                F.id, F.titulo, F.cartaz
+              FROM 
+                tbFilmesUsuario as U
+              JOIN tbFilmes as F ON (U.filme = F.id)
+              WHERE 
+                  U.usuario = :usuario
+      ";
+
+    $sql .= isset($this->assistido) ? 'AND U.assistido = TRUE' : '';
+    $sql .= isset($this->curtido) ? 'AND U.curtido = TRUE' : '';
+    $sql .= isset($this->salvo) ? 'AND U.salvo = TRUE' : '';
+
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
 }

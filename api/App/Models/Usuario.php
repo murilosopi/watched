@@ -65,7 +65,7 @@
     public function obterUsuarioPorUsername() {
       $sql = "
         SELECT
-          id, nome, username, sobre, foto_perfil
+          id, nome, username, sobre, assinante
         FROM 
           tbUsuarios 
         WHERE 
@@ -105,6 +105,23 @@
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function obterTotalSeguidores() {
+      $sql = "
+	    	SELECT 
+          count(*)
+        FROM
+          tbUsuariosSeguidores as us          
+        WHERE
+          us.id = :id
+      ";
+      
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
     }
 
     public function obterSeguindo() {

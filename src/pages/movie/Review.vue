@@ -131,7 +131,7 @@ export default {
     getReviews() {
       const params = { filme: this.movie }
       this.$api
-        .get('/obter-resenhas-por-filme', { params })
+        .get('/obter-resenhas-filme', { params })
         .then(res => {
           const response = res.data;
           

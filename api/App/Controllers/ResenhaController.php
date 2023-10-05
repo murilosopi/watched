@@ -29,6 +29,20 @@ class ResenhaController {
     $response->enviar();
   }
 
+  public function obterResenhasPorUsuario() {
+    $resenhaModel = new Resenha();
+    $resenhaModel->idUsuario = $_GET['uid'] ?? 0;
+    $resenhaModel->offset = $_GET['offset'] ?? 0;
+    $resenhaModel->limit = $_GET['limit'] ?? 0; 
+
+    $resenhas = $resenhaModel->obterTodasResenhasPorUsuario();
+
+    $response = new Response();
+    $response->sucesso = !empty($resenhas);
+    if ($response->sucesso) $response->dados = $resenhas;
+    $response->enviar();
+  }
+
   public function registrarResenha() {
     $response = new Response();
 

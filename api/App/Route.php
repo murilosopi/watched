@@ -39,13 +39,19 @@
         'action' => 'registrarResenha'
       );
 
-      $routes['obter-resenhas-por-filme'] = array(
-        'route' => '/obter-resenhas-por-filme',
+      $routes['obter-resenhas-filme'] = array(
+        'route' => '/obter-resenhas-filme',
         'controller' => 'ResenhaController',
         'action' => 'obterResenhasPorFilme'
       );
 
-      $routes['usuario/checar-acesso'] = array(
+      $routes['obter-resenhas-usuario'] = array(
+        'route' => '/obter-resenhas-usuario',
+        'controller' => 'ResenhaController',
+        'action' => 'obterResenhasPorUsuario'
+      );
+
+      $routes['usuario-checar-acesso'] = array(
         'route' => '/usuario/checar-acesso',
         'controller' => 'AuthController',
         'action' => 'checarAcessoUsuario'
@@ -98,6 +104,30 @@
         'route' => '/alterar-assistido-filme',
         'controller' => 'InteracoesController',
         'action' => 'alterarFilmeAssistido'
+      );
+
+      $routes['obter-estatiscas-perfil'] = array(
+        'route' => '/obter-estatiscas-perfil',
+        'controller' => 'UsuarioController',
+        'action' => 'obterEstatiscasPerfil'
+      );
+
+      $routes['lista-curtidos'] = array(
+        'route' => '/lista/curtidos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaCurtidos'
+      );
+
+      $routes['lista-assistidos'] = array(
+        'route' => '/lista/assistidos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaAssistidos'
+      );
+
+      $routes['lista-salvos'] = array(
+        'route' => '/lista/salvos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaSalvos'
       );
 
       $this->setRoutes($routes); 

@@ -73,6 +73,23 @@
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function obterTotalResenhasUsuario() {
+      $sql = "
+        SELECT 
+          count(*)
+        FROM 
+          tbResenhas as r
+        WHERE 
+          r.usuario = :usuario
+      ";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
+    }
+
     // Exclui a resenha com um determinado n° identificador
     public function deletarResenhaPorFilmeUsuario() {
       $sql = "

@@ -166,10 +166,6 @@ export default {
         })
         .catch(() => {});
     },
-
-    submitReview() {
-      console.log(this.review);
-    }
   },
 
   computed: {
