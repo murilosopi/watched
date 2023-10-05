@@ -100,6 +100,12 @@
         'action' => 'alterarFilmeAssistido'
       );
 
+      $routes['obter-estatiscas-perfil'] = array(
+        'route' => '/obter-estatiscas-perfil',
+        'controller' => 'UsuarioController',
+        'action' => 'obterEstatiscasPerfil'
+      );
+
       $this->setRoutes($routes); 
     }
 

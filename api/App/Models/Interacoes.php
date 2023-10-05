@@ -79,4 +79,23 @@ class Interacoes extends Model
     return $stmt->execute();
   }
 
+  public function consultarTotalAssistidosUsuario() {
+    $sql = 
+      "SELECT 
+        count(*) 
+      FROM 
+        tbFilmesUsuario 
+      WHERE 
+        usuario = :usuario AND filme = :filme";
+
+
+      $stmt = $this->conexao->prepare($sql);
+
+      $stmt->bindValue(':usuario', $this->usuario);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
+  }
+
 }
