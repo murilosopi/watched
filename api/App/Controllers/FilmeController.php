@@ -40,21 +40,6 @@
       if($response->sucesso) $response->dados = $filme;
       $response->enviar();
     }
-
-    public function obterConsultarInteracoes() {
-
-      $filmeModel = new Filme();
-      $filmeModel->id  = $_POST['id'] ?? 0;
-
-      $idUsuario = $_POST['usuario'] ?? 0;
-      
-      $filme = $filmeModel->ObterFilmePorUsuario($usuario);
-      
-      $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
-      $response->enviar();
-    }
   }
 
 
