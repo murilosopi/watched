@@ -20,34 +20,37 @@
           <template v-else>
             <p
               class="text-break w-100"
-              :class="{ placeholder: !alreadyLoaded }"
+              :class="{ placeholder: !loadedInfo }"
               style="white-space: pre-wrap"
             >
-              {{ biography }}
+              {{ about }}
             </p>
-            <div class="col d-flex gap-3 small" :class="{placeholder: !alreadyLoaded, 'py-4': !alreadyLoaded}">
-              <template v-if="alreadyLoaded">
-                <ButtonCustom v-if="false">
+            <div class="col d-flex gap-3 small" :class="{'placeholder py-4': !loadedInfo }">
+              <template v-if="loadedInfo">
+                <ButtonCustom v-if="!about && loggedData.tag == username">
                   Alterar
                   <i class="bi bi-pencil-square fs-5"></i>
                 </ButtonCustom>
 
-                <ButtonCustom variant="azul">
-                  <i class="bi bi-plus-lg fs-5"></i>
-                  Seguir
-                </ButtonCustom>
+                <template v-else>
+                  <ButtonCustom>
+                    <i class="bi bi-chat-left fs-5"></i>
+                    Bate-Papo
+                  </ButtonCustom>
+  
+                  <ButtonCustom variant="azul">
+                    <i class="bi bi-plus-lg fs-5"></i>
+                    Seguir
+                  </ButtonCustom>
+                </template>
 
-                <ButtonCustom>
-                  <i class="bi bi-chat-left fs-5"></i>
-                  Bate-Papo
-                </ButtonCustom>
               </template>
 
             </div>
           </template>
         </article>
 
-        <UserStats :username="username" />
+        <UserStats :id="id" />
       </div>
     </DarkBox>
 
@@ -87,17 +90,19 @@ export default {
 
   data() {
     return {
-      biography: "",
+      about: "",
+      id: "",
       reviews: [],
       lists: [],
+      stats: []
     };
   },
 
   props: ["username"],
 
   computed: {
-    alreadyLoaded() {
-      return false;
+    loadedInfo() {
+      return this.id.length != 0;
     },
   },
 
@@ -126,9 +131,33 @@ export default {
 
     getLists() {},
 
-    getUserProfile() {
-      this.changePageTitle(`@${this.username}`)
-    }
+    getInfo() {
+      const params = { username: this.username };
+      return this.$api
+        .get("/obter-informacoes-perfil", { params })
+        .then((res) => {
+          let response = res.data;
+
+          
+          if (response.sucesso) {
+            const data = response.dados;
+            
+            this.id = data.id;
+            this.about = data.sobre;
+            this.name = data.nome;
+            this.subscriber = data.assinante;
+
+            this.changePageTitle(`@${this.username}`)
+            this.getStats();
+          } else {
+            throw 'Usuário não encontrado';
+          }
+
+        })
+        .catch(() => {
+          this.$router.push('/erro');
+        });
+    },
   },
 
   beforeRouteEnter(to, from, next) {
@@ -138,7 +167,7 @@ export default {
   },
 
   created() {
-    this.getUserProfile();
+    this.getInfo();
   }
 };
 </script>
