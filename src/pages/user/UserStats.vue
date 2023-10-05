@@ -22,7 +22,7 @@
 <script>
 export default {
   props: {
-    username: { required: true }
+    id: { required: true }
   },
 
   data() {
@@ -34,6 +34,43 @@ export default {
   computed: {
     alreadyLoaded() {
       return Object.keys(this.stats).length > 0;
+    }
+  },
+  
+  methods: {
+    getStats() {
+        const params = { uid: this.id };
+        this.$api
+          .get("/obter-estatifscas-perfil", { params })
+          .then((res) => {
+            let response = res.data;
+
+            
+            if (response.sucesso) {
+              const data = response.dados;
+              
+              this.stats = {
+                watched: data.assistidos,
+                following: data.seguindo,
+                followers: data.seguidores,
+                reviews: data.resenhas,
+              }
+            } else {
+              throw 'Usuário não encontrado';
+            }
+
+          })
+          .catch(() => {
+            this.$router.push('/erro');
+          });
+    }
+  },
+
+  watch: {
+    id(value) {
+      if(value) {
+        this.getStats();
+      }
     }
   }
 };

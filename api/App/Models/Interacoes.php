@@ -86,13 +86,12 @@ class Interacoes extends Model
       FROM 
         tbFilmesUsuario 
       WHERE 
-        usuario = :usuario AND filme = :filme";
+        usuario = :usuario";
 
 
       $stmt = $this->conexao->prepare($sql);
 
       $stmt->bindValue(':usuario', $this->usuario);
-      $stmt->bindValue(':filme', $this->filme);
       $stmt->execute();
 
       return $stmt->fetchColumn(0);
