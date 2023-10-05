@@ -39,10 +39,16 @@
         'action' => 'registrarResenha'
       );
 
-      $routes['obter-resenhas-por-filme'] = array(
-        'route' => '/obter-resenhas-por-filme',
+      $routes['obter-resenhas-filme'] = array(
+        'route' => '/obter-resenhas-filme',
         'controller' => 'ResenhaController',
         'action' => 'obterResenhasPorFilme'
+      );
+
+      $routes['obter-resenhas-usuario'] = array(
+        'route' => '/obter-resenhas-usuario',
+        'controller' => 'ResenhaController',
+        'action' => 'obterResenhasPorUsuario'
       );
 
       $routes['usuario/checar-acesso'] = array(
