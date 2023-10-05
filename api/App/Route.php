@@ -51,7 +51,7 @@
         'action' => 'obterResenhasPorUsuario'
       );
 
-      $routes['usuario/checar-acesso'] = array(
+      $routes['usuario-checar-acesso'] = array(
         'route' => '/usuario/checar-acesso',
         'controller' => 'AuthController',
         'action' => 'checarAcessoUsuario'
@@ -110,6 +110,24 @@
         'route' => '/obter-estatiscas-perfil',
         'controller' => 'UsuarioController',
         'action' => 'obterEstatiscasPerfil'
+      );
+
+      $routes['lista-curtidos'] = array(
+        'route' => '/lista/curtidos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaCurtidos'
+      );
+
+      $routes['lista-assistidos'] = array(
+        'route' => '/lista/assistidos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaAssistidos'
+      );
+
+      $routes['lista-salvos'] = array(
+        'route' => '/lista/salvos',
+        'controller' => 'ListaFilmesController',
+        'action' => 'obterListaSalvos'
       );
 
       $this->setRoutes($routes); 
