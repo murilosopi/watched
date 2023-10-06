@@ -45,5 +45,19 @@ export default {
   object-fit: cover;
   border-radius: 50%;
   width: 100%;
+  margin: auto;
+  display: block;
+}
+
+@media (min-width: 768px) { 
+  .user-photo {
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) { 
+  .user-photo {
+    width: 60%;
+  }
 }
 </style>
