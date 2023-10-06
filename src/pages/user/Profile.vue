@@ -148,7 +148,6 @@ export default {
             this.subscriber = data.assinante;
 
             this.changePageTitle(`@${this.username}`)
-            this.getStats();
           } else {
             throw 'Usuário não encontrado';
           }

@@ -2,19 +2,19 @@
   <ul class="user-stats col-lg-3 d-none d-lg-flex flex-column m-auto gap-2">
     <li class="d-flex align-items-center gap-2" :class="{ 'placeholder placeholder-sm': !alreadyLoaded }">
       <i class="bi bi-people-fill fs-5"></i>
-      <strong>Seguidores:</strong> {{ 0 }}
+      <strong>Seguidores:</strong> {{ stats.followers }}
     </li>
     <li class="d-flex align-items-center gap-2" :class="{ 'placeholder placeholder-sm': !alreadyLoaded }">
       <i class="bi bi-person-check-fill fs-5"></i>
-      <strong>Seguindo:</strong> {{ 0 }}
+      <strong>Seguindo:</strong> {{ stats.following }}
     </li>
     <li class="d-flex align-items-center gap-2" :class="{ 'placeholder placeholder-sm': !alreadyLoaded }">
       <i class="bi bi-film fs-5"></i>
-      <strong>Assistidos:</strong> {{ 0 }}
+      <strong>Assistidos:</strong> {{ stats.watched }}
     </li>
     <li class="d-flex align-items-center gap-2" :class="{ 'placeholder placeholder-sm': !alreadyLoaded }">
       <i class="bi bi-chat-left-quote fs-5"></i>
-      <strong>Resenhas:</strong> {{ 0 }}
+      <strong>Resenhas:</strong> {{ stats.reviews }}
     </li>
   </ul>
 </template>
@@ -41,7 +41,7 @@ export default {
     getStats() {
         const params = { uid: this.id };
         this.$api
-          .get("/obter-estatifscas-perfil", { params })
+          .get("/obter-estatiscas-perfil", { params })
           .then((res) => {
             let response = res.data;
 
@@ -60,9 +60,7 @@ export default {
             }
 
           })
-          .catch(() => {
-            this.$router.push('/erro');
-          });
+          .catch(() => {});
     }
   },
 

@@ -114,7 +114,7 @@
         FROM
           tbUsuariosSeguidores as us          
         WHERE
-          us.id = :id
+          us.usuario = :id
       ";
       
       $stmt = $this->conexao->prepare($sql);
