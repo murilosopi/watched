@@ -1,5 +1,5 @@
 <template>
-    <DarkBox class="px-md-4 px-5 py-4">
+    <DarkBox class="px-4 py-3">
         <article class="userpost">
             <div class="row align-items-center mb-2">
                 <UserAvatar :username="userpost.user" class="col-1 d-none d-sm-block p-0 mb-0"/>
