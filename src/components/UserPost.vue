@@ -26,15 +26,15 @@
                 <div class="col column-gap-5 d-flex justify-content-end">
                     <InteractiveIcon title="Upvote">
                         <i class="bi bi-chevron-compact-up text-primary fs-6" @click="addUpvote"></i>
-                        <p class="ms-auto small text-white">{{ counterUp }}</p>
+                        <p class="text-center small text-white">{{ counterUp }}</p>
                     </InteractiveIcon>
                     <InteractiveIcon title="Downvote">
                         <i class="bi bi-chevron-compact-down text-danger fs-6" @click="addDownvote"></i>
-                        <p class="ms-auto small text-white">{{ counterDown }}</p>
+                        <p class="text-center small text-white">{{ counterDown }}</p>
                     </InteractiveIcon>
                     <InteractiveIcon title="DoComment">
                         <i class="bi bi-chat text-white fs-6"></i>
-                        <p class="ms-auto small text-white">{{ counterComment }}</p>
+                        <p class="text-center small text-white">{{ counterComment }}</p>
                     </InteractiveIcon>
                 </div>
             </div>
