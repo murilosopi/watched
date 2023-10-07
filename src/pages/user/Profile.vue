@@ -108,9 +108,9 @@ export default {
 
   methods: {
     getReviews(offset = 0, limit = 0) {
-      if(!this.userLogged) return false;
+      if(!this.loadedInfo) return;
       
-      const params = { offset, limit, uid: this.loggedData.id };
+      const params = { offset, limit, uid: this.id };
       this.$api
         .get("/obter-resenhas-usuario", { params })
         .then((res) => {
@@ -149,7 +149,8 @@ export default {
             this.name = data.nome;
             this.subscriber = data.assinante;
 
-            this.changePageTitle(`@${this.username}`)
+            this.changePageTitle(`@${this.username}`);
+            this.getReviews();
           } else {
             throw 'Usuário não encontrado';
           }
@@ -169,7 +170,6 @@ export default {
 
   created() {
     this.getInfo();
-    this.getReviews();
   }
 };
 </script>
