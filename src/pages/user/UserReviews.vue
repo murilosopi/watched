@@ -1,31 +1,32 @@
 <template>
   <Scroller>
-    <ul class="user-reviews list-unstyled flex-nowrap justify-content-start">
+    <ul class="user-reviews list-unstyled flex-nowrap justify-content-start align-items-center">
       <li
         v-for="review in reviews"
         :key="review.id"
         class="col-xl-6 col-lg-7 col-md-8 col-12 me-4"
       >
         <DarkBox class="row py-3 rounded">
-          <div class="col-2 d-flex">
+          <div class="col-2 d-flex" v-if="review.reaction">
             <InteractiveIcon
               tag="span"
               class="m-auto"
               :title="
-                review.reaction.charAt(0).toUpperCase() +
-                review.reaction.slice(1)
+                review.reaction | reactionName
               "
             >
               <i class="bi bi-emoji-frown display-4"></i>
             </InteractiveIcon>
           </div>
           <div class="col">
-            <p class="small text-white-50">{{ review.text }}</p>
-            <h5 class="fw-bold h6">
-              <router-link :to="`/filme/${review.movieId}`" class="text-light">
-                {{ review.movieTitle }}
-              </router-link>
-            </h5>
+            <div class="px-3">
+                <h5 class="h6">
+                <router-link :to="`/filme/${review.movieId}`" class="text-light fw-normal">
+                  {{ review.movieTitle }}
+                </router-link>
+              </h5>
+              <p class="small text-white-50">{{ review.text }}</p>
+            </div>
           </div>
         </DarkBox>
       </li>
@@ -47,6 +48,12 @@ export default {
   props: {
     reviews: Array,
   },
+
+  filters: {
+    reactionName(value) {
+      return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+    }
+  }
 };
 </script>
 

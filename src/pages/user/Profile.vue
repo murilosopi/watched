@@ -108,7 +108,9 @@ export default {
 
   methods: {
     getReviews(offset = 0, limit = 0) {
-      const params = { offset, limit };
+      if(!this.userLogged) return false;
+      
+      const params = { offset, limit, uid: this.loggedData.id };
       this.$api
         .get("/obter-resenhas-usuario", { params })
         .then((res) => {
@@ -167,6 +169,7 @@ export default {
 
   created() {
     this.getInfo();
+    this.getReviews();
   }
 };
 </script>
