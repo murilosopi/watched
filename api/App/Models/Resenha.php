@@ -55,13 +55,11 @@
     public function obterTodasResenhasPorUsuario() {
       $sql = "
         SELECT 
-          r.id, r.usuario, r.titulo, r.descricao, r.nota, u.username 
+          r.id, r.usuario, r.titulo, r.descricao, r.nota, u.username, r.filme, f.titulo as tituloFilme
         FROM 
           tbResenhas as r 
-        LEFT JOIN 
-          tbUsuarios as u 
-        ON
-          (r.usuario = u.id) 
+        JOIN tbUsuarios as u ON (r.usuario = u.id) 
+        JOIN tbFilmes as f ON (f.id = r.filme) 
         WHERE 
           r.usuario = :usuario
       ";
