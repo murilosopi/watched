@@ -8,6 +8,7 @@
     <button
       class="scroller-prev me-auto"
       type="button"
+      v-show="scrollLeft"
       @mousedown.left="prevScrollPressing"
       @mouseup="clearTimer"
       @touchstart.prevent="prevScrollPressing"
@@ -19,6 +20,7 @@
     <button
       class="scroller-next ms-auto"
       type="button"
+      v-show="scrollLeft < maxScrollLeft"
       @mousedown.left ="nextScrollPressing"
       @mouseup="clearTimer"
       @touchstart.prevent="nextScrollPressing"
@@ -36,44 +38,68 @@ export default {
   data() {
     return {
       timerPressing: null,
-      scrollLeft: 0
+      scrollLeft: 0,
+      maxScrollLeft: 0
     }
   },
 
   methods: {
     nextScroll() {
-      this.container.scrollLeft += 250;
+      this.scrollLeft += 250;
+
+      if(this.scrollLeft > this.maxScrollLeft) {
+        this.scrollLeft = this.maxScrollLeft;
+        this.clearTimer();
+      }
     },
 
     prevScroll() {
       const minScroll = 250;
 
-      if(this.container.scrollLeft < minScroll) {
-        this.container.scrollLeft = 0;
+      if(this.scrollLeft < minScroll) {
+        this.scrollLeft = 0;
+        this.clearTimer();
       } else {
-        this.container.scrollLeft -= minScroll;
-      }
+        this.scrollLeft -= minScroll;
+      } 
     }, 
     prevScrollPressing() {
-      this.container.scrollLeft -= 100
+      this.scrollLeft -= 100
       this.timerPressing = setInterval(() => {
-        this.container.scrollLeft -= 300
+        this.prevScroll();
       }, 300);
     }, 
     nextScrollPressing() {
-      this.container.scrollLeft += 100
+      this.scrollLeft += 100
       this.timerPressing = setInterval(() => {
-        this.container.scrollLeft += 300
+        this.nextScroll();
       }, 300);
     },
 
     clearTimer() {
       clearInterval(this.timerPressing);
-    }
+    },
+  },
+
+  watch: {
+    scrollLeft(value) {
+      this.container.scrollLeft = value;
+
+      if(value < 0) {
+        this.clearTimer();
+        this.scrollLeft = 0;
+      }
+    },
   },
 
   mounted() {
     this.container = this.$el.querySelector('.scroller-target > *');
+
+    this.maxScrollLeft = this.container.scrollWidth - this.container.clientWidth;
+  },
+
+  updated() {
+    this.maxScrollLeft = this.container.scrollWidth - this.container.clientWidth;
   }
 };
 </script>
