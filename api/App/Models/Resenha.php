@@ -27,7 +27,9 @@
       $stmt->bindValue(':descricao', $this->descricao);
       $stmt->bindValue(':nota', $this->notaAvaliacao);
 
-      return $stmt->execute();
+      $execute = $stmt->execute();
+
+      return $execute ? $this->conexao->lastInsertId() : false;
     }
 
     // Retorna todas as resenhas registradas sobre um filme utilizando o n° identificador

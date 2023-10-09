@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center align-items-center">
     <div class="col-lg-4 col-3" v-for="emoji in emojis" :key="emoji.id">
-      <InteractiveIcon class="mx-auto" tag="label" :for="emoji.value" :class="{disabled: disabled && !isReactionChecked(emoji.value)}">
+      <InteractiveIcon class="mx-auto" tag="label" :for="`emoji-reaction-${emoji.id}`" :class="{disabled: disabled && !isReactionChecked(emoji.value)}">
         <i
           class="bi fs-2"
           :class="{
@@ -15,8 +15,8 @@
       <input
         type="checkbox"
         v-model="reactions"
-        :id="emoji.value"
-        :value="emoji.value"
+        :id="`emoji-reaction-${emoji.id}`"
+        :value="emoji"
         hidden
         @change="updateReactions"
         :checked="isReactionChecked(emoji.value)"
@@ -49,7 +49,7 @@ export default {
     },
 
     isReactionChecked(reaction) {
-      return this.value.some((r) => r == reaction);
+      return this.value.some((r) => r.value == reaction);
     },
 
     getReactions() {

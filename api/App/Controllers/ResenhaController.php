@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Resources\Response;
 use App\Models\Resenha;
+use App\Models\Reacao;
 
 class ResenhaController {
   public function obterNotaFilme() {
@@ -58,8 +59,27 @@ class ResenhaController {
     $resenha->titulo = $_POST['title'] ?? null;
     $resenha->descricao = $_POST['text'] ?? null;
     $resenha->notaAvaliacao = $_POST['rating'] ?? null;
-   
-    $response->sucesso = $resenha->registrarResenha();
+
+    $reacoes = $_POST['reactions'] ?? null;
+    
+    $id = $resenha->registrarResenha();
+    $response->sucesso = !empty($id);
+
+    if($id) {
+      foreach($reacoes as $reacao) {
+        $reacao = (object)$reacao;
+
+        $reacaoModel = new Reacao();
+        $reacaoModel->resenha = $id;
+        $reacaoModel->id = $reacao->id;
+
+        $reacaoModel->registrarReacaoResenha();
+      }
+    }
+
+
+
+
     $response->enviar();
 
   }
