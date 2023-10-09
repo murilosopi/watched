@@ -38,6 +38,12 @@ class ResenhaController {
 
     $resenhas = $resenhaModel->obterTodasResenhasPorUsuario();
 
+    $reacaoModel = new Reacao();
+    foreach($resenhas as &$resenha) {
+      $reacaoModel->resenha = $resenha['id'];
+      $resenha['reacao'] = $reacaoModel->obterReacaoResenha();
+    }
+
     $response = new Response();
     $response->sucesso = !empty($resenhas);
     if ($response->sucesso) $response->dados = $resenhas;
@@ -60,7 +66,7 @@ class ResenhaController {
     $resenha->descricao = $_POST['text'] ?? null;
     $resenha->notaAvaliacao = $_POST['rating'] ?? null;
 
-    $reacoes = $_POST['reactions'] ?? null;
+    $reacoes = $_POST['reactions'] ?? [];
     
     $id = $resenha->registrarResenha();
     $response->sucesso = !empty($id);

@@ -7,15 +7,15 @@
         class="col-xl-6 col-lg-7 col-md-8 col-12 me-4"
       >
         <DarkBox class="row py-3 rounded">
-          <div class="col-2 d-flex" v-if="review.reaction">
+          <div class="col-2 d-flex" v-if="review.reaction.id">
             <InteractiveIcon
               tag="span"
               class="m-auto"
               :title="
-                review.reaction | reactionName
+                review.reaction.description | reactionName
               "
             >
-              <i class="bi bi-emoji-frown display-4"></i>
+              <i class="bi display-4" :class="`bi-${review.reaction.icon}`"></i>
             </InteractiveIcon>
           </div>
           <div class="col">

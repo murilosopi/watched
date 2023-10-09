@@ -55,7 +55,7 @@
     </DarkBox>
 
     <section class="mt-5" v-if="reviews.length">
-      <Title tag="h3" class="h2">
+      <Title tag="h3" class="h2 mb-3">
         Resenhas Recentes
         <i class="bi bi-clock-history ms-2"></i>
       </Title>
@@ -120,12 +120,19 @@ export default {
             response.dados.forEach((review) => {
               this.reviews.push({
                 id: review.id,
-                reaction: review.reacao,
+                reaction: {
+                  icon: review.reacao.icone,
+                  description: review.reacao.descricao,
+                  id: review.reacao.id
+                },
                 movieId: review.filme,
                 movieTitle: review.tituloFilme,
                 text: review.descricao,
               });
             });
+
+            console.log(this.reviews);
+
           }
         })
         .catch(() => {});
