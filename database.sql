@@ -72,6 +72,20 @@ CREATE TABLE tbResenhas (
     FOREIGN KEY (filme) REFERENCES tbFilmes (id)
 );
 
+CREATE TABLE tbReacoes(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    icone VARCHAR(50),
+    descricao VARCHAR(50)
+);
+
+CREATE TABLE tbReacoesResenha(
+    resenha INT NOT NULL,
+    reacao INT NOT NULL,
+
+    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
+    FOREIGN KEY (resenha) REFERENCES tbResenhas (id)
+);
+
 /*Chat: */
 CREATE TABLE tbChats(
     id INT PRIMARY KEY AUTO_INCREMENT,
