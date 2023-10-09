@@ -1,12 +1,13 @@
 <template>
   <div class="row justify-content-center align-items-center">
-    <div class="col-lg-4 col-3" v-for="emoji in emojis" :key="emoji.value">
-      <InteractiveIcon class="mx-auto" tag="label" :for="emoji.value">
+    <div class="col-lg-4 col-3" v-for="emoji in emojis" :key="emoji.id">
+      <InteractiveIcon class="mx-auto" tag="label" :for="emoji.value" :class="{disabled: disabled && !isReactionChecked(emoji.value)}">
         <i
           class="bi fs-2"
-          :class="
-            isReactionChecked(emoji.value) ? `${emoji.icon}-fill` : emoji.icon
-          "
+          :class="{
+            [`bi-${emoji.icon}`]: !isReactionChecked(emoji.value),
+            [`bi-${emoji.icon}-fill`]: isReactionChecked(emoji.value)
+          }"
         ></i>
         {{ emoji.value | capitalize }}
       </InteractiveIcon>
@@ -37,14 +38,7 @@ export default {
   data() {
     return {
       reactions: this.value,
-      emojis: [
-        { icon: "bi-emoji-frown", value: "triste" },
-        { icon: "bi-emoji-neutral", value: "tedioso" },
-        { icon: "bi-emoji-smile", value: "satisfeito" },
-        { icon: "bi-emoji-laughing", value: "animado" },
-        { icon: "bi-emoji-dizzy", value: "amei" },
-        { icon: "bi-emoji-heart-eyes", value: "abismado" },
-      ],
+      emojis: [],
     };
   },
   methods: {
@@ -57,20 +51,45 @@ export default {
     isReactionChecked(reaction) {
       return this.value.some((r) => r == reaction);
     },
+
+    getReactions() {
+      this.$api
+        .get('/obter-icones-reacoes')
+        .then(res => {
+          const response = res.data;
+
+          if(response.sucesso) {
+            this.emojis = response.dados.map(reaction => {
+              return {
+                icon: reaction.icone,
+                id: reaction.id,
+                value: reaction.descricao
+              }
+            });
+          }
+        })
+        .catch(() => {});
+    }
   },
   components: {
     InteractiveIcon,
   },
   computed: {
     disabled() {
-      return this.value.length === 3;
+      return this.value.length === 1;
     }
   },
   updated() {
     this.reactions = this.value;
   },
+  created() {
+    this.getReactions();
+  }
 };
 </script>
 
 <style>
+.disabled {
+  opacity: 0.35;
+}
 </style>

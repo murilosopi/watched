@@ -443,3 +443,13 @@ VALUES
 
     -- O Quinto Elemento
     (1, 40);
+
+
+INSERT INTO tbReacoes(id, icone, descricao)
+VALUES 
+    (1, 'emoji-frown', 'triste'),
+    (2, 'emoji-neutral', 'tedioso'),
+    (3, 'emoji-smile', 'satisfeito'),
+    (4, 'emoji-laughing', 'animado'),
+    (5, 'emoji-dizzy', 'abismado'),
+    (6, 'emoji-heart-eyes', 'amei');

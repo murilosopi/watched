@@ -136,6 +136,12 @@
         'action' => 'obterListaSalvos'
       );
 
+      $routes['obter-icones-reacoes'] = array(
+        'route' => '/obter-icones-reacoes',
+        'controller' => 'ReacaoController',
+        'action' => 'obterIconesReacoes'
+      );
+
       $this->setRoutes($routes); 
     }
 
