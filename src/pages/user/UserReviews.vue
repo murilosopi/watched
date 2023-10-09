@@ -15,7 +15,7 @@
                 review.reaction.description | reactionName
               "
             >
-              <i class="bi display-4" :class="`bi-${review.reaction.icon}`"></i>
+              <i class="bi display-6" :class="`bi-${review.reaction.icon}`"></i>
             </InteractiveIcon>
           </div>
           <div class="col">

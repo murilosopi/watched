@@ -7,7 +7,7 @@
           <!-- Curtir/descurtir -->
           <InteractiveIcon>
             <i @click="captureLiked"
-              class="bi"
+              class="bi fs-4"
               :class="{ 'bi-heart': !liked, 'bi-heart-fill': liked }"
             ></i>
           </InteractiveIcon>
@@ -17,7 +17,7 @@
           <!-- Marcar/desmarcar como assistido -->
           <InteractiveIcon>
             <i @click="captureWatched"
-              class="bi"
+              class="bi fs-4"
               :class="{
                 'bi-camera-reels': !watched,
                 'bi-camera-reels-fill': watched,
@@ -30,7 +30,7 @@
         <div>
           <InteractiveIcon>
             <i @click="captureSaved"
-              class="bi"
+              class="bi fs-4"
               :class="{
                 ' bi-bookmark-star': !saved,
                 ' bi-bookmark-star-fill': saved,

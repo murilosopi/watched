@@ -32,17 +32,17 @@
         <div class="d-flex flex-wrap justify-content-end gap-3" :class="{placeholder: !movieHasLoaded}">
           <!-- Curtir/descurtir -->
           <InteractiveIcon>
-            <i class="bi bi-heart"></i>
+            <i class="bi bi-heart fs-4"></i>
             0
           </InteractiveIcon>
           <!-- Marcar/desmarcar assistido -->
           <InteractiveIcon>
-            <i class="bi bi-camera-reels"></i>
+            <i class="bi bi-camera-reels fs-4"></i>
             0
           </InteractiveIcon>
           <!-- salvar/removerSalvoFilme -->
           <InteractiveIcon>
-            <i class="bi bi-bookmark-star"></i>
+            <i class="bi bi-bookmark-star fs-4"></i>
             0
           </InteractiveIcon>
         </div>

@@ -24,10 +24,6 @@ export default {
   cursor: pointer;
 }
 
-.interactive-icon i {
-  font-size: 1.5rem;
-}
-
 .interactive-icon:hover i {
   transform: scale(1.05);
 }
