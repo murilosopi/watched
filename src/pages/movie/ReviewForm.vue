@@ -72,6 +72,12 @@ export default {
     ButtonCustom,
   },
 
+  props: {
+    movie: {
+      required: true
+    }
+  },
+
   data() {
     return {
       review: {

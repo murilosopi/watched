@@ -5,7 +5,7 @@
       sua opinião? :)
     </Title>
     <hr class="w-25 mx-auto" />
-    <ReviewForm />
+    <ReviewForm :movie="movie"/>
     <ReviewsList class="mt-5" :reviews="list" />
   </section>
 </template>
