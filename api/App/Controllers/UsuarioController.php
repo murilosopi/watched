@@ -52,4 +52,23 @@ class UsuarioController
     $response->enviar();
     
   }
+
+  public function alterarSobreUsuario() {
+
+    $response = new Response();
+
+    if(isset($_SESSION['usuario'])) {
+      $model = new Usuario();
+      $model->id = $_SESSION['usuario']['id'];
+      $model->sobre = $_GET['sobre'] ?? 0;
+
+      $response->sucesso = $model->alterarSobre();
+
+    } else {
+      $response->sucesso = false;
+      $response->descricao = 'Necessário estar autenticado para realizar esta alteração';
+    }
+
+    $response->enviar();
+  }
 }

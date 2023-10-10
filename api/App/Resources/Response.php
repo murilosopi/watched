@@ -4,7 +4,7 @@ namespace App\Resources;
 class Response {
   public bool $sucesso;
   public string $descricao;
-  public object | array $dados;
+  public $dados;
 
   public function enviar() {  
     header('Content-Type: application/json');    

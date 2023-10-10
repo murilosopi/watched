@@ -142,6 +142,12 @@
         'action' => 'obterIconesReacoes'
       );
 
+      $routes['usuario/alterar-sobre'] = array(
+        'route' => '/usuario/alterar-sobre',
+        'controller' => 'UsuarioController',
+        'action' => 'alterarSobreUsuario'
+      );
+
       $this->setRoutes($routes); 
     }
 
