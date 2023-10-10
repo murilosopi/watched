@@ -23,4 +23,5 @@ export default {
 @import url(./assets/styles/base/colors.css);
 @import url(./assets/styles/base/fonts.css);
 @import url(./assets/styles/base/normalize.css);
+@import '~@sweetalert2/theme-dark/dark.css';
 </style>
