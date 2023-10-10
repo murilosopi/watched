@@ -1,26 +1,21 @@
 <template>
   <div class="row justify-content-center align-items-center">
     <div class="col-lg-4 col-3" v-for="emoji in emojis" :key="emoji.id">
-      <InteractiveIcon class="mx-auto" tag="label" :for="`emoji-reaction-${emoji.id}`" :class="{disabled: disabled && !isReactionChecked(emoji.id)}">
+      <InteractiveIcon
+        class="mx-auto"
+        :for="`emoji-reaction-${emoji.id}`"
+        :class="{ disabled: disabled && !isReactionChecked(emoji.id) }"
+        @click.native.prevent="checkReaction(emoji.id)"
+      >
         <i
           class="bi fs-2"
           :class="{
             [`bi-${emoji.icon}`]: !isReactionChecked(emoji.id),
-            [`bi-${emoji.icon}-fill`]: isReactionChecked(emoji.id)
+            [`bi-${emoji.icon}-fill`]: isReactionChecked(emoji.id),
           }"
         ></i>
         {{ emoji.value | capitalize }}
       </InteractiveIcon>
-
-      <input
-        type="checkbox"
-        v-model="reactions"
-        :id="`emoji-reaction-${emoji.id}`"
-        :value="emoji.id"
-        hidden
-        @change="updateReactions"
-        :checked="isReactionChecked(emoji.id)"
-      />
     </div>
   </div>
 </template>
@@ -37,54 +32,56 @@ export default {
   },
   data() {
     return {
-      reactions: this.value,
+      reaction: this.value,
       emojis: [],
     };
   },
   methods: {
-    updateReactions(event) {
-      if(!this.disabled || this.isReactionChecked(event.target.value)) {
-        this.$emit("change", this.reactions);
-      }
+
+    checkReaction(id) {
+      let value = id;
+      if(this.isReactionChecked(id)) value = '';
+
+      this.$emit('change', value);
     },
 
     isReactionChecked(reaction) {
-      return this.value.some((r) => r == reaction);
+      return this.value == reaction;
     },
 
     getReactions() {
       this.$api
-        .get('/obter-icones-reacoes')
-        .then(res => {
+        .get("/obter-icones-reacoes")
+        .then((res) => {
           const response = res.data;
 
-          if(response.sucesso) {
-            this.emojis = response.dados.map(reaction => {
+          if (response.sucesso) {
+            this.emojis = response.dados.map((reaction) => {
               return {
                 icon: reaction.icone,
                 id: reaction.id,
-                value: reaction.descricao
-              }
+                value: reaction.descricao,
+              };
             });
           }
         })
         .catch(() => {});
-    }
+    },
   },
   components: {
     InteractiveIcon,
   },
   computed: {
     disabled() {
-      return this.value.length === 1;
-    }
+      return this.value.length > 0;
+    },
   },
   updated() {
     this.reactions = this.value;
   },
   created() {
     this.getReactions();
-  }
+  },
 };
 </script>
 

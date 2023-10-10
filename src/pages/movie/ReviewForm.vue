@@ -34,8 +34,8 @@
         <div class="col-lg-5 order-lg-0">
           <Reaction
             class="mt-0 mt-lg-5"
-            v-model="review.reactions"
-            @change="review.reactions = $event"
+            v-model="review.reaction"
+            @change="review.reaction = $event"
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ export default {
     return {
       review: {
         rating: 0,
-        reactions: [],
+        reaction: "",
         text: "",
       },
     };
@@ -113,7 +113,7 @@ export default {
     resetReview() {
       this.review = {
         rating: 0,
-        reactions: [],
+        reaction: "",
         text: "",
         movie: this.$route.params.id,
       };

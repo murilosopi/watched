@@ -121,9 +121,9 @@ export default {
               this.reviews.push({
                 id: review.id,
                 reaction: {
-                  icon: review.reacao.icone,
-                  description: review.reacao.descricao,
-                  id: review.reacao.id
+                  icon: review.iconeReacao,
+                  description: review.descricaoReacao,
+                  id: review.idReacao
                 },
                 movieId: review.filme,
                 movieTitle: review.tituloFilme,
