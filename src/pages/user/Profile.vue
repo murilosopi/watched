@@ -9,45 +9,52 @@
         <article class="col-lg-6 my-auto">
           <Title tag="h2"> @{{ username }} </Title>
 
-          <div class="col-5" v-if="false">
-            <ButtonCustom class="position-relative">
-              Adicione um texto sobre você
-              <span
-                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"
-              ></span>
-            </ButtonCustom>
-          </div>
-          <template v-else>
-            <p
-              class="text-break w-100"
-              :class="{ placeholder: !loadedInfo }"
-              style="white-space: pre-wrap"
-            >
-              {{ about }}
-            </p>
-            <div class="col d-flex gap-3 small" :class="{'placeholder py-4': !loadedInfo }">
-              <template v-if="loadedInfo">
-                <ButtonCustom v-if="!about && loggedData.tag == username">
+          <p
+            class="text-break w-100"
+            :class="{ placeholder: !loadedInfo }"
+            style="white-space: pre-wrap"
+          >
+            {{ about }}
+          </p>
+          <div
+            class="col d-flex gap-3 small"
+            :class="{ 'placeholder py-4': !loadedInfo }"
+          >
+            <template v-if="loadedInfo">
+
+              <template v-if="loggedData.tag == username">
+                
+                <ButtonCustom v-if="about">
                   Alterar
                   <i class="bi bi-pencil-square fs-5"></i>
                 </ButtonCustom>
 
-                <template v-else>
-                  <ButtonCustom>
-                    <i class="bi bi-chat-left fs-5"></i>
-                    Bate-Papo
-                  </ButtonCustom>
-  
-                  <ButtonCustom variant="azul">
-                    <i class="bi bi-plus-lg fs-5"></i>
-                    Seguir
-                  </ButtonCustom>
-                </template>
+                <ButtonCustom class="position-relative" variant="azul" v-else>
+                  Adicione um texto sobre você
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"
+                  ></span>
+                </ButtonCustom>
 
+                <ButtonCustom>
+                  Configurações
+                  <i class="bi bi-gear ms-2 fs-5"></i>
+                </ButtonCustom>
               </template>
 
-            </div>
-          </template>
+              <template v-else>
+                <ButtonCustom>
+                  <i class="bi bi-chat-left fs-5"></i>
+                  Bate-Papo
+                </ButtonCustom>
+
+                <ButtonCustom variant="azul">
+                  <i class="bi bi-plus-lg fs-5"></i>
+                  Seguir
+                </ButtonCustom>
+              </template>
+            </template>
+          </div>
         </article>
 
         <UserStats :id="id" />
@@ -94,7 +101,7 @@ export default {
       id: "",
       reviews: [],
       lists: [],
-      stats: []
+      stats: [],
     };
   },
 
@@ -108,8 +115,8 @@ export default {
 
   methods: {
     getReviews(offset = 0, limit = 0) {
-      if(!this.loadedInfo) return;
-      
+      if (!this.loadedInfo) return;
+
       const params = { offset, limit, uid: this.id };
       this.$api
         .get("/obter-resenhas-usuario", { params })
@@ -123,7 +130,7 @@ export default {
                 reaction: {
                   icon: review.iconeReacao,
                   description: review.descricaoReacao,
-                  id: review.idReacao
+                  id: review.idReacao,
                 },
                 movieId: review.filme,
                 movieTitle: review.tituloFilme,
@@ -132,7 +139,6 @@ export default {
             });
 
             console.log(this.reviews);
-
           }
         })
         .catch(() => {});
@@ -147,10 +153,9 @@ export default {
         .then((res) => {
           let response = res.data;
 
-          
           if (response.sucesso) {
             const data = response.dados;
-            
+
             this.id = data.id;
             this.about = data.sobre;
             this.name = data.nome;
@@ -159,12 +164,11 @@ export default {
             this.changePageTitle(`@${this.username}`);
             this.getReviews();
           } else {
-            throw 'Usuário não encontrado';
+            throw "Usuário não encontrado";
           }
-
         })
         .catch(() => {
-          this.$router.push('/erro');
+          this.$router.push("/erro");
         });
     },
   },
@@ -177,7 +181,7 @@ export default {
 
   created() {
     this.getInfo();
-  }
+  },
 };
 </script>
 
