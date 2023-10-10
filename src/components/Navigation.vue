@@ -27,7 +27,7 @@
             Pesquisar
           </a>
           <template v-if="userLogged">
-            <router-link to="/meu-perfil">
+            <router-link :to="`/usuario/${loggedData.tag}`">
               <a class="nav-link fw-bold">
                 <i class="bi bi-person-circle"></i>
                 Meu perfil
