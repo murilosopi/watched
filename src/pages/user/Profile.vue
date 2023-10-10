@@ -24,19 +24,19 @@
 
               <template v-if="loggedData.tag == username">
                 
-                <ButtonCustom v-if="about">
+                <ButtonCustom v-if="about" data-bs-toggle="modal" data-bs-target="#about-user" @click.native="openAboutEdit" >
                   Alterar
                   <i class="bi bi-pencil-square fs-5"></i>
                 </ButtonCustom>
 
-                <ButtonCustom class="position-relative" variant="azul" v-else>
+                <ButtonCustom class="position-relative" variant="azul" v-else data-bs-toggle="modal" data-bs-target="#about-user">
                   Adicione um texto sobre você
                   <span
                     class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"
                   ></span>
                 </ButtonCustom>
 
-                <ButtonCustom>
+                <ButtonCustom @click.native="goToConfig">
                   Configurações
                   <i class="bi bi-gear ms-2 fs-5"></i>
                 </ButtonCustom>
@@ -70,6 +70,27 @@
     </section>
 
     <UserMovieLists :lists="lists" />
+
+    <Dialog id="about-user" v-if="loadedInfo">
+      <InputCustom slot="content" :icon="false">
+        <textarea slot="input" maxlength="240" class="form-control" id="message-text" rows="5" name="sobre" v-model="newAbout"></textarea>
+      </InputCustom>
+
+      <div slot="footer" class="container">
+        <div class="row">
+          <div class="col-6">
+            <ButtonCustom data-bs-dismiss="modal" variant="azul">
+              Fechar
+            </ButtonCustom>
+          </div>
+          <div class="col-6">
+            <ButtonCustom data-bs-dismiss="modal" @click="updateAbout">
+              Salvar
+            </ButtonCustom>
+          </div>
+        </div>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -82,6 +103,8 @@ import Title from "@/components/Title.vue";
 import UserMovieLists from "./UserMovieLists.vue";
 import UserStats from "./UserStats.vue";
 import UserReviews from "./UserReviews.vue";
+import Dialog from "@/components/Dialog.vue";
+import InputCustom from "@/components/InputCustom.vue";
 
 export default {
   mixins: [PageMixin],
@@ -93,6 +116,8 @@ export default {
     UserStats,
     UserReviews,
     UserMovieLists,
+    Dialog,
+    InputCustom
   },
 
   data() {
@@ -102,6 +127,8 @@ export default {
       reviews: [],
       lists: [],
       stats: [],
+
+      newAbout: '',
     };
   },
 
@@ -137,8 +164,6 @@ export default {
                 text: review.descricao,
               });
             });
-
-            console.log(this.reviews);
           }
         })
         .catch(() => {});
@@ -171,6 +196,16 @@ export default {
           this.$router.push("/erro");
         });
     },
+
+    openAboutEdit() {
+      this.newAbout = this.loggedData.about;
+    },
+
+    updateAbout() {},
+
+    goToConfig() {
+      this.$router.push('/configuracoes')
+    }
   },
 
   beforeRouteEnter(to, from, next) {

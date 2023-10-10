@@ -7,7 +7,10 @@
 <script>
 export default {
   props: {
-    variant: String,
+    variant: {
+      type: String,
+      default: ''
+    },
     tag: {
       default: 'div'
     }
