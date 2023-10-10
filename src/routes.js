@@ -7,6 +7,7 @@ const header = () => import('@/components/PageHeader');
 const Home = () => import('@/pages/home/Home');
 const Login = () => import('@/pages/user/Login');
 const SignUp = () => import('@/pages/user/SignUp');
+const Config = () => import('@/pages/user/Config.vue');
 const Search = () => import('@/pages/search/Search');
 const Profile = () => import('@/pages/user/Profile');
 const Movie = () => import('@/pages/movie/Movie');
@@ -61,6 +62,13 @@ export default new Router({
       components: {
         header,
         page: Search
+      }
+    },
+    {
+      path: '/configuracoes',
+      components: {
+        header,
+        page: Config
       }
     },
     {
