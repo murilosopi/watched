@@ -73,6 +73,19 @@ class ResenhaController {
     $response->enviar();
 
   }
+
+  public function existeResenhaFilmeUsuario() {
+    $resenha = new Resenha();
+    $resenha->idFilme = $_GET['filme'] ?? 0;
+    $resenha->idUsuario = $_GET['usuario'] ?? 0;
+
+    $total = $resenha->obterTotalResenhasUsuarioFilme();
+
+    $response = new Response();
+    $response->sucesso = !empty($total);
+    $response->enviar();
+
+  }
 }
 
 ?>

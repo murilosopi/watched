@@ -147,6 +147,12 @@
         'controller' => 'UsuarioController',
         'action' => 'alterarSobreUsuario'
       );
+      
+      $routes['existe-resenha-filme-usuario'] = array(
+        'route' => '/existe-resenha-filme-usuario',
+        'controller' => 'ResenhaController',
+        'action' => 'existeResenhaFilmeUsuario'
+      );
 
       $this->setRoutes($routes); 
     }

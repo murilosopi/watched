@@ -133,6 +133,7 @@ export default {
 
         if (response) {
           this.resetReview();
+          this.$emit('newReview');
         }
       });
     },

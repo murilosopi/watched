@@ -1,11 +1,19 @@
 <template>
   <section class="col">
     <Title tag="h3" class="text-center">
-      <i class="bi bi-chat-left-text"></i>&nbsp; Que tal compartilhar abaixo a
-      sua opinião? :)
+      Opinião do Público
+      <i class="bi bi-chat-left-text"></i>&nbsp;
     </Title>
     <hr class="w-25 mx-auto" />
-    <ReviewForm :movie="movie"/>
+    <Transition
+      leave-active-class="animate__animated animate__fadeOut animate__faster"
+    >
+      <ReviewForm
+        :movie="movie"
+        v-if="!existsUserReview"
+        @newReview="newReview"
+      />
+    </Transition>
     <ReviewsList class="mt-5" :reviews="list" />
   </section>
 </template>
@@ -19,44 +27,61 @@ export default {
   components: {
     Title,
     ReviewsList,
-    ReviewForm
+    ReviewForm,
   },
 
-  props: ['movie'],
+  props: ["movie"],
 
   data() {
     return {
       list: [],
-    }
+      existsUserReview: false,
+    };
   },
 
   methods: {
-
     getReviews() {
-      const params = { filme: this.movie }
-      this.$api
-        .get('/obter-resenhas-filme', { params })
-        .then(res => {
-          const response = res.data;
-          
-          if(response.sucesso) {
-            this.list = response.dados.map((review => {
-              return {
-                user: review.username,
-                rating: Number(review.nota),
-                text: review.descricao,
-                date: '01/01/2023',
-              }
-            }));
-          }
+      const params = { filme: this.movie };
+      this.$api.get("/obter-resenhas-filme", { params }).then((res) => {
+        const response = res.data;
 
-        });
-    }
+        if (response.sucesso) {
+          this.list = response.dados.map((review) => {
+            return {
+              user: review.username,
+              rating: Number(review.nota),
+              text: review.descricao,
+              date: review.data,
+            };
+          });
+        }
+      });
+    },
+
+    checkUserReview() {
+      if (this.userLogged) {
+        const params = { filme: this.movie, usuario: this.loggedData.id };
+
+        this.$api
+          .get("/existe-resenha-filme-usuario", { params })
+          .then((res) => {
+            const response = res.data;
+
+            this.existsUserReview = response.sucesso;
+          });
+      }
+    },
+
+    newReview() {
+      this.getReviews();
+      this.checkUserReview();
+    },
   },
-  
+
   created() {
     this.getReviews();
-  }
+    this.checkUserReview();
+  },
 };
 </script>
 

@@ -36,9 +36,9 @@
 
     // Retorna todas as resenhas registradas sobre um filme utilizando o n° identificador
     public function obterTodasResenhasPorFilme() {
-      $sql = "
+      $sql = '
         SELECT 
-          r.id, r.usuario, r.titulo, r.descricao, r.nota, u.username
+          r.id, r.usuario, r.titulo, r.descricao, r.nota, DATE_FORMAT(r.dataHora, "%d/%m/%Y %I:%i") as data, u.username
         FROM 
           tbResenhas as r 
         JOIN 
@@ -46,7 +46,7 @@
         ON
           (r.usuario = u.id) 
         WHERE r.filme = :filme
-      ";
+      ';
 
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':filme', $this->idFilme);
@@ -127,6 +127,24 @@
       $stmt->execute();
 
       return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function obterTotalResenhasUsuarioFilme() {
+      $sql = "SELECT
+                COUNT(*) AS total
+              FROM
+                tbResenhas
+              WHERE 
+                filme = :filme
+                AND usuario = :usuario
+              ";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->idFilme);
+      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->execute();
+
+      return $stmt->fetchColumn(0);
     }
   }
 ?>
