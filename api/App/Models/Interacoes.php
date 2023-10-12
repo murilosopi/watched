@@ -29,6 +29,17 @@ class Interacoes extends Model
     ];
   }
 
+  public function existeInteracoesFilmeUsuario() {
+    $sql = "SELECT COUNT(*) FROM tbFilmesUsuario WHERE filme = :filme AND usuario = :usuario";
+    
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':filme', $this->filme);
+    $stmt->execute();
+    
+    return $stmt->fetchColumn(0) != 0;
+  }
+
   public function registrarInteracaoFilme() {
     $sql = "INSERT INTO tbFilmesUsuario 
               (filme, usuario, assistido, curtido, salvo)
@@ -39,10 +50,10 @@ class Interacoes extends Model
 
     $stmt->bindValue(':usuario', $this->usuario);
     $stmt->bindValue(':filme', $this->filme);
-    $stmt->bindValue(':assistido', $this->assistido ?? false);
-    $stmt->bindValue(':curtido', $this->curtido ?? false);
-    $stmt->bindValue(':salvo', $this->salvo ?? false);
-    
+    $stmt->bindValue(':assistido', $this->assistido ?? false, \PDO::PARAM_BOOL);
+    $stmt->bindValue(':curtido', $this->curtido ?? false, \PDO::PARAM_BOOL);
+    $stmt->bindValue(':salvo', $this->salvo ?? false, \PDO::PARAM_BOOL);
+
     return $stmt->execute();
   }
 
