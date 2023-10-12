@@ -154,6 +154,12 @@
         'action' => 'existeResenhaFilmeUsuario'
       );
 
+      $routes['interacoes-filme'] = array(
+        'route' => '/interacoes-filme',
+        'controller' => 'InteracoesController',
+        'action' => 'buscarInteracoesFilme'
+      );
+
       $this->setRoutes($routes); 
     }
 

@@ -20,7 +20,13 @@ class Interacoes extends Model
     $stmt->bindValue(':filme', $this->filme);
     $stmt->execute();
 
-    return $stmt->fetch(\PDO::FETCH_ASSOC);
+    $interacoes =  $stmt->fetch(\PDO::FETCH_ASSOC);
+    
+    return [
+      'assistido' => !empty($interacoes['assistido']),
+      'curtido' => !empty($interacoes['curtido']),
+      'salvo' => !empty($interacoes['salvo']),
+    ];
   }
 
   public function registrarInteracaoFilme() {
@@ -79,6 +85,26 @@ class Interacoes extends Model
     return $stmt->execute();
   }
 
+  public function obterTotaisPorFilme() {
+    $sql = 
+      "SELECT 
+        IFNULL(sum(assistido), 0) AS totalAssistido,
+        IFNULL(sum(curtido), 0) AS totalCurtido,
+        IFNULL(sum(salvo), 0) AS totalSalvo
+      FROM 
+        tbFilmesUsuario 
+      WHERE 
+        filme = :filme";
+
+
+      $stmt = $this->conexao->prepare($sql);
+
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetch(\PDO::FETCH_ASSOC);
+  }
+
   public function consultarTotalAssistidosUsuario() {
     $sql = 
       "SELECT 
@@ -86,7 +112,7 @@ class Interacoes extends Model
       FROM 
         tbFilmesUsuario 
       WHERE 
-        usuario = :usuario";
+        usuario = :usuario and assistido = true";
 
 
       $stmt = $this->conexao->prepare($sql);

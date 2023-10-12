@@ -76,4 +76,27 @@ class InteracoesController
     $response->sucesso = !empty($filme);
     $response->enviar();
   }
+
+  public function buscarInteracoesFilme() {
+    $model = new Interacoes();
+    $model->filme = $_GET['id'] ?? 0;
+
+    $interacoes = $model->obterTotaisPorFilme() ?? [];
+
+    
+    if(isset($_SESSION['usuario'])) {
+      $model->usuario = $_SESSION['usuario']['id'];
+      
+      $interacoesUsuario = $model->consultarInteracoesFilme();
+      
+      if(!empty($interacoesUsuario)) {
+        $interacoes = array_merge($interacoesUsuario, $interacoes);
+      }
+    }
+
+    $response = new Response();
+    $response->sucesso = !empty($_GET['id']);
+    if($response->sucesso) $response->dados = $interacoes;
+    $response->enviar();
+  }
 }
