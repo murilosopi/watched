@@ -10,7 +10,7 @@ export default {
         icon: "x-circle",
         title: "Ops",
         text: "você não está logado...",
-        class: "danger",
+        class: "warning",
       });
     }
   }
