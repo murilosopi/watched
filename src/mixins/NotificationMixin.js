@@ -5,5 +5,13 @@ export default {
     ...mapActions('notification', {
       notifyUser: 'addNotification'
     }),
+    notifyAuthRequired() {
+      this.notifyUser({
+        icon: "x-circle",
+        title: "Ops",
+        text: "você não está logado...",
+        class: "danger",
+      });
+    }
   }
 }
