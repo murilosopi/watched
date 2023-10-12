@@ -97,7 +97,7 @@ export default {
                 text: "Login realizado com sucesso!",
                 class: 'success'
               })              
-              router.push('/explorar');
+              router.push('/');
             } else {
               this.notifyUser({
                 icon: 'x-circle',

@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router);
 const header = () => import('@/components/PageHeader');
 
-const Home = () => import('@/pages/home/Home');
+// const Home = () => import('@/pages/home/Home');
 const Login = () => import('@/pages/user/Login');
 const SignUp = () => import('@/pages/user/SignUp');
 const Config = () => import('@/pages/user/Config.vue');
@@ -33,16 +33,16 @@ export default new Router({
       path: '/',
       components: {
         header,
-        page: Home,
-      }
-    },
-    {
-      path: '/explorar',
-      components: {
-        header,
         page: Explore,
       }
     },
+    // {
+    //   path: '/explorar',
+    //   components: {
+    //     header,
+    //     page: Explore,
+    //   }
+    // },
     {
       path: '/login',
       components: {
