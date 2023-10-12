@@ -15,9 +15,9 @@ class InteracoesController
     $model->filme = $_POST['filme'] ?? 0;
     $model->usuario = $_SESSION['usuario']['id'];
 
-    $interacoes = $model->consultarInteracoesFilme();
-
-    if (empty($interacoes)) {
+    $existe = $model->existeInteracoesFilmeUsuario();
+    
+    if (!$existe) {
       $model->assistido = true;
 
       $sucesso = $model->registrarInteracaoFilme();
@@ -39,7 +39,6 @@ class InteracoesController
     $model->usuario = $_SESSION['usuario']['id'];
 
     $existe = $model->existeInteracoesFilmeUsuario();
-
     
     if (!$existe) {
       $model->curtido = true;
@@ -62,9 +61,9 @@ class InteracoesController
     $model->filme = $_POST['filme'] ?? 0;
     $model->usuario = $_SESSION['usuario']['id'];
 
-    $interacoes = $model->consultarInteracoesFilme();
-
-    if (empty($interacoes)) {
+    $existe = $model->existeInteracoesFilmeUsuario();
+    
+    if (!$existe) {
       $model->salvo = true;
 
       $sucesso = $model->registrarInteracaoFilme();
