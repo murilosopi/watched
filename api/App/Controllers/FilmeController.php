@@ -7,20 +7,23 @@ use App\Resources\Response;
   class FilmeController {
 
     public function obterTodosFilmes() {
+      $model = new Filme();
+      $model->offset = $_GET['offset'] ?? 0;
+      $model->limit = $_GET['limit'] ?? 0;
+      
+      $filmes = $model->obterTodosFilmes();
 
       if(isset($_SESSION['usuario'])) {
-        $model = new Interacoes();
-        $model->offset = $_GET['offset'] ?? 0;
-        $model->limit = $_GET['limit'] ?? 0;
-        $model->usuario = $_SESSION['usuario']['id'];
-  
-        $filmes = $model->obterTodosFilmes();
-      } else {
-        $model = new Filme();
-        $model->offset = $_GET['offset'] ?? 0;
-        $model->limit = $_GET['limit'] ?? 0;
-  
-        $filmes = $model->obterTodosFilmes();
+        $interacoesModel = new Interacoes();
+        $interacoesModel->usuario = $_SESSION['usuario']['id'];
+        
+        foreach($filmes as &$filme) {
+          $interacoesModel->filme = $filme['id'];
+
+          $interacoes = $interacoesModel->consultarInteracoesFilme();
+
+          $filme = array_merge($filme, $interacoes);
+        }
       }
 
       $response = new Response();
@@ -51,8 +54,3 @@ use App\Resources\Response;
       $response->enviar();
     }
   }
-
-
-
-
-?> 
