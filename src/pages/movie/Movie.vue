@@ -1,10 +1,13 @@
 <template>
   <main class="l-movie">
     <DarkBox class="row px-4 py-5 mb-5" id="article-movie">
-      <div class="col-3 d-none d-md-block" :class="{placeholder: !movieHasLoaded}">
+      <div
+        class="col-3 d-none d-md-block"
+        :class="{ placeholder: !movieHasLoaded }"
+      >
         <MoviePoster
-          :url="movie.url || ''"
-          :title="movie.title || ''"
+          :url="url || ''"
+          :title="title || ''"
           tag="figure"
           class="m-auto"
         ></MoviePoster>
@@ -12,38 +15,68 @@
 
       <div class="col order-1 order-md-0">
         <div class="col p-0">
-          <h2 class="h1 title w-100" :class="{placeholder: !movieHasLoaded}">{{ movie.title || '' }}</h2>
-          <p class="w-100" :class="{'placeholder py-5': !movieHasLoaded}">{{ movie.synopsis || '' }}</p>
+          <h2 class="h1 title w-100" :class="{ placeholder: !movieHasLoaded }">
+            {{ title || "" }}
+          </h2>
+          <p class="w-100" :class="{ 'placeholder py-5': !movieHasLoaded }">
+            {{ synopsis || "" }}
+          </p>
           <!-- Listagem de gêneros -->
-          <BadgeList :badges="genresBadges" class="w-100" :class="{placeholder: !genresBadges.length}"/>
-          <div class="d-flex align-items-center" :class="{placeholder: !movieHasLoaded}">
+          <BadgeList
+            :badges="genresBadges"
+            class="w-100"
+            :class="{ placeholder: !genresBadges.length }"
+          />
+          <div
+            class="d-flex align-items-center"
+            :class="{ placeholder: !movieHasLoaded }"
+          >
             <!-- Contagem de estrelas pela avaliação média -->
-            <StarRating :value="movie.rating || 0" />
+            <StarRating :value="rating || 0" />
             <!-- Duração -->
             <p class="m-0 ms-md-4 ms-auto">
               <i class="bi bi-clock"></i>
-              {{ movie.minutes || 0 | duration }}
+              {{ minutes || 0 | duration }}
             </p>
           </div>
         </div>
       </div>
 
       <div class="order-sm-0 order-1 col-sm-2 ps-5 p-md-0 mt-2 mt-sm-0">
-        <div class="d-flex flex-wrap justify-content-end gap-3" :class="{placeholder: !movieHasLoaded}">
+        <div
+          class="d-flex flex-wrap justify-content-end gap-3"
+          :class="{ placeholder: !movieHasLoaded }"
+        >
           <!-- Curtir/descurtir -->
-          <InteractiveIcon>
-            <i class="bi bi-heart fs-4"></i>
-            0
+          <InteractiveIcon @click.native="captureLiked(id)">
+            <i
+              class="bi fs-4"
+              :class="{
+                'bi-heart': !liked,
+                'bi-heart-fill': liked,
+              }"
+            ></i>
+            {{ totalLiked }}
           </InteractiveIcon>
           <!-- Marcar/desmarcar assistido -->
-          <InteractiveIcon>
-            <i class="bi bi-camera-reels fs-4"></i>
-            0
+          <InteractiveIcon @click.native="captureWatched(id)">
+            <i
+              class="bi fs-4"
+              :class="{
+                'bi-camera-reels': !watched,
+                'bi-camera-reels-fill': watched,
+              }"
+            ></i>
+            {{ totalWatched }}
           </InteractiveIcon>
           <!-- salvar/removerSalvoFilme -->
-          <InteractiveIcon>
-            <i class="bi bi-bookmark-star fs-4"></i>
-            0
+          <InteractiveIcon @click.native="captureSaved(id)">
+            <i class="bi fs-4"
+             :class="{
+              'bi-bookmark-star': !saved,
+              'bi-bookmark-star-fill': saved,
+             }"></i>
+            {{ totalSaved }}
           </InteractiveIcon>
         </div>
       </div>
@@ -74,8 +107,8 @@ import BadgeList from "@/components/BadgeList.vue";
 import MovieDetails from "@/components/MovieDetails.vue";
 import StreamingList from "@/pages/movie/StreamingList.vue";
 import StarRating from "@/components/StarRating.vue";
-import ReviewSection from '@/pages/movie/Review.vue';
-
+import ReviewSection from "@/pages/movie/Review.vue";
+import MovieInteractionMixin from "@/mixins/MovieInteractionMixin";
 
 export default {
   components: {
@@ -86,10 +119,10 @@ export default {
     MovieDetails,
     StreamingList,
     StarRating,
-    ReviewSection
+    ReviewSection,
   },
 
-  mixins: [PageMixin],
+  mixins: [PageMixin, MovieInteractionMixin],
 
   filters: {
     duration(value) {
@@ -108,7 +141,12 @@ export default {
 
   data() {
     return {
-      movie: {},
+      title: "",
+      url: "",
+      synopsis: "",
+      minutes: "",
+      rating: 0,
+
       genres: [],
     };
   },
@@ -116,6 +154,8 @@ export default {
   methods: {
     getMovieDetails() {
       const params = { id: this.id };
+      if(this.userLogged) params.uid = this.loggedData.id;
+
       this.$api
         .get("/filme", { params })
         .then((res) => {
@@ -123,17 +163,15 @@ export default {
           const success = res.data.sucesso;
 
           if (success) {
-            this.movie = {
-              title: response.titulo,
-              url: response.cartaz,
-              synopsis: response.sinopse,
-              minutes: response.duracaoMin,
-            };
+            this.title = response.titulo;
+            this.url = response.cartaz;
+            this.synopsis = response.sinopse;
+            this.minutes = response.duracaoMin;             
           } else {
             // to do: lançar erros p/ exibir feedback visual
           }
 
-          this.changePageTitle(this.movie.title);
+          this.changePageTitle(this.title);
         })
         .catch(() => {});
     },
@@ -146,7 +184,7 @@ export default {
           const response = res.data;
 
           if (response.sucesso) {
-            this.movie.rating = Number(response.dados.nota).toFixed(1);
+            this.rating = Number(response.dados.nota).toFixed(1);
           }
         })
         .catch(() => {});
@@ -170,7 +208,7 @@ export default {
 
   computed: {
     movieHasLoaded() {
-      return this.movie.title ? true : false;
+      return this.title ? true : false;
     },
 
     genresBadges() {
@@ -189,6 +227,7 @@ export default {
     this.getMovieDetails();
     this.getMovieRating();
     this.getMovieGenres();
+    this.getInteractionValues();
   },
 };
 </script>
