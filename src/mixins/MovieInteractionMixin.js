@@ -145,4 +145,14 @@ export default {
       totalSaved: 0,
     };
   },
+
+  watch: {
+    userLogged(value) {
+      if(!value) {
+        this.watched = false;
+        this.saved = false;
+        this.liked = false;
+      }
+    }
+  }
 };
