@@ -76,9 +76,9 @@ export default {
       title: this.movie.titulo,
       rating: Number(this.movie.nota),
       urlImage: this.movie.cartaz,
-      liked: this.movie.liked,
-      saved: this.movie.saved,
-      watched: this.movie.watched,
+      liked: this.movie.curtido,
+      saved: this.movie.salvo,
+      watched: this.movie.assistido,
       id: this.movie.id,
     };
   },

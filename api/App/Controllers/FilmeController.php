@@ -1,17 +1,27 @@
 <?php
   namespace App\Controllers;
   use App\Models\Filme;
-  use App\Resources\Response;
+use App\Models\Interacoes;
+use App\Resources\Response;
 
   class FilmeController {
 
     public function obterTodosFilmes() {
 
-      $filmeModel = new Filme();
-      $filmeModel->offset = $_GET['offset'] ?? 0;
-      $filmeModel->limit = $_GET['limit'] ?? 0;
-
-      $filmes = $filmeModel->obterTodosFilmes();
+      if(isset($_SESSION['usuario'])) {
+        $model = new Interacoes();
+        $model->offset = $_GET['offset'] ?? 0;
+        $model->limit = $_GET['limit'] ?? 0;
+        $model->usuario = $_SESSION['usuario']['id'];
+  
+        $filmes = $model->obterTodosFilmes();
+      } else {
+        $model = new Filme();
+        $model->offset = $_GET['offset'] ?? 0;
+        $model->limit = $_GET['limit'] ?? 0;
+  
+        $filmes = $model->obterTodosFilmes();
+      }
 
       $response = new Response();
       $response->sucesso = !empty($filmes);
