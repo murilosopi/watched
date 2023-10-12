@@ -4,7 +4,12 @@
       class="poster-img w-100"
       :src="url"
       :alt="`Cartaz do filme ${title}`"
+      v-if="url"
     />
+    <div
+      class="poster-img w-100"
+      v-else>
+    </div>
 
     <slot></slot>
   </component>

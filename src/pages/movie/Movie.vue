@@ -3,13 +3,13 @@
     <DarkBox class="row px-4 py-5 mb-5" id="article-movie">
       <div
         class="col-3 d-none d-md-block"
-        :class="{ placeholder: !movieHasLoaded }"
       >
         <MoviePoster
           :url="url || ''"
           :title="title || ''"
           tag="figure"
-          class="m-auto"
+          class="m-auto w-100"
+          :class="{ placeholder: !movieHasLoaded }"
         ></MoviePoster>
       </div>
 

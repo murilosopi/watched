@@ -5,11 +5,20 @@
         <MovieCard :movie="movie"/>
       </div>
     </li>
+
+    <template v-if="!movies.length">
+      <li v-for="i in 10" :key="i">
+        <div>
+          <MoviePoster class="placeholder" tag="figure"></MoviePoster>
+        </div>
+      </li>
+    </template>
   </ul>
 </template>
 
 <script>
 import MovieCard from '@/components/MovieCard.vue'
+import MoviePoster from './MoviePoster.vue';
 export default {
   props: {
     movies: Array,
@@ -18,7 +27,8 @@ export default {
     }
   },
   components: {
-    MovieCard
+    MovieCard,
+    MoviePoster
   }
 }
 </script>
