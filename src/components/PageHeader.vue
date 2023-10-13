@@ -8,7 +8,7 @@
           </router-link>
         </Title>
 
-        <SearchBar />
+        <SearchBar :value="search" />
 
       </Navigation>
       <Dividers />
@@ -27,6 +27,10 @@ export default {
     error: {
       type: Boolean,
       default: false,
+    },
+    search: {
+      type: String,
+      default: ''
     }
   },
   components: {

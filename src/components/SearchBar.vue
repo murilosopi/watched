@@ -3,6 +3,8 @@
     action="pesquisar"
     class="d-none d-sm-flex flex-grow-1 mx-3 mx-md-5"
     id="form-search"
+    @keypress.enter.prevent="submit"
+    @submit.prevent="submit"
   >
     <div class="input-group search-box w-100">
       <input
@@ -11,6 +13,7 @@
         name="pesquisa"
         placeholder="Busque por filmes e usuários..."
         class="flex-grow-1"
+        v-model="search"
       />
       <button type="submit">
         <i class="bi bi-search"></i>
@@ -20,7 +23,20 @@
 </template>
 
 <script>
-export default {};
+import router from '@/routes';
+export default {
+  props: ['value'],
+  data() {
+    return {
+      search: this.value || ''
+    }
+  },
+  methods: {
+    submit() {
+      if(this.search.length) router.push(`/pesquisar/${this.search}`)
+    }
+  }
+};
 </script>
 
 <style>

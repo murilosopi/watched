@@ -62,7 +62,20 @@ export default new Router({
       components: {
         header,
         page: Search
-      }
+      },
+      props: {
+        page: true,
+        header: true
+      },
+      children: [
+        {
+          path: ':search',
+          components: {
+            header,
+            page: Search
+          },
+        },
+      ]
     },
     {
       path: '/configuracoes',
