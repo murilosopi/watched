@@ -1,28 +1,20 @@
 <?php
-  namespace App\Models;
-  use App\Connection;
 
-  class Plataforma {
-    private $id;
-    private $nome;
-    private $urlIcone;
-    private $urlLink;
-    private $conexao;
+namespace App\Models;
 
-    public function __construct() {
-      $this->conexao = Connection::getDb();
-    }
+use App\Connection;
+use App\Model;
 
-    public function __get($atributo) {
-      return $this->$atributo;
-    }
+class Plataforma extends Model
+{
+  protected $id;
+  protected $nome;
+  protected $urlIcone;
+  protected $urlLink;
 
-    public function __set($atributo, $valor) {
-      $this->atributo = $valor;
-    }
-
-    public function obterPlataformasPorFilme(int $idFilme) {
-      $sql = "
+  public function obterPlataformasPorFilme(int $idFilme)
+  {
+    $sql = "
         SELECT 
           p.id, p.nome, p.icone, p.url
         FROM 
@@ -35,11 +27,28 @@
           pf.filme = :filme;
       ";
 
-      $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $idFilme);
-      $stmt->execute();
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':filme', $idFilme);
+    $stmt->execute();
 
-      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
   }
-?>
+
+  public function plataformaPorId()
+  {
+    $sql = "
+        SELECT 
+          icone, url
+        FROM 
+          tbPlataformas
+        WHERE 
+          id = :id;
+      ";
+
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':id', $this->id);
+    $stmt->execute();
+
+    return $stmt->fetch(\PDO::FETCH_ASSOC);
+  }
+}

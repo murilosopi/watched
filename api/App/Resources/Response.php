@@ -12,4 +12,10 @@ class Response {
     $json = json_encode($this, JSON_UNESCAPED_UNICODE);
     exit($json);
   } 
+
+  public function erro($msg = 'Ocorreu um erro, tente novamente mais tarde.') {
+    $this->descricao = $msg;
+    $this->sucesso = false;
+    $this->enviar();
+  }
 }

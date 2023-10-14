@@ -1,19 +1,88 @@
 <template>
-  <DarkBox class="streaming-list ms-lg-5 p-4 h-100 w-100" :class="{placeholder: !platforms.length}">
-    <Title class="h4 text-center mb-4">
+  <DarkBox
+    class="streaming-list ms-lg-5 p-4 h-100 w-100"
+    :class="{ placeholder: loading }"
+  >
+    <Title class="h4 text-center mb-4 fw-bold">
       Onde Assistir
       <i class="bi bi-play"></i>
     </Title>
 
-    <nav :class="{placeholder: !platforms.length}">
-      <ul class="list-unstyled">
-        <li class="mb-3 row align-items-center" v-for="platform in platforms" :key="platform.id">
-          <a :href="platform.url" class="text-light fw-normal d-flex align-items-center" target="_blank">
-            <img :src="platform.icon" :alt="`Logo da plataform de streaming ${platform.name}`" class="col-1 me-3">
-            <span>{{ platform.name }}</span>
-          </a>
-        </li>
-      </ul>
+    <nav :class="{ placeholder: loading }">
+      <template v-if="platforms.buy && platforms.buy.length">
+        <Title tag="h4" class="h5 mb-1">Comprar</Title>
+        <ul class="list-unstyled">
+          <li
+            class="mb-3 row align-items-center"
+            v-for="platform in platforms.buy"
+            :key="platform.id"
+          >
+            <a
+              :href="platform.url"
+              class="text-light fw-normal d-flex align-items-center"
+              target="_blank"
+            >
+              <img
+                v-if="platform.icon"
+                :src="platform.icon"
+                :alt="`Logo da plataforma de streaming ${platform.name}`"
+                class="plattform-icon rounded col-2 me-2"
+              />
+              <span>{{ platform.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </template>
+
+      <template v-if="platforms.rent && platforms.rent.length">
+        <Title tag="h4" class="h5 mb-1">Alugar</Title>
+        <ul class="list-unstyled">
+          <li
+            class="mb-3 row align-items-center"
+            v-for="platform in platforms.rent"
+            :key="platform.id"
+          >
+            <a
+              :href="platform.url"
+              class="text-light fw-normal d-flex align-items-center"
+              target="_blank"
+            >
+              <img
+                v-if="platform.icon"
+                :src="platform.icon"
+                :alt="`Logo da plataforma de streaming ${platform.name}`"
+                class="plattform-icon rounded col-2 me-2"
+              />
+              <span>{{ platform.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </template>
+
+      <template v-if="platforms.flatrate && platforms.flatrate.length">
+        <Title tag="h4" class="h5 mb-1">Assinatura</Title>
+        <ul class="list-unstyled">
+          <li
+            class="mb-3 row align-items-center"
+            v-for="platform in platforms.flatrate"
+            :key="platform.id"
+          >
+            <a
+              :href="platform.url"
+              class="text-light fw-normal d-flex align-items-center"
+              target="_blank"
+            >
+              <img
+                v-if="platform.icon"
+                :src="platform.icon"
+                :alt="`Logo da plataforma de streaming ${platform.name}`"
+                class="plattform-icon rounded col-2 me-2"
+              />
+              <span>{{ platform.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </template>
     </nav>
   </DarkBox>
 </template>
@@ -24,48 +93,62 @@ import DarkBox from "@/components/DarkBox.vue";
 export default {
   components: {
     Title,
-    DarkBox
+    DarkBox,
   },
 
   props: {
     id: {
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
     return {
       platforms: [],
-    }
+    };
   },
 
   methods: {
     getPlatformsAvaible() {
       const params = { id: this.id };
 
-      this.$api.get('/obter-plataformas-filme', { params})
-        .then(res => {
+      this.$api
+        .get("/obter-plataformas-filme", { params })
+        .then((res) => {
           const response = res.data.dados;
           const success = res.data.sucesso;
 
-          if(success) {
-            this.platforms = response.map(original => ({
-              id: original.id,
-              name: original.nome,
-              url: original.url,
-              icon: original.icone,
-            }));
+          if (success) {
+            this.platforms = response;
+
+            console.log(response);
           }
         })
         .catch(() => {});
-    }
+    },
+  },
+
+  computed: {
+    loading() {
+      const { buy, flatrate, rent } = this.platforms;
+
+      return [buy, flatrate, rent].every((type) => !type || !type.length);
+    },
   },
 
   created() {
     this.getPlatformsAvaible();
-  }
+  },
 };
 </script>
 
-<style>
+<style scoded>
+.plattform-icon {
+  filter: grayscale(1) contrast(1.4);
+  transition: .2s;
+}
+
+li:hover .plattform-icon {
+  filter: grayscale(0) contrast(1);
+}
 </style>

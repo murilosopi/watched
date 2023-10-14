@@ -15,9 +15,9 @@ class FilmeController extends Action
   public function obterTodosFilmes()
   {
 
-    $originResponse = $this->clientRequest('GET', 'https://api.themoviedb.org/3/trending/movie/week?language=pt');
+    $dados = $this->clientRequest('GET', 'https://api.themoviedb.org/3/trending/movie/week');
 
-    if (!empty($originResponse)) {
+    if (!empty($dados)) {
       $model = new Resenha();
       $filmes = array_map(function ($item) use ($model) {
 
@@ -28,9 +28,10 @@ class FilmeController extends Action
         $filme->titulo = $item->title ?? null;
         $filme->cartaz = "https://image.tmdb.org/t/p/w500/{$item->poster_path}" ?? null;
         $filme->nota = $model->obterNotaFilme()['nota'] ?? null;
+        $filme->detalhes = $item;
 
         return $filme;
-      }, $originResponse->results);
+      }, $dados->results);
     } else {
       $response = new Response;
       $response->erro('Ocorreu um erro ao buscar informações');
@@ -67,9 +68,29 @@ class FilmeController extends Action
 
   public function obterDetalhesFilme()
   {
-    $filmeModel = new Filme();
-    $filmeModel->id = $_GET['id'] ?? 0;
-    $filme = $filmeModel->obterDetalhesFilme();
+  
+    $id = $_GET['id'] ?? 0;
+
+    $dados = $this->clientRequest('GET', "https://api.themoviedb.org/3/movie/{$id}");
+    $credits = $this->clientRequest('GET', "https://api.themoviedb.org/3/movie/{$id}/credits");
+
+    
+    if(!empty($dados)) {
+      $filme = [
+        'tituloOriginal' => $dados->original_title,
+        'anoLancamento' => date('Y', strtotime($dados->release_date)),
+        'titulo' => $dados->title,
+        'sinopse' => $dados->overview,
+        'generos' => $dados->genres,
+        'producao' => $dados->production_companies,
+        'elenco' => array_slice($credits->cast, 0, 10),
+        'cartaz' => "https://image.tmdb.org/t/p/w500/{$dados->poster_path}",
+        'duracaoMin' => $dados->runtime
+      ];
+    } else {
+      $response = new Response;
+      $response->erro('Ocorreu um erro ao buscar informações');
+    }
 
     $response = new Response();
     $response->sucesso = !empty($filme);
