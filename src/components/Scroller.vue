@@ -101,7 +101,7 @@ export default {
   },
 
   beforeDestroy() {
-    window.document.removeEventListener('mouseup');
+    window.document.removeEventListener('mouseup', this.clearTimer);
   },
 
   updated() {
