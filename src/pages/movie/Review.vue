@@ -1,5 +1,5 @@
 <template>
-  <section class="col">
+  <section class="col" v-if="list.length || userLogged && !existsUserReview">
     <Title tag="h3" class="text-center">
       Opinião do Público
       <i class="bi bi-chat-left-text"></i>&nbsp;
