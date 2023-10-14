@@ -64,8 +64,8 @@ export default new Router({
         page: Search
       },
       props: {
-        page: true,
-        header: true
+        page: route => ({ search: route.params.search.replaceAll('-', ' ')}),
+        header: route => ({ search: route.params.search.replaceAll('-', ' ')}),
       },
       children: [
         {

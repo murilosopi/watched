@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     submit() {
-      if(this.search.length) router.push(`/pesquisar/${this.search}`)
+      if(this.search.length) router.push(`/pesquisar/${this.search.replaceAll(' ', '-')}`)
     }
   }
 };
