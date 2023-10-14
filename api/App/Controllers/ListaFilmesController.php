@@ -1,16 +1,11 @@
 <?php
-
 namespace App\Controllers;
-
-use App\Action;
 use App\Resources\Response;
 use App\Models\ListaFilmes;
 use App\Models\Interacoes;
 
-class ListaFilmesController extends Action
-{
-    public function obterListaCurtidos()
-    {
+class ListaFilmesController {
+    public function obterListaCurtidos() {
         $model = new Interacoes();
         $model->usuario = $_GET['uid'] ?? 0;
         $model->curtido = true;
@@ -19,12 +14,11 @@ class ListaFilmesController extends Action
 
         $response = new Response();
         $response->sucesso = !empty($listas);
-        if ($response->sucesso) $response->dados = $listas;
+        if($response->sucesso) $response->dados = $listas;
         $response->enviar();
     }
 
-    public function obterListaSalvos()
-    {
+    public function obterListaSalvos() {
         $model = new Interacoes();
         $model->usuario = $_GET['uid'] ?? 0;
         $model->salvo = true;
@@ -33,12 +27,11 @@ class ListaFilmesController extends Action
 
         $response = new Response();
         $response->sucesso = !empty($listas);
-        if ($response->sucesso) $response->dados = $listas;
+        if($response->sucesso) $response->dados = $listas;
         $response->enviar();
     }
 
-    public function obterListaAssistidos()
-    {
+    public function obterListaAssistidos() {
         $model = new Interacoes();
         $model->usuario = $_GET['uid'] ?? 0;
         $model->assistido = true;
@@ -47,7 +40,7 @@ class ListaFilmesController extends Action
 
         $response = new Response();
         $response->sucesso = !empty($listas);
-        if ($response->sucesso) $response->dados = $listas;
+        if($response->sucesso) $response->dados = $listas;
         $response->enviar();
     }
 }

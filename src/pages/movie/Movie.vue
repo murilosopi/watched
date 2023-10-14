@@ -5,8 +5,8 @@
         class="col-3 d-none d-md-block"
       >
         <MoviePoster
-          :url="details.url || ''"
-          :title="details.title || ''"
+          :url="url || ''"
+          :title="title || ''"
           tag="figure"
           class="m-auto w-100"
           :class="{ placeholder: !movieHasLoaded }"
@@ -16,10 +16,10 @@
       <div class="col order-1 order-md-0">
         <div class="col p-0">
           <h2 class="h1 title w-100" :class="{ placeholder: !movieHasLoaded }">
-            {{ details.title || "" }}
+            {{ title || "" }}
           </h2>
           <p class="w-100" :class="{ 'placeholder py-5': !movieHasLoaded }">
-            {{ details.synopsis || "" }}
+            {{ synopsis || "" }}
           </p>
           <!-- Listagem de gêneros -->
           <BadgeList
@@ -32,11 +32,11 @@
             :class="{ placeholder: !movieHasLoaded }"
           >
             <!-- Contagem de estrelas pela avaliação média -->
-            <StarRating :value="details.rating || 0" />
+            <StarRating :value="rating || 0" />
             <!-- Duração -->
             <p class="m-0 ms-md-4 ms-auto">
               <i class="bi bi-clock"></i>
-              {{ details.minutes || 0 | duration }}
+              {{ minutes || 0 | duration }}
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@
 
     <div class="row">
       <div class="col">
-        <MovieDetails :id="id" :details="details" v-if="movieHasLoaded" />
+        <MovieDetails :id="id" />
       </div>
 
       <div class="col-4 d-md-flex d-none px-0">
@@ -141,44 +141,37 @@ export default {
 
   data() {
     return {
-      details: {},
+      title: "",
+      url: "",
+      synopsis: "",
+      minutes: "",
+      rating: 0,
 
       genres: [],
     };
   },
 
   methods: {
-
     getMovieDetails() {
       const params = { id: this.id };
+      if(this.userLogged) params.uid = this.loggedData.id;
+
       this.$api
-        .get("/detalhes-filme", { params })
+        .get("/filme", { params })
         .then((res) => {
           const response = res.data.dados;
           const success = res.data.sucesso;
 
           if (success) {
-            this.details = {
-              originalTitle: response.tituloOriginal,
-              release: response.anoLancamento,
-              cast: response.elenco,
-              director: response.direcao,
-              screenwriter: response.roteiro,
-              distribution: response.distribuicao,
-              language: response.idioma,
-              country: response.pais,
-              title:  response.titulo,
-              url:  response.cartaz,
-              synopsis:  response.sinopse,
-              genres:  response.generos,
-              minutes:  response.duracaoMin
-            }
-
-            this.changePageTitle(this.title);
-
+            this.title = response.titulo;
+            this.url = response.cartaz;
+            this.synopsis = response.sinopse;
+            this.minutes = response.duracaoMin;             
           } else {
             // to do: lançar erros p/ exibir feedback visual
           }
+
+          this.changePageTitle(this.title);
         })
         .catch(() => {});
     },
@@ -191,7 +184,22 @@ export default {
           const response = res.data;
 
           if (response.sucesso) {
-            this.details.rating = Number(response.dados.nota).toFixed(1);
+            this.rating = Number(response.dados.nota).toFixed(1);
+          }
+        })
+        .catch(() => {});
+    },
+
+    getMovieGenres() {
+      const params = { id: this.id };
+      this.$api
+        .get("/obter-generos-filme", { params })
+        .then((res) => {
+          const response = res.data.dados;
+          const success = res.data.sucesso;
+
+          if (success) {
+            this.genres = response.map((genre) => genre.nome);
           }
         })
         .catch(() => {});
@@ -200,11 +208,11 @@ export default {
 
   computed: {
     movieHasLoaded() {
-      return this.details.title ? true : false;
+      return this.title ? true : false;
     },
 
     genresBadges() {
-      return this.details.genres ? this.details.genres.map((genre) => ({ text: genre.name })) : [];
+      return this.genres ? this.genres.map((genre) => ({ text: genre })) : [];
     },
   },
 
@@ -218,6 +226,7 @@ export default {
   created() {
     this.getMovieDetails();
     this.getMovieRating();
+    this.getMovieGenres();
     this.getInteractionValues();
   },
 };

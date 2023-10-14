@@ -4,9 +4,8 @@ namespace App\Controllers;
 
 use App\Models\Interacoes;
 use App\Resources\Response;
-use App\Action;
 
-class InteracoesController extends Action
+class InteracoesController
 {
 
   public function alterarFilmeAssistido()
@@ -17,7 +16,7 @@ class InteracoesController extends Action
     $model->usuario = $_SESSION['usuario']['id'];
 
     $existe = $model->existeInteracoesFilmeUsuario();
-
+    
     if (!$existe) {
       $model->assistido = true;
 
@@ -40,10 +39,10 @@ class InteracoesController extends Action
     $model->usuario = $_SESSION['usuario']['id'];
 
     $existe = $model->existeInteracoesFilmeUsuario();
-
+    
     if (!$existe) {
       $model->curtido = true;
-
+      
       $sucesso = $model->registrarInteracaoFilme();
     } else {
       $sucesso = $model->alterarFilmeCurtido();
@@ -63,7 +62,7 @@ class InteracoesController extends Action
     $model->usuario = $_SESSION['usuario']['id'];
 
     $existe = $model->existeInteracoesFilmeUsuario();
-
+    
     if (!$existe) {
       $model->salvo = true;
 
