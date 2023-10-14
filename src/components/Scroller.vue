@@ -96,6 +96,12 @@ export default {
     this.container = this.$el.querySelector('.scroller-target > *');
 
     this.maxScrollLeft = this.container.scrollWidth - this.container.clientWidth;
+
+    window.document.addEventListener('mouseup', this.clearTimer);
+  },
+
+  beforeDestroy() {
+    window.document.removeEventListener('mouseup');
   },
 
   updated() {
