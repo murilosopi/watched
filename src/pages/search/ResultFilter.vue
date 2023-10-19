@@ -40,7 +40,6 @@
     </li>
     <li :class="cls">Usuários</li>
     <li :class="cls">Publicações</li>
-    <li :class="cls">Resenhas</li>
   </ul>
 </template>
 
