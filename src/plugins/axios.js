@@ -4,7 +4,7 @@ import Axios from 'axios'
 Vue.use({
   install(Vue) {
     Vue.prototype.$api = Axios.create({
-      baseURL: 'http://localhost',
+      baseURL: 'http://localhost:81',
       withCredentials: true
     });
 
