@@ -59,6 +59,12 @@ CREATE TABLE tbPlataformas(
     url TEXT NOT NULL
 );    
 
+CREATE TABLE tbReacoes(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    icone VARCHAR(50),
+    descricao VARCHAR(50)
+);
+
 CREATE TABLE tbResenhas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filme INT NOT NULL,
@@ -71,12 +77,6 @@ CREATE TABLE tbResenhas (
     FOREIGN KEY (usuario) REFERENCES tbUsuarios (id),
     FOREIGN KEY (filme) REFERENCES tbFilmes (id),
     FOREIGN KEY (reacao) REFERENCES tbReacoes (id)
-);
-
-CREATE TABLE tbReacoes(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    icone VARCHAR(50),
-    descricao VARCHAR(50)
 );
 
 /*Chat: */
