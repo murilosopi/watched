@@ -6,25 +6,40 @@ use App\Resources\Response;
 
   class FilmeController {
 
-    public function obterTodosFilmes() {
-      $model = new Filme();
-      $model->offset = $_GET['offset'] ?? 0;
-      $model->limit = $_GET['limit'] ?? 0;
-      
-      $filmes = $model->obterTodosFilmes();
+  public function obterTodosFilmes()
+  {
 
-      if(isset($_SESSION['usuario'])) {
-        $interacoesModel = new Interacoes();
-        $interacoesModel->usuario = $_SESSION['usuario']['id'];
-        
-        foreach($filmes as &$filme) {
-          $interacoesModel->filme = $filme['id'];
+    $originResponse = $this->clientRequest('GET', 'https://api.themoviedb.org/3/trending/movie/week?language=pt');
 
-          $interacoes = $interacoesModel->consultarInteracoesFilme();
+    if (!empty($originResponse)) {
+      $model = new Resenha();
+      $filmes = array_map(function ($item) use ($model) {
 
-          $filme = array_merge($filme, $interacoes);
-        }
+        $model->filme = $item->id;
+
+        $filme = new stdClass();
+        $filme->id = $item->id ?? null;
+        $filme->titulo = $item->title ?? null;
+        $filme->cartaz = "https://image.tmdb.org/t/p/w500/{$item->poster_path}" ?? null;
+        $filme->nota = $model->obterNotaFilme()['nota'] ?? null;
+
+        return $filme;
+      }, $originResponse->results);
+    } else {
+      $response = new Response;
+      $response->erro('Ocorreu um erro ao buscar informações');
+    }
+
+    if (isset($_SESSION['usuario'])) {
+      $interacoesModel = new Interacoes();
+      $interacoesModel->usuario = $_SESSION['usuario']['id'];
+
+      foreach ($filmes as &$filme) {
+        $interacoesModel->filme = $filme->id;
+        $interacoes = $interacoesModel->consultarInteracoesFilme();
+        $filme = array_merge((array)$filme, $interacoes);
       }
+    }
 
       $response = new Response();
       $response->sucesso = !empty($filmes);
@@ -43,14 +58,15 @@ use App\Resources\Response;
       $response->enviar();
     }
 
-    public function obterDetalhesFilme() {
-      $filmeModel = new Filme();
-      $filmeModel->id = $_GET['id'] ?? 0;
-      $filme = $filmeModel->obterDetalhesFilme();
-  
-      $response = new Response();
-      $response->sucesso = !empty($filme);
-      if($response->sucesso) $response->dados = $filme;
-      $response->enviar();
-    }
+  public function obterDetalhesFilme()
+  {
+    $filmeModel = new Filme();
+    $filmeModel->id = $_GET['id'] ?? 0;
+    $filme = $filmeModel->obterDetalhesFilme();
+
+    $response = new Response();
+    $response->sucesso = !empty($filme);
+    if ($response->sucesso) $response->dados = $filme;
+    $response->enviar();
   }
+}
