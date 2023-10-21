@@ -6,7 +6,7 @@
 
       <hr />
 
-      <ResultGroup title="Perfis">
+      <ResultGroup title="Perfis" v-if="!usersFetched || users.length">
         <ul class="list-unstyled">
           <li class="col-md-3 col-sm-4 col-5" v-for="user in users" :key="user.id">
             <router-link :to="`/usuario/${user.tag}`" class="text-light text-center">
@@ -28,7 +28,7 @@
         </ul>
       </ResultGroup>
 
-      <ResultGroup title="Filmes">
+      <ResultGroup title="Filmes" v-if="!moviesFetched || movies.length">
         <MoviesPanel :movies="movies" :inline="true"/>
       </ResultGroup>
 
