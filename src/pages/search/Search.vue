@@ -44,7 +44,11 @@ import ResultGroup from "@/components/ResultGroup.vue";
 import MoviesPanel from "@/components/MoviesPanel.vue";
 import Title from "@/components/Title.vue";
 
+import PageMixin from "@/mixins/PageMixin";
+
 export default {
+  mixins: [PageMixin],
+
   components: {
     ResultFilter,
     SortingMenu,
@@ -62,6 +66,10 @@ export default {
 
       movies: [],
     };
+  },
+  created() {
+    this.changeFavicon("pesquisa", "svg");
+    this.changePageTitle(`Pesquisa - ${this.search}`);
   },
 };
 </script>
