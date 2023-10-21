@@ -31,9 +31,11 @@ class PesquisaController extends Action
         $filme = new \stdClass();
         $filme->id = $item->id ?? null;
         $filme->titulo = $item->title ?? null;
+        $filme->relevancia = $item->popularity ?? null;
+        $filme->data = $item->release_date ?? null;
         $filme->cartaz = "https://image.tmdb.org/t/p/w500/{$item->poster_path}" ?? null;
         $filme->nota = $model->obterNotaFilme()['nota'] ?? null;
-        $filme->detalhes = $item;
+        // $filme->detalhes = $item;
 
         return $filme;
       }, $dados->results);

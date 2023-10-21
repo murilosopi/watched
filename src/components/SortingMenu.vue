@@ -44,9 +44,17 @@ export default {
   },
   data() {
     return {
-      sortBy: "relevance",
+      sortBy: null,
     };
   },
+  watch: {
+    sortBy() {
+      this.$emit('change', this.sortBy);
+    }
+  },
+  created() {
+    this.sortBy = 'relevance'
+  }
 };
 </script>
 

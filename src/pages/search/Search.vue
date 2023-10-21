@@ -2,7 +2,7 @@
   <div id="search">
     <div class="row border-bottom border-dark">
       <ResultFilter class="col-11" />
-      <SortingMenu class="col" />
+      <SortingMenu class="col" @change="sortBy"/>
 
       <hr />
 
@@ -76,6 +76,8 @@ export default {
 
         if(response.dados && response.dados.length) {
           this.movies = [...response.dados];
+
+          this.sortBy(this.factorSort);
         }
 
         this.moviesFetched = true;
@@ -92,6 +94,8 @@ export default {
             tag: u.username,
             id: u.id
           }));
+
+          this.sortBy(this.factorSort);
         }
 
         this.usersFetched = true;
@@ -115,7 +119,27 @@ export default {
       this.users = [];
       this.usersFetched = false;
       this.moviesFetched = false;
-    }
+    },
+
+    sortBy( factor = 'relevance' ) {
+      this.factorSort = factor;
+
+      switch(factor) {
+        case 'recent': 
+          this.movies.sort(this.sortRecent);
+          break;
+        case 'old': 
+          this.movies.sort(this.sortOld);
+          break;
+        default:
+          this.movies.sort(this.sortRelevance);
+          break;
+      } 
+    },
+
+    sortRelevance(a, b) { return a.relevancia > b.relevancia ? -1 : 1 },
+    sortRecent(a, b) { return new Date(a.data).getTime() > new Date(b.data).getTime() ? -1 : 1 },
+    sortOld(a, b) { return new Date(a.data).getTime() < new Date(b.data).getTime() ? -1 : 1 },
 
   },
   created() {
