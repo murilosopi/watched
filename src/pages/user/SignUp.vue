@@ -143,7 +143,7 @@ export default {
               this.auth({ username: this.tag, password: this.password })
                 .then(success => {
                   if(success) {
-                    router.push('/explorar');
+                    router.push('/');
                   }
                 });
             } else {
