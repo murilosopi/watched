@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Action;
 use App\Resources\Response;
 use App\Models\Usuario;
 use App\Models\Filme;
 use App\Models\Interacoes;
 use App\Models\Resenha;
 
-class UsuarioController
+class UsuarioController extends Action
 {
 
   public function obterInformacoesPerfil()
@@ -25,7 +26,8 @@ class UsuarioController
     $response->enviar();
   }
 
-  public function obterEstatiscasPerfil() {
+  public function obterEstatiscasPerfil()
+  {
 
     $usuarioModel = new Usuario();
     $usuarioModel->id = $_GET['uid'] ?? 0;
@@ -43,27 +45,26 @@ class UsuarioController
       'resenhas' => (int)$resenhaModel->obterTotalResenhasUsuario(),
       'assistidos' => (int)$interacoesModel->consultarTotalAssistidosUsuario()
     ];
-    
+
     $response = new Response();
     $response->sucesso = !empty($_GET['uid']);
 
-    if($response->sucesso) $response->dados = $totais;
+    if ($response->sucesso) $response->dados = $totais;
 
     $response->enviar();
-    
   }
 
-  public function alterarSobreUsuario() {
+  public function alterarSobreUsuario()
+  {
 
     $response = new Response();
 
-    if(isset($_SESSION['usuario'])) {
+    if (isset($_SESSION['usuario'])) {
       $model = new Usuario();
       $model->id = $_SESSION['usuario']['id'];
       $model->sobre = $_GET['sobre'] ?? 0;
 
       $response->sucesso = $model->alterarSobre();
-
     } else {
       $response->sucesso = false;
       $response->descricao = 'Necessário estar autenticado para realizar esta alteração';

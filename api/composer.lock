@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "84739704e55b10d7924a36b205f60895",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
             "version": "7.8.0",
-            "version_normalized": "7.8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
@@ -39,7 +44,6 @@
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2023-08-27T10:20:53+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -47,7 +51,6 @@
                     "forward-command": false
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/functions_include.php"
@@ -127,12 +130,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../guzzlehttp/guzzle"
+            "time": "2023-08-27T10:20:53+00:00"
         },
         {
             "name": "guzzlehttp/promises",
             "version": "2.0.1",
-            "version_normalized": "2.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
@@ -151,7 +153,6 @@
                 "bamarni/composer-bin-plugin": "^1.8.1",
                 "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
-            "time": "2023-08-03T15:11:55+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -159,7 +160,6 @@
                     "forward-command": false
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "GuzzleHttp\\Promise\\": "src/"
@@ -213,12 +213,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../guzzlehttp/promises"
+            "time": "2023-08-03T15:11:55+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
             "version": "2.6.1",
-            "version_normalized": "2.6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
@@ -248,7 +247,6 @@
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2023-08-27T10:13:57+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -256,7 +254,6 @@
                     "forward-command": false
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "GuzzleHttp\\Psr7\\": "src/"
@@ -332,12 +329,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../guzzlehttp/psr7"
+            "time": "2023-08-27T10:13:57+00:00"
         },
         {
             "name": "psr/http-client",
             "version": "1.0.3",
-            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-client.git",
@@ -353,14 +349,12 @@
                 "php": "^7.0 || ^8.0",
                 "psr/http-message": "^1.0 || ^2.0"
             },
-            "time": "2023-09-23T14:17:50+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Client\\": "src/"
@@ -387,12 +381,11 @@
             "support": {
                 "source": "https://github.com/php-fig/http-client"
             },
-            "install-path": "../psr/http-client"
+            "time": "2023-09-23T14:17:50+00:00"
         },
         {
             "name": "psr/http-factory",
             "version": "1.0.2",
-            "version_normalized": "1.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-factory.git",
@@ -408,14 +401,12 @@
                 "php": ">=7.0.0",
                 "psr/http-message": "^1.0 || ^2.0"
             },
-            "time": "2023-04-10T20:10:41+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Message\\": "src/"
@@ -445,12 +436,11 @@
             "support": {
                 "source": "https://github.com/php-fig/http-factory/tree/1.0.2"
             },
-            "install-path": "../psr/http-factory"
+            "time": "2023-04-10T20:10:41+00:00"
         },
         {
             "name": "psr/http-message",
             "version": "2.0",
-            "version_normalized": "2.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
@@ -465,14 +455,12 @@
             "require": {
                 "php": "^7.2 || ^8.0"
             },
-            "time": "2023-04-04T09:54:51+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Message\\": "src/"
@@ -501,12 +489,11 @@
             "support": {
                 "source": "https://github.com/php-fig/http-message/tree/2.0"
             },
-            "install-path": "../psr/http-message"
+            "time": "2023-04-04T09:54:51+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
-            "version_normalized": "3.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ralouphie/getallheaders.git",
@@ -525,9 +512,7 @@
                 "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^5 || ^6.5"
             },
-            "time": "2019-03-08T08:55:37+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/getallheaders.php"
@@ -548,12 +533,11 @@
                 "issues": "https://github.com/ralouphie/getallheaders/issues",
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
-            "install-path": "../ralouphie/getallheaders"
+            "time": "2019-03-08T08:55:37+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
             "version": "v2.5.2",
-            "version_normalized": "2.5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
@@ -568,7 +552,6 @@
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2022-01-02T09:53:40+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -579,7 +562,6 @@
                     "url": "https://github.com/symfony/contracts"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "function.php"
@@ -618,9 +600,16 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/deprecation-contracts"
+            "time": "2022-01-02T09:53:40+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
 }
