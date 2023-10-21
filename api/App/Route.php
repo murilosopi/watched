@@ -159,6 +159,12 @@
         'controller' => 'InteracoesController',
         'action' => 'buscarInteracoesFilme'
       );
+      
+      $routes['pesquisar-filmes'] = array(
+        'route' => '/pesquisar-filmes',
+        'controller' => 'PesquisaController',
+        'action' => 'pesquisarFilmes'
+      );
 
       $this->setRoutes($routes); 
     }

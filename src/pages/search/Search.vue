@@ -67,9 +67,41 @@ export default {
       movies: [],
     };
   },
+  methods: {
+    doSearch() {
+      const params = { pesquisa: this.search };
+      this.$api.get('/pesquisar-filmes', { params }).then(res => {
+        const response = res.data;
+
+        if(response.dados && response.dados.length) {
+          this.movies = [...response.dados];
+        } else {
+          this.notFound();
+        }
+      });
+    },
+
+    notFound() {
+      this.notifyUser({
+        icon: "emoji-astonished-fill",
+        title: "Ops",
+        text: "não foram encontrado resultados...",
+        class: "warning",
+      });
+      this.$router.back();
+    }
+
+  },
   created() {
     this.changeFavicon("pesquisa", "svg");
     this.changePageTitle(`Pesquisa - ${this.search}`);
+    this.doSearch();
   },
+  watch: {
+    search() {
+      this.movies = [];
+      this.doSearch();
+    }
+  }
 };
 </script>

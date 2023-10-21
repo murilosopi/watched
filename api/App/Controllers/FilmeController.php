@@ -7,7 +7,6 @@ use App\Models\Interacoes;
 use App\Models\Resenha;
 use App\Resources\Response;
 use App\Action;
-use stdClass;
 
 class FilmeController extends Action
 {
@@ -23,7 +22,7 @@ class FilmeController extends Action
 
         $model->filme = $item->id;
 
-        $filme = new stdClass();
+        $filme = new \stdClass();
         $filme->id = $item->id ?? null;
         $filme->titulo = $item->title ?? null;
         $filme->cartaz = "https://image.tmdb.org/t/p/w500/{$item->poster_path}" ?? null;
