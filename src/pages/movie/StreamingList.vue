@@ -120,8 +120,6 @@ export default {
 
           if (success) {
             this.platforms = response;
-
-            console.log(response);
           }
         })
         .catch(() => {});
