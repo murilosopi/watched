@@ -1,31 +1,15 @@
 <?php
   namespace App\Models;
-  use App\Connection;
+  use App\Model;
 
-  class Usuario {
-    private $id;
-    private $nome;
-    private $username;
-    private $sobre;
-    private $fotoPerfil;
-    private $email;
-    private $senha;
-    private $conexao;
-
-    public function __construct() {
-      $this->conexao = Connection::getDb();
-    }
-
-    public function __get($atributo) {
-      return $this->$atributo;
-    }
-
-    public function __set($atributo, $valor) {
-      $this->$atributo = $valor;
-      return $this->$atributo;
-    }
-
-   
+  class Usuario extends Model {
+    protected $id;
+    protected $nome;
+    protected $username;
+    protected $sobre;
+    protected $fotoPerfil;
+    protected $email;
+    protected $senha;
 
     // Retorna um usuário que tenha um username ou email e senha compatíveis
     public function obterUsuarioPorId() {
@@ -210,18 +194,20 @@
       return $stmt->execute();
     }
 
-    public function buscarUsuarios(string $pesquisa) {
+    public function buscarUsuarios() {
       $sql = "
         SELECT 
-          id, nome, username, sobre, foto_perfil
+          id, nome, username, sobre
         FROM
           tbUsuarios
         WHERE
-          (nome LIKE :pesquisa || username LIKE :pesquisa) AND id != :id;
+          (nome LIKE :nome || username LIKE :username || sobre LIKE :sobre) AND id != :id;
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':pesquisa', "%$pesquisa%");
+      $stmt->bindValue(':nome', "%{$this->nome}%");
+      $stmt->bindValue(':username', "%{$this->username}%");
+      $stmt->bindValue(':sobre', "%{$this->sobre}%");
       $stmt->bindValue(':id', $this->id);
       $stmt->execute();
 

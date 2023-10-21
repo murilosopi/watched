@@ -166,6 +166,12 @@
         'action' => 'pesquisarFilmes'
       );
 
+      $routes['pesquisar-usuarios'] = array(
+        'route' => '/pesquisar-usuarios',
+        'controller' => 'PesquisaController',
+        'action' => 'pesquisarUsuarios'
+      );
+
       $this->setRoutes($routes); 
     }
 

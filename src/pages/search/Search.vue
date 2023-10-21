@@ -68,7 +68,7 @@ export default {
     };
   },
   methods: {
-    doSearch() {
+    searchMovies() {
       const params = { pesquisa: this.search };
       this.$api.get('/pesquisar-filmes', { params }).then(res => {
         const response = res.data;
@@ -78,6 +78,23 @@ export default {
         } else {
           this.notFound();
         }
+      });
+    },
+
+    searchUsers() {
+      const params = { pesquisa: this.search };
+      this.$api.get('/pesquisar-usuarios', { params }).then(res => {
+        const response = res.data;
+
+        if(response.dados && response.dados.length) {
+          this.users = response.dados.map(u => ({
+            tag: u.username,
+            id: u.id
+          }));
+        } 
+        // else {
+        //   this.notFound();
+        // }
       });
     },
 
@@ -95,12 +112,14 @@ export default {
   created() {
     this.changeFavicon("pesquisa", "svg");
     this.changePageTitle(`Pesquisa - ${this.search}`);
-    this.doSearch();
+    this.searchMovies();
+    this.searchUsers();
   },
   watch: {
     search() {
       this.movies = [];
-      this.doSearch();
+      this.searchMovies();
+      this.searchUsers();
     }
   }
 };
