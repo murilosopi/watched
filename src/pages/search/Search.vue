@@ -63,8 +63,9 @@ export default {
   data() {
     return {
       users: [],
-
       movies: [],
+      usersFetched: false,
+      moviesFetched: false,
     };
   },
   methods: {
@@ -75,10 +76,10 @@ export default {
 
         if(response.dados && response.dados.length) {
           this.movies = [...response.dados];
-        } else {
-          this.notFound();
         }
-      });
+
+        this.moviesFetched = true;
+      }).then(this.validateFetched);
     },
 
     searchUsers() {
@@ -91,21 +92,29 @@ export default {
             tag: u.username,
             id: u.id
           }));
-        } 
-        // else {
-        //   this.notFound();
-        // }
-      });
+        }
+
+        this.usersFetched = true;
+      }).then(this.validateFetched);
     },
 
-    notFound() {
-      this.notifyUser({
-        icon: "emoji-astonished-fill",
-        title: "Ops",
-        text: "não foram encontrado resultados...",
-        class: "warning",
-      });
-      this.$router.back();
+    validateFetched() {
+      if(this.usersFetched && this.moviesFetched && !this.users.length && !this.movies.length) {
+        this.notifyUser({
+          icon: "emoji-astonished-fill",
+          title: "Ops",
+          text: "não foram encontrado resultados...",
+          class: "warning",
+        });
+        this.$router.back();
+      }
+    },
+
+    clear() {
+      this.movies = [];
+      this.users = [];
+      this.usersFetched = false;
+      this.moviesFetched = false;
     }
 
   },
@@ -115,12 +124,13 @@ export default {
     this.searchMovies();
     this.searchUsers();
   },
+
   watch: {
     search() {
-      this.movies = [];
+      this.clear();
       this.searchMovies();
       this.searchUsers();
     }
-  }
+  },
 };
 </script>
