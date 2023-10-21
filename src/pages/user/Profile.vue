@@ -24,16 +24,9 @@
 
               <template v-if="loggedData.tag == username">
                 
-                <ButtonCustom v-if="about" data-bs-toggle="modal" data-bs-target="#about-user" @click.native="openAboutEdit" >
+                <ButtonCustom data-bs-toggle="modal" data-bs-target="#about-user" @click.native="openAboutEdit" variant="azul" >
                   Alterar
                   <i class="bi bi-pencil-square fs-5"></i>
-                </ButtonCustom>
-
-                <ButtonCustom class="position-relative" variant="azul" v-else data-bs-toggle="modal" data-bs-target="#about-user">
-                  Adicione um texto sobre você
-                  <span
-                    class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"
-                  ></span>
                 </ButtonCustom>
 
                 <ButtonCustom @click.native="goToConfig">
