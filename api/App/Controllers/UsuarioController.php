@@ -33,7 +33,7 @@ class UsuarioController extends Action
     $usuarioModel->id = $_GET['uid'] ?? 0;
 
     $resenhaModel = new Resenha();
-    $resenhaModel->idUsuario = $_GET['uid'] ?? 0;
+    $resenhaModel->usuario = $_GET['uid'] ?? 0;
 
     $interacoesModel = new Interacoes();
     $interacoesModel->usuario = $_GET['uid'] ?? 0;

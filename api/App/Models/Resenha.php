@@ -4,8 +4,8 @@
 
   class Resenha extends Model {
     protected $id;
-    protected $idFilme;
-    protected $idUsuario;
+    protected $filme;
+    protected $usuario;
     protected $titulo;
     protected $descricao;
     protected $notaAvaliacao;
@@ -22,8 +22,8 @@
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $this->idFilme);
-      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->bindValue(':usuario', $this->usuario);
       $stmt->bindValue(':titulo', $this->titulo);
       $stmt->bindValue(':descricao', $this->descricao);
       $stmt->bindValue(':nota', $this->notaAvaliacao);
@@ -49,7 +49,7 @@
       ';
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $this->idFilme);
+      $stmt->bindValue(':filme', $this->filme);
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -73,7 +73,7 @@
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->bindValue(':usuario', $this->usuario);
       $stmt->execute();
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -90,7 +90,7 @@
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->bindValue(':usuario', $this->usuario);
       $stmt->execute();
 
       return $stmt->fetchColumn(0);
@@ -106,8 +106,8 @@
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $this->idFilme);
-      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->bindValue(':usuario', $this->usuario);
       $stmt->execute();
 
       return $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -123,7 +123,7 @@
               ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $this->idFilme);
+      $stmt->bindValue(':filme', $this->filme);
       $stmt->execute();
 
       return $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -140,8 +140,8 @@
               ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':filme', $this->idFilme);
-      $stmt->bindValue(':usuario', $this->idUsuario);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->bindValue(':usuario', $this->usuario);
       $stmt->execute();
 
       return $stmt->fetchColumn(0);

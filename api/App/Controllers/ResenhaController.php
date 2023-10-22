@@ -12,7 +12,7 @@ class ResenhaController extends Action
   public function obterNotaFilme()
   {
     $resenhaModel = new Resenha();
-    $resenhaModel->idFilme = $_GET['id'] ?? 0;
+    $resenhaModel->filme = $_GET['id'] ?? 0;
     $nota = $resenhaModel->obterNotaFilme();
 
     $r = new Response();
@@ -24,7 +24,7 @@ class ResenhaController extends Action
   public function obterResenhasPorFilme()
   {
     $resenhaModel = new Resenha();
-    $resenhaModel->idFilme = $_GET['filme'] ?? 0;
+    $resenhaModel->filme = $_GET['filme'] ?? 0;
     $resenhaModel->offset = $_GET['offset'] ?? 0;
     $resenhaModel->limit = $_GET['limit'] ?? 0;
 
@@ -39,7 +39,7 @@ class ResenhaController extends Action
   public function obterResenhasPorUsuario()
   {
     $resenhaModel = new Resenha();
-    $resenhaModel->idUsuario = $_GET['uid'] ?? 0;
+    $resenhaModel->usuario = $_GET['uid'] ?? 0;
     $resenhaModel->offset = $_GET['offset'] ?? 0;
     $resenhaModel->limit = $_GET['limit'] ?? 0;
 
@@ -68,8 +68,8 @@ class ResenhaController extends Action
     }
 
     $resenha = new Resenha();
-    $resenha->idFilme = $_POST['movie'] ?? 0;
-    $resenha->idUsuario = $_SESSION['usuario']['id'];
+    $resenha->filme = $_POST['movie'] ?? 0;
+    $resenha->usuario = $_SESSION['usuario']['id'];
     $resenha->titulo = $_POST['title'] ?? null;
     $resenha->descricao = $_POST['text'] ?? null;
     $resenha->reacao = $_POST['reaction'] ?? null;
@@ -84,8 +84,8 @@ class ResenhaController extends Action
   public function existeResenhaFilmeUsuario()
   {
     $resenha = new Resenha();
-    $resenha->idFilme = $_GET['filme'] ?? 0;
-    $resenha->idUsuario = $_GET['usuario'] ?? 0;
+    $resenha->filme = $_GET['filme'] ?? 0;
+    $resenha->usuario = $_GET['usuario'] ?? 0;
 
     $total = $resenha->obterTotalResenhasUsuarioFilme();
 
