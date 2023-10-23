@@ -45,12 +45,6 @@ class ResenhaController extends Action
 
     $resenhas = $resenhaModel->obterTodasResenhasPorUsuario();
 
-    $reacaoModel = new Reacao();
-    foreach ($resenhas as &$resenha) {
-      $reacaoModel->resenha = $resenha['id'];
-      $resenha['reacao'] = $reacaoModel->obterReacaoResenha();
-    }
-
     $response = new Response();
     $response->sucesso = !empty($resenhas);
     if ($response->sucesso) $response->dados = $resenhas;

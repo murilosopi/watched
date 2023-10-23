@@ -61,12 +61,11 @@
         "SELECT 
           r.id, r.usuario, r.titulo,
           r.descricao, r.nota, u.username, 
-          r.filme, f.titulo as tituloFilme, 
+          r.filme,
           reacao.id as idReacao, reacao.descricao as descricaoReacao, reacao.icone as iconeReacao
         FROM 
           tbResenhas as r 
-        JOIN tbUsuarios as u ON (r.usuario = u.id) 
-        JOIN tbFilmes as f ON (f.id = r.filme) 
+        JOIN tbUsuarios as u ON (r.usuario = u.id)
         JOIN tbReacoes as reacao ON reacao.id = r.reacao
         WHERE 
           r.usuario = :usuario
