@@ -174,10 +174,10 @@ export default {
               minutes:  response.duracaoMin
             }
 
-            this.changePageTitle(this.title);
+            this.changePageTitle(this.details.title);
 
           } else {
-            // to do: lançar erros p/ exibir feedback visual
+            this.$router.push('/erro');
           }
         })
         .catch(() => {});
