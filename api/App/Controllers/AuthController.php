@@ -54,7 +54,9 @@ class AuthController extends Action
         ->__set('senha', $senha);
 
 
-      $_SESSION['usuario'] = $this->authModel->obterUsuarioLogin();
+      $usuario = $this->authModel->obterUsuarioLogin();
+
+      if(!empty($usuario)) $_SESSION['usuario'] = $usuario;
     }
 
     $response = new Response();
