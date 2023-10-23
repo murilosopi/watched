@@ -1,9 +1,11 @@
 <template>
   <div id="search">
-    <div class="row border-bottom border-dark">
-      <ResultFilter class="col-11" />
-      <SortingMenu class="col" @change="sortBy"/>
 
+    <div class="row">
+      <ResultFilter class="col-10" />
+      <SortingMenu class="col d-flex align-items-end justify-content-end" @change="sortBy"/>
+    </div>
+    <div class="row">
       <hr />
 
       <ResultGroup title="Perfis" v-if="!usersFetched || users.length">
