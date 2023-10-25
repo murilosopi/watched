@@ -30,6 +30,8 @@
         </ul>
       </ResultGroup>
 
+      <hr>
+      
       <ResultGroup title="Filmes" v-if="!moviesFetched || movies.length">
         <MoviesPanel :movies="movies" :inline="true"/>
       </ResultGroup>
@@ -71,18 +73,27 @@ export default {
     };
   },
   methods: {
-    searchMovies() {
-      const params = { pesquisa: this.search };
+    searchMovies(page = 1) {
+      const params = { pesquisa: this.search, pagina: page };
       this.$api.get('/pesquisar-filmes', { params }).then(res => {
         const response = res.data;
 
-        if(response.dados && response.dados.length) {
-          this.movies = [...response.dados];
+        const { dados: data } = response;
 
-          this.sortBy(this.factorSort);
+        if(data && data.filmes.length) {
+          if(page >= 11) return;
+          this.movies = [
+            ...this.movies,
+            ...data.filmes
+          ];
+
+          if(data.proximaPagina) {
+            this.searchMovies(data.proximaPagina);
+          }
         }
 
         this.moviesFetched = true;
+
       }).then(this.validateFetched);
     },
 
