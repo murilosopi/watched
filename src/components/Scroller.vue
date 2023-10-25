@@ -79,6 +79,10 @@ export default {
     clearTimer() {
       clearInterval(this.timerPressing);
     },
+
+    mouseWheel() {
+      this.scrollLeft = this.container.scrollLeft;
+    }
   },
 
   watch: {
@@ -98,6 +102,7 @@ export default {
     this.maxScrollLeft = this.container.scrollWidth - this.container.clientWidth;
 
     window.document.addEventListener('mouseup', this.clearTimer);
+    window.document.addEventListener('mousewheel', this.mouseWheel);
   },
 
   beforeDestroy() {
