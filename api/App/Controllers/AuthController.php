@@ -56,7 +56,12 @@ class AuthController extends Action
 
       $usuario = $this->authModel->obterUsuarioLogin();
 
-      if(!empty($usuario)) $_SESSION['usuario'] = $usuario;
+      if(!empty($usuario)) {
+        $_SESSION['usuario'] = $usuario;
+
+        $this->authModel->id = $usuario['id'];
+        $this->authModel->atualizarAcesso();
+      }
     }
 
     $response = new Response();
@@ -70,7 +75,12 @@ class AuthController extends Action
   {
     $response = new Response();
     $response->sucesso = !empty($_SESSION['usuario']);
-    if ($response->sucesso) $response->dados = $_SESSION['usuario'];
+    if ($response->sucesso) {
+      $response->dados = $_SESSION['usuario'];
+      
+      $this->authModel->id = $_SESSION['usuario']['id'];
+      $this->authModel->atualizarAcesso();
+    }
     $response->enviar();
   }
 

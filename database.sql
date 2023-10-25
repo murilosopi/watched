@@ -14,7 +14,8 @@ CREATE TABLE tbUsuarios(
     privado BOOLEAN DEFAULT FALSE,
     assinante BOOLEAN DEFAULT FALSE,
     ultimoAcesso DATETIME,
-    dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+    dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    visualizacoes INT DEFAULT 0
 );
 
 CREATE TABLE tbAdministradores(

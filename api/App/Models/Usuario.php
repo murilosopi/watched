@@ -213,5 +213,14 @@
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function adicionarVisualizacaoPerfil() {
+      $sql = "UPDATE tbUsuarios SET visualizacoes = visualizacoes + 1 WHERE id = :id";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+
+      return $stmt->execute();
+    }
   }
 ?>

@@ -3,6 +3,7 @@ namespace App\Models;
 use App\Model;
 
 class Auth extends Model {
+  protected int $id;
   protected string $email;
   protected string $username;
   protected string $senha;
@@ -58,6 +59,15 @@ class Auth extends Model {
       $stmt->bindValue(':senha', $this->senha);
       $stmt->execute();
       return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarAcesso() {
+      $sql = "UPDATE tbUsuarios SET ultimoAcesso = CURRENT_TIMESTAMP WHERE id = :id";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+
+      return $stmt->execute();
     }
 
 }

@@ -19,6 +19,11 @@ class UsuarioController extends Action
 
     $usuario = $model->obterUsuarioPorUsername();
 
+    if(!empty($usuario)) {
+      $model->id = $usuario['id'];
+      $model->adicionarVisualizacaoPerfil();
+    }
+
     $response = new Response();
     $response->sucesso = !empty($usuario);
     if ($response->sucesso) $response->dados = $usuario;
