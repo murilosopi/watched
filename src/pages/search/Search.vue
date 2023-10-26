@@ -81,7 +81,6 @@ export default {
         const { dados: data } = response;
 
         if(data && data.filmes.length) {
-          if(page >= 11) return;
           this.movies = [
             ...this.movies,
             ...data.filmes
