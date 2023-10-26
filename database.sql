@@ -13,7 +13,7 @@ CREATE TABLE tbUsuarios(
     senha CHAR(32) NOT NULL,
     privado BOOLEAN DEFAULT FALSE,
     assinante BOOLEAN DEFAULT FALSE,
-    ultimoAcesso DATETIME,
+    ultimoA esso DATETIME,
     dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     visualizacoes INT DEFAULT 0
 );
@@ -90,6 +90,13 @@ CREATE TABLE tbUsuariosSeguidores (
     seguidor INT NOT NULL,
     FOREIGN KEY(usuario) REFERENCES tbUsuarios(id),
     FOREIGN KEY(seguidor) REFERENCES tbUsuarios(id)
+);
+
+CREATE TABLE tbPostagens(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario INT NOT NULL,
+    texto VARCHAR(1500),
+    imagem VARCHAR(1500)
 );
 
 INSERT INTO tbReacoes(id, icone, descricao)
