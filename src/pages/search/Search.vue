@@ -8,29 +8,28 @@
     <div class="row">
       <hr />
 
-      <ResultGroup title="Perfis" v-if="!usersFetched || users.length">
-        <ul class="list-unstyled">
-          <li class="col-md-3 col-sm-4 col-5" v-for="user in users" :key="user.id">
-            <router-link :to="`/usuario/${user.tag}`" class="text-light text-center">
-              <UserAvatar :username="user.tag" />
-              <Title class="h5 mt-2">@{{ user.tag }}</Title>
-            </router-link>
-          </li>
-
-          <template v-if="!users.length">
-            <li class="col-md-3 col-sm-4 col-5" v-for="i in 10" :key="i">
-              <UserAvatar username=""/>
-              <div class="row">
-                <div class="placeholder mt-3 py-3 rounded px-3 col-8 mx-auto"></div>
-              </div>
+      <template v-if="!usersFetched || users.length">
+        <ResultGroup title="Perfis">
+          <ul class="list-unstyled">
+            <li class="col-md-3 col-sm-4 col-5" v-for="user in users" :key="user.id">
+              <router-link :to="`/usuario/${user.tag}`" class="text-light text-center">
+                <UserAvatar :username="user.tag" />
+                <Title class="h5 mt-2">@{{ user.tag }}</Title>
+              </router-link>
             </li>
-          </template>
-
-
-        </ul>
-      </ResultGroup>
-
-      <hr>
+            <template v-if="!users.length">
+              <li class="col-md-3 col-sm-4 col-5" v-for="i in 10" :key="i">
+                <UserAvatar username=""/>
+                <div class="row">
+                  <div class="placeholder mt-3 py-3 rounded px-3 col-8 mx-auto"></div>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </ResultGroup>
+        <hr>
+      </template>
+      
       
       <ResultGroup title="Filmes" v-if="!moviesFetched || movies.length">
         <MoviesPanel :movies="movies" :inline="true"/>
