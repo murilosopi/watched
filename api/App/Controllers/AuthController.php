@@ -29,7 +29,7 @@ class AuthController extends Action
       $this->authModel
         ->__set('nome', $nome)
         ->__set('email', $email)
-        ->__set('senha', $senha)
+        ->__set('senha', password_hash($senha, PASSWORD_BCRYPT))
         ->__set('username', $username);
 
       $cadastroValido = !$this->authModel->cadastroExistente();
@@ -53,11 +53,15 @@ class AuthController extends Action
         ->__set('username', $username)
         ->__set('senha', $senha);
 
-
       $usuario = $this->authModel->obterUsuarioLogin();
 
-      if(!empty($usuario)) {
-        $_SESSION['usuario'] = $usuario;
+      if(!empty($usuario) && password_verify($senha, $usuario['senha'])) {
+        $_SESSION['usuario'] = [
+          'id' => $usuario['id'],
+          'nome' => $usuario['nome'],
+          'username' => $usuario['username'],
+          'sobre' => $usuario['sobre'],
+        ];
 
         $this->authModel->id = $usuario['id'];
         $this->authModel->atualizarAcesso();

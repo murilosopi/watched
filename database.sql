@@ -10,7 +10,7 @@ CREATE TABLE tbUsuarios(
     username VARCHAR(20) NOT NULL,
     sobre VARCHAR(240),
     email VARCHAR(75) NOT NULL,   
-    senha CHAR(32) NOT NULL,
+    senha CHAR(60) NOT NULL,
     privado BOOLEAN DEFAULT FALSE,
     assinante BOOLEAN DEFAULT FALSE,
     ultimoAcesso DATETIME,

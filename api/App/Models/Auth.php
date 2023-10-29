@@ -48,15 +48,14 @@ class Auth extends Model {
     public function obterUsuarioLogin() {
       $sql = "
         SELECT 
-          id, nome, username, sobre
+          id, nome, username, sobre, senha
         FROM 
           tbUsuarios 
         WHERE 
-          (username = :username OR email = :username) AND senha = :senha
+          (username = :username OR email = :username)
       ";
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':username', $this->username);
-      $stmt->bindValue(':senha', $this->senha);
       $stmt->execute();
       return $stmt->fetch(\PDO::FETCH_ASSOC);
     }

@@ -157,6 +157,15 @@ export default {
           });
       }
     },
+    
+    validatePassword(password) {
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(password);
+    },
+
+    validateEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    },
+
     validate() {
       if (
         !this.tag ||
@@ -174,11 +183,31 @@ export default {
         return false;
       }
 
+      if(!this.validateEmail(this.email)) {
+        this.notifyUser({
+          icon: "exclamation-diamond",
+          title: "Atenção",
+          text: "o e-mail fornecido é inválido!",
+          class: "warning",
+        });
+        return false;
+      }
+
       if (this.password != this.passwordConfirmation) {
         this.notifyUser({
           icon: "exclamation-diamond",
           title: "Atenção",
           text: "as senhas passadas são diferentes!",
+          class: "warning",
+        });
+        return false;
+      }
+
+      if(!this.validatePassword(this.password)) {
+        this.notifyUser({
+          icon: "exclamation-diamond",
+          title: "Senha Fraca",
+          text: "sua senha deve ter no mínimo oito caracteres contendo: letras maiúscula e minúscula, números e caracteres especiais!",
           class: "warning",
         });
         return false;
