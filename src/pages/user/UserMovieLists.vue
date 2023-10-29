@@ -1,31 +1,35 @@
 <template>
   <div class="user-movie-lists">
-    <MovieListSection
-      v-for="(list, idx) in interactionList"
-      :key="idx"
-      :name="list.name"
-      :movies="list.movies"
-    >
-      <i
-        :class="{
-          'bi-heart': idx == 'liked',
-          'bi-camera-reels': idx == 'watched',
-          'bi-bookmark-star': idx == 'saved',
-        }"
-        class="bi me-2 fs-2"
-        slot="icon"
-      ></i>
-    </MovieListSection>
+    <template v-for="(list, idx) in interactionList">
+      <MovieListSection
+        :key="idx"
+        :name="list.name"
+        :movies="list.movies"
+      >
+        <i
+          :class="{
+            'bi-heart': idx == 'liked',
+            'bi-camera-reels': idx == 'watched',
+            'bi-bookmark-star': idx == 'saved',
+          }"
+          class="bi me-2 fs-2"
+          slot="icon"
+        ></i>
+      </MovieListSection>
+      <hr :key="`_${idx}`">
+    </template>
 
-    <MovieListSection
-      v-for="(list, idx) in lists"
-      :key="list.id"
-      :name="list.name"
-      :movies="list.movies"
-      :class="idx + 1 == list.length ? 'mb-3' : ''"
-    >return
-      <i class="bi bi-heart me-2 fs-5" slot="icon"></i>
-    </MovieListSection>
+    <template v-for="(list, idx) in lists">
+      <MovieListSection
+        :key="list.id"
+        :name="list.name"
+        :movies="list.movies"
+        :class="idx + 1 == list.length ? 'mb-3' : ''"
+      >return
+        <i class="bi bi-heart me-2 fs-5" slot="icon"></i>
+      </MovieListSection>
+      <hr :key="list.id">
+    </template>
   </div>
 </template>
 
@@ -38,15 +42,15 @@ export default {
     return {
       interactionList: {
         liked: {
-          name: "Curtido",
+          name: "Curtidos",
           movies: []
         },
         watched: {
-          name: "Assistido",
+          name: "Assistidos",
           movies: []
         },
         saved: {
-          name: "Salvo",
+          name: "Salvos",
           movies: []
         },
       },

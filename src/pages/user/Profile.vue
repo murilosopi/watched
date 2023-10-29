@@ -1,6 +1,6 @@
 <template>
   <div class="user-profile">
-    <DarkBox class="p-4">
+    <DarkBox class="p-4 mb-5">
       <div class="row">
         <div class="col-9 col-sm-8 col-md-6 col-lg-3 mb-4 mb-lg-0 mx-auto">
           <UserAvatar :username="username" />
@@ -54,13 +54,17 @@
       </div>
     </DarkBox>
 
-    <section class="mt-5" v-if="reviews.length">
-      <Title tag="h3" class="h2 mb-3">
-        Resenhas Recentes
-        <i class="bi bi-clock-history ms-2"></i>
-      </Title>
-      <UserReviews :reviews="reviews" />
-    </section>
+    <template v-if="reviews.length">
+      <section>
+        <Title tag="h3" class="ps-3 display-6 mb-4">
+          <i class="bi bi-clock-history ms-2"></i>
+          Resenhas Recentes
+        </Title>
+        <UserReviews :reviews="reviews" />
+      </section>
+
+      <hr>
+    </template>
 
     <UserMovieLists :lists="lists" :uid="id"/>
 
