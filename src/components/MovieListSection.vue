@@ -1,14 +1,12 @@
 <template>
   <section class="movie-list">
-    <Title tag="h3" class="align-items-center d-flex">
+    <Title tag="h3" class="ps-3 display-6">
       <slot name="icon"></slot>
       {{ name }}
     </Title>
 
     <Scroller>
-      <div>
-        <MoviesPanel :movies="movies" :inline="true" />
-      </div>
+      <MoviesPanel :movies="movies" :inline="true" />
     </Scroller>
   </section>
 </template>
