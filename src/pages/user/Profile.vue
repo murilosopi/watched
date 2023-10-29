@@ -62,7 +62,7 @@
       <UserReviews :reviews="reviews" />
     </section>
 
-    <UserMovieLists :lists="lists" />
+    <UserMovieLists :lists="lists" :uid="id"/>
 
     <Dialog id="about-user" v-if="loadedInfo">
       <InputCustom slot="content" :icon="false">
