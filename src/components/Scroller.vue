@@ -121,11 +121,14 @@ export default {
   overflow-x: hidden;
 }
 
+.scroller .scroller-target {
+  padding: 0 1rem;
+}
+
 .scroller .scroller-target > * {
   flex-wrap: nowrap !important;
   display: flex;
   width: 100%;
-  padding: 0 1rem;
   justify-content: flex-start;
   gap: 3rem 2rem;
 

@@ -1,14 +1,21 @@
+:has(> .l-poster) {
+  padding: 2rem 1rem;
+}
+
 .l-poster {
   display: flex;
   width: 75%;
   margin: auto;
-  padding: 2rem 1rem;
   justify-content: center;
   gap: 3rem 2rem;
 
   overflow-x: scroll;
   scrollbar-width: none;
   scroll-behavior: smooth;
+}
+
+:has(> .poster-card):first-child {
+  margin-left: 1rem;
 }
 
 .l-poster .poster-card {
