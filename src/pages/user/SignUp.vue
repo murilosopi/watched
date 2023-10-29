@@ -10,7 +10,7 @@
       </p>
     </div>
 
-    <form @submit.prevent="signUp" @keypress.enter.prevent>
+    <form @submit.prevent="signUp" @keypress.enter.prevent="signUp">
       <div class="row justify-content-center">
         <div class="col-md-7">
           <InputCustom>
@@ -151,7 +151,7 @@ export default {
                 icon: "x-octagon",
                 title: "Erro",
                 text: "não foi possível efetuar o cadastro...",
-                class: "error",
+                class: "danger",
               });
             }
           });
