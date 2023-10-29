@@ -145,22 +145,21 @@ class Interacoes extends Model
   public function obterFilmesInteracoesUsuario()
   {
     $sql = "SELECT 
-                F.id, F.titulo, F.cartaz
+                filme
               FROM 
-                tbFilmesUsuario as U
-              JOIN tbFilmes as F ON (U.filme = F.id)
+                tbFilmesUsuario
               WHERE 
-                  U.usuario = :usuario
+                  usuario = :usuario
       ";
 
-    $sql .= isset($this->assistido) ? 'AND U.assistido = TRUE' : '';
-    $sql .= isset($this->curtido) ? 'AND U.curtido = TRUE' : '';
-    $sql .= isset($this->salvo) ? 'AND U.salvo = TRUE' : '';
+    $sql .= isset($this->assistido) ? 'AND assistido = TRUE' : '';
+    $sql .= isset($this->curtido) ? 'AND curtido = TRUE' : '';
+    $sql .= isset($this->salvo) ? 'AND salvo = TRUE' : '';
 
     $stmt = $this->conexao->prepare($sql);
     $stmt->bindValue(':usuario', $this->usuario);
     $stmt->execute();
 
-    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    return $stmt->fetchAll(\PDO::FETCH_COLUMN);
   }
 }
