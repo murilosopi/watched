@@ -2,10 +2,10 @@
   namespace App;
   class Connection {
     public static function getDb() {
-      $host = 'localhost';
-      $dbname = 'watched';
-      $username = 'root';
-      $password = '';
+      $host = DATABASE_HOST;
+      $dbname = DATABASE_NAME;
+      $username = DATABASE_USERNAME;
+      $password = DATABASE_SENHA;
 
       try {
         $pdo = new \PDO(

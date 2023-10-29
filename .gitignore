@@ -23,3 +23,4 @@ pnpm-debug.log*
 *.sw?
 
 /api/vendor/
+/api/App/Config/CredentialSets.php

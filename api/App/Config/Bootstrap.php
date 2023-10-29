@@ -11,5 +11,6 @@ header("Access-Control-Allow-Credentials: true");
 define('UPLOAD_PATH', $_SERVER['DOCUMENT_ROOT']."/../public/uploads/");
 
 require_once __DIR__."/../../vendor/autoload.php";
+require_once __DIR__.'/CredentialSets.php';
 
 ?>
