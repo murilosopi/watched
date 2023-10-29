@@ -13,7 +13,7 @@ CREATE TABLE tbUsuarios(
     senha CHAR(32) NOT NULL,
     privado BOOLEAN DEFAULT FALSE,
     assinante BOOLEAN DEFAULT FALSE,
-    ultimoA esso DATETIME,
+    ultimoAcesso DATETIME,
     dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     visualizacoes INT DEFAULT 0
 );
