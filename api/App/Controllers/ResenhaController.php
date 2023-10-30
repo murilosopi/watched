@@ -66,7 +66,7 @@ class ResenhaController extends Action
     $resenha->usuario = $_SESSION['usuario']['id'];
     $resenha->titulo = $_POST['title'] ?? null;
     $resenha->descricao = $_POST['text'] ?? null;
-    $resenha->reacao = $_POST['reaction'] ?? null;
+    $resenha->reacao = !empty($_POST['reaction']) ? $_POST['reaction'] : null;
     $resenha->notaAvaliacao = $_POST['rating'] ?? null;
 
     $id = $resenha->registrarResenha();

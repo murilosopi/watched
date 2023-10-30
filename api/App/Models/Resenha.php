@@ -66,7 +66,7 @@
         FROM 
           tbResenhas as r 
         JOIN tbUsuarios as u ON (r.usuario = u.id)
-        JOIN tbReacoes as reacao ON reacao.id = r.reacao
+        LEFT JOIN tbReacoes as reacao ON reacao.id = r.reacao
         WHERE 
           r.usuario = :usuario
       ";
