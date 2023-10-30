@@ -19,13 +19,14 @@
               Home
             </a>
           </router-link>
-          <a
-            href="pesquisa-mobile?rota=/guia-filmes"
-            class="nav-link fw-bold d-sm-none"
-          >
-            <i class="bi bi-search"></i>
-            Pesquisar
-          </a>
+          <router-link to="/pesquisa">
+            <a
+              class="nav-link fw-bold d-sm-none"
+            >
+              <i class="bi bi-search"></i>
+              Pesquisar
+            </a>
+          </router-link>
           <template v-if="userLogged">
             <router-link :to="`/usuario/${loggedData.tag}`">
               <a class="nav-link fw-bold">
