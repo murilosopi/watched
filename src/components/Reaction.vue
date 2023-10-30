@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center align-items-center">
+  <div class="row h-50 justify-content-center align-items-center">
     <div class="col-lg-4 col-3" v-for="emoji in emojis" :key="emoji.id">
       <InteractiveIcon
         class="mx-auto"
@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     disabled() {
-      return this.value.length > 0;
+      return `${this.value}`.length > 0;
     },
   },
   updated() {
