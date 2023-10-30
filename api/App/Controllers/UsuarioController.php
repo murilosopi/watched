@@ -67,7 +67,7 @@ class UsuarioController extends Action
     if (isset($_SESSION['usuario'])) {
       $model = new Usuario();
       $model->id = $_SESSION['usuario']['id'];
-      $model->sobre = $_GET['sobre'] ?? 0;
+      $model->sobre = $_POST['sobre'] ?? 0;
 
       $response->sucesso = $model->alterarSobre();
     } else {

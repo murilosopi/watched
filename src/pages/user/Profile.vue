@@ -81,7 +81,7 @@
             </ButtonCustom>
           </div>
           <div class="col-6">
-            <ButtonCustom data-bs-dismiss="modal" @click="updateAbout">
+            <ButtonCustom data-bs-dismiss="modal" @click.native="updateAbout">
               Salvar
             </ButtonCustom>
           </div>
@@ -195,10 +195,27 @@ export default {
     },
 
     openAboutEdit() {
-      this.newAbout = this.loggedData.about;
+      this.newAbout = this.about;
     },
 
-    updateAbout() {},
+    updateAbout() {
+      const original = this.about;
+
+      this.about = this.newAbout;
+
+      const params = { sobre: this.about }
+
+      this.$api.post('/usuario/alterar-sobre', params)
+        .then(res => {
+          const response = res.data;
+
+          if(!response.sucesso) {
+            this.about = original;
+          }
+
+          this.newAbout = this.about;
+        })
+    },
 
     goToConfig() {
       this.$router.push('/configuracoes')
@@ -214,6 +231,14 @@ export default {
   created() {
     this.getInfo();
   },
+
+  mounted() {
+    this.$el.addEventListener('shown.bs.modal', (e) => {
+      if(e.target.id == 'about-user') {
+        e.target.querySelector('textarea').focus()
+      }
+    });
+  }
 };
 </script>
 
