@@ -1,31 +1,26 @@
 <template>
   <div class="user-movie-lists">
-    <template v-for="(list, idx) in interactionList">
-      <MovieListSection
-        :key="idx"
-        :name="list.name"
-        :movies="list.movies"
-      >
-        <i
-          :class="{
-            'bi-heart': idx == 'liked',
-            'bi-camera-reels': idx == 'watched',
-            'bi-bookmark-star': idx == 'saved',
-          }"
-          class="bi me-2 fs-2"
-          slot="icon"
-        ></i>
-      </MovieListSection>
-      <hr :key="`_${idx}`">
-    </template>
+    <TransitionGroup leave-active-class="animate__animated animate__fadeOut animate__faster">
+      <template v-for="(list, idx) in interactionList">
+
+        <template v-if="list.movies.length || !list.loaded">
+
+          <MovieListSection :key="idx" :name="list.name" :movies="list.movies">
+            <i :class="{
+              'bi-heart': idx == 'liked',
+              'bi-camera-reels': idx == 'watched',
+              'bi-bookmark-star': idx == 'saved',
+            }" class="bi me-2 fs-2" slot="icon"></i>
+          </MovieListSection>
+          <hr :key="`_${idx}`">
+        </template>
+
+      </template>
+    </TransitionGroup>
 
     <template v-for="(list, idx) in lists">
-      <MovieListSection
-        :key="list.id"
-        :name="list.name"
-        :movies="list.movies"
-        :class="idx + 1 == list.length ? 'mb-3' : ''"
-      >return
+      <MovieListSection :key="list.id" :name="list.name" :movies="list.movies"
+        :class="idx + 1 == list.length ? 'mb-3' : ''">return
         <i class="bi bi-heart me-2 fs-5" slot="icon"></i>
       </MovieListSection>
       <hr :key="list.id">
@@ -43,15 +38,18 @@ export default {
       interactionList: {
         liked: {
           name: "Curtidos",
-          movies: []
+          movies: [],
+          loaded: false
         },
         watched: {
           name: "Assistidos",
-          movies: []
+          movies: [],
+          loaded: false
         },
         saved: {
           name: "Salvos",
-          movies: []
+          movies: [],
+          loaded: false
         },
       },
     };
@@ -74,15 +72,18 @@ export default {
         .then((res) => {
           let response = res.data;
 
+          this.interactionList.liked.loaded = true;
+
           if (response.sucesso) {
             response.dados.forEach(async (id) => {
               const movieInfo = await this.getMovieInfo(id);
 
-              if(movieInfo) this.interactionList.liked.movies.push(movieInfo);
+
+              if (movieInfo) this.interactionList.liked.movies.push(movieInfo);
             });
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     },
 
     getWatchedMovies() {
@@ -93,15 +94,18 @@ export default {
         .then((res) => {
           let response = res.data;
 
+          this.interactionList.watched.loaded = true;
+
           if (response.sucesso) {
             response.dados.forEach(async (id) => {
               const movieInfo = await this.getMovieInfo(id);
 
-              if(movieInfo) this.interactionList.watched.movies.push(movieInfo);
+
+              if (movieInfo) this.interactionList.watched.movies.push(movieInfo);
             });
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     },
 
     getSavedMovies() {
@@ -112,15 +116,18 @@ export default {
         .then((res) => {
           let response = res.data;
 
+          this.interactionList.saved.loaded = true;
+
           if (response.sucesso) {
             response.dados.forEach(async (id) => {
               const movieInfo = await this.getMovieInfo(id);
 
-              if(movieInfo) this.interactionList.saved.movies.push(movieInfo);
+
+              if (movieInfo) this.interactionList.saved.movies.push(movieInfo);
             });
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     },
 
     getMovieInfo(id) {
@@ -132,7 +139,7 @@ export default {
 
           return response.sucesso ? response.dados : false;
         })
-        .catch(() => {});
+        .catch(() => { });
     },
   },
   watch: {
