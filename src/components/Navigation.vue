@@ -1,60 +1,77 @@
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark">
+  <div class="navbar navbar-dark">
     <div class="container-md justify-content-between">
       <slot></slot>
 
       <button
         class="ms-auto navbar-toggler border-0"
         type="button"
-        data-bs-toggle="collapse"
+        data-bs-toggle="offcanvas"
         data-bs-target="#navbar"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse flex-grow-0" id="navbar">
-        <nav class="navbar-nav text-end py-3 px-4 gap-3">
-          <router-link to="/">
-            <a class="nav-link fw-bold">
+      <DarkBox class="offcanvas offcanvas-end" id="navbar" data-bs-backdrop="static">
+        <div class="offcanvas-header justify-content-end">
+          <InteractiveIcon
+            type="button"
+            data-bs-dismiss="offcanvas"
+            aria-label="Fechar"
+          >
+            <i class="bi bi-x-lg fs-4"></i>
+          </InteractiveIcon>
+        </div>
+        <div class="offcanvas-body">
+          <nav class="navbar-nav text-end gap-3">
+            <router-link class="nav-link fw-bold" to="/">
               <i class="bi bi-house"></i>
               Home
-            </a>
-          </router-link>
-          <router-link to="/pesquisa">
-            <a
-              class="nav-link fw-bold d-sm-none"
-            >
+            </router-link>
+            <router-link to="/pesquisa" class="nav-link fw-bold d-sm-none">
               <i class="bi bi-search"></i>
               Pesquisar
-            </a>
-          </router-link>
-          <template v-if="userLogged">
-            <router-link :to="`/usuario/${loggedData.tag}`">
-              <a class="nav-link fw-bold">
+            </router-link>
+            <template v-if="userLogged">
+              <router-link
+                :to="`/usuario/${loggedData.tag}`"
+                class="nav-link fw-bold"
+              >
                 <i class="bi bi-person-circle"></i>
                 Meu perfil
+              </router-link>
+              <a
+                class="nav-link fw-bold"
+                href="/logout"
+                @click.prevent="logout"
+              >
+                <i class="bi bi-box-arrow-left"></i>
+                Sair
               </a>
-            </router-link>
-            <a class="nav-link fw-bold" href="/logout" @click.prevent="logout">
-              <i class="bi bi-box-arrow-left"></i>
-              Sair
-            </a>
-          </template>
-          <template v-else>
-            <router-link to="/login">
-              <a class="nav-link fw-bold">
-                <i class="bi bi-box-arrow-in-right"></i>
-                Entre na sua conta!
-              </a>
-            </router-link>
-          </template>
-        </nav>
-      </div>
+            </template>
+            <template v-else>
+              <router-link to="/login">
+                <a class="nav-link fw-bold">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  Entre na sua conta!
+                </a>
+              </router-link>
+            </template>
+          </nav>
+        </div>
+      </DarkBox>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import DarkBox from "./DarkBox.vue";
+import InteractiveIcon from "./InteractiveIcon.vue";
+export default {
+  components: {
+    DarkBox,
+    InteractiveIcon
+},
+};
 </script>
 
 <style></style>
