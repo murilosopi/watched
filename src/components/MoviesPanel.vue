@@ -1,6 +1,6 @@
 <template>
   <ul class="list-unstyled l-poster py-4 overflow-visible" :class="inline ? 'flex-nowrap overflow-x-scroll' : 'flex-wrap' ">
-    <li v-for="(movie, index) in movies" :key="index">
+    <li v-for="(movie, index) in movies" :key="`${movie.id}-${index}`">
       <MovieCard :movie="movie"/>
     </li>
 

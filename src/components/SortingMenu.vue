@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown" data-bs-theme="dark">
-    <InteractiveIcon data-bs-toggle="dropdown" data-bs-auto-close="outside">
+    <InteractiveIcon class="toggler" data-bs-auto-close="outside" @click.native="toggleDropdown" data-bs-toggle="dropdown">
       <i class="bi bi-sort-down fs-4"></i>
     </InteractiveIcon>
     <ul class="dropdown-menu">
@@ -37,6 +37,8 @@
 <script>
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import Title from "@/components/Title.vue";
+import { Dropdown } from "bootstrap";
+import Swal from "sweetalert2";
 export default {
   components: {
     InteractiveIcon,
@@ -47,6 +49,11 @@ export default {
       sortBy: null,
     };
   },
+  methods: {
+    toggleDropdown() {
+      this.dropdown.toggle()
+    }
+  },
   watch: {
     sortBy() {
       this.$emit('change', this.sortBy);
@@ -54,6 +61,9 @@ export default {
   },
   created() {
     this.sortBy = 'relevance'
+  },
+  mounted() {
+    this.dropdown = new Dropdown(this.$el.querySelector('.toggler'))
   }
 };
 </script>
