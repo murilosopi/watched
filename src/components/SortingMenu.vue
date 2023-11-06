@@ -38,7 +38,6 @@
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import Title from "@/components/Title.vue";
 import { Dropdown } from "bootstrap";
-import Swal from "sweetalert2";
 export default {
   components: {
     InteractiveIcon,
