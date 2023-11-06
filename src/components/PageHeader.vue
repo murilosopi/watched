@@ -10,6 +10,10 @@
 
         <SearchBar :value="search" />
 
+        <template v-if="userLogged">
+          <ChatIcon class="ms-auto me-2" />
+        </template>
+
       </Navigation>
       <Dividers />
     </template>
@@ -22,6 +26,8 @@ import SearchBar from "@/components/SearchBar.vue";
 import Title from "@/components/Title.vue";
 import Navigation from "@/components/Navigation.vue";
 import Dividers from "@/components/Dividers.vue";
+import ChatIcon from "./ChatIcon.vue";
+
 export default {
   props: {
     error: {
@@ -38,6 +44,7 @@ export default {
     Title,
     Navigation,
     Dividers,
+    ChatIcon
   }
 };
 </script>

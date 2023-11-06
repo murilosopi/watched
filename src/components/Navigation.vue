@@ -4,7 +4,7 @@
       <slot></slot>
 
       <button
-        class="ms-auto navbar-toggler border-0"
+        class="navbar-toggler border-0"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#navbar"
