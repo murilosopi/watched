@@ -11,7 +11,8 @@
         <SearchBar :value="search" />
 
         <template v-if="userLogged">
-          <ChatIcon class="ms-auto me-2" />
+          <ChatIcon class="ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modal-chat" />
+          <ChatModal />
         </template>
 
       </Navigation>
@@ -27,6 +28,7 @@ import Title from "@/components/Title.vue";
 import Navigation from "@/components/Navigation.vue";
 import Dividers from "@/components/Dividers.vue";
 import ChatIcon from "./ChatIcon.vue";
+import ChatModal from "./ChatModal.vue";
 
 export default {
   props: {
@@ -44,7 +46,8 @@ export default {
     Title,
     Navigation,
     Dividers,
-    ChatIcon
+    ChatIcon,
+    ChatModal
   }
 };
 </script>
