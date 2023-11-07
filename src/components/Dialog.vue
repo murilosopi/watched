@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" :class=" size ? `modal-${size}` : ''">
       <DarkBox class="modal-content rounded">
         <div class="modal-header" v-if="title.length > 0">
           <h1 class="modal-title fs-5">{{ title }}</h1>
@@ -33,6 +33,10 @@ export default {
     title: {
         type: String,
         default: ''
+    },
+    size: {
+      type: String,
+      default: ''
     }
   },
   data() {
