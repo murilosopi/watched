@@ -18,7 +18,7 @@
       <form @submit.prevent="submit">
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-7 col-xl-5">
-            <InputCustom>
+            <InputCustom class="mb-3">
               <i class="bi bi-person-circle" slot="icon"></i>
               <input type="text" placeholder="Usuário" slot="input" class="form-control" v-model="username" @keypress.enter.prevent>
             </InputCustom>
@@ -26,7 +26,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-7 col-xl-5">
-            <InputCustom>
+            <InputCustom class="mb-3">
               <i class="bi bi-lock-fill" slot="icon"></i>
               <input type="password" placeholder="Senha" slot="input" class="form-control" v-model="password" @keypress.enter.prevent="submit">
             </InputCustom>

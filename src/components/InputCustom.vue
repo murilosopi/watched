@@ -1,5 +1,5 @@
 <template>
-  <div class="input-group input-custom mb-3">
+  <div class="input-group input-custom">
     <div class="input-group-text" v-if="icon">
         <slot name="icon"></slot>
     </div>
@@ -19,14 +19,20 @@ export default {
 </script>
 
 <style>
-.input-custom .input-group-text,
-.input-custom .form-control {
+.input-custom :is(.input-group-text, .form-control) {
   border: none!important;
-  border-radius: 0!important;
-  border-bottom: 1.5px solid white!important;
   outline: none!important;
-  padding: 0.7rem!important;
+  padding-top: 0.7rem!important;
+  padding-bottom: 0.7rem!important;
   background-color: rgb(33, 33, 33) !important;
+}
+
+.input-custom :is(.input-group-text, .form-control):not(.rounded-pill) {
+  border-radius: 0!important;
+}
+
+.input-custom :is(.input-group-text, .form-control):not(.border-0, .border-bottom-0) {
+  border-bottom: 1.5px solid white!important;
 }
 
 .input-custom .input-group-text,

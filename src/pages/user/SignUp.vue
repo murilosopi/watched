@@ -13,7 +13,7 @@
     <form @submit.prevent="signUp" @keypress.enter.prevent="signUp">
       <div class="row justify-content-center">
         <div class="col-md-7">
-          <InputCustom>
+          <InputCustom class="mb-3">
             <i class="bi bi-person-fill" slot="icon"></i>
             <input
               v-model="name"
@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-md-5">
-          <InputCustom>
+          <InputCustom class="mb-3">
             <i class="bi bi-person-badge-fill" slot="icon"></i>
             <input
               v-model="tag"
@@ -40,7 +40,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col">
-          <InputCustom>
+          <InputCustom class="mb-3">
             <i class="bi bi-envelope-fill" slot="icon"></i>
             <input
               v-model="email"
@@ -54,7 +54,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-md">
-          <InputCustom>
+          <InputCustom class="mb-3">
             <i class="bi bi-lock-fill" slot="icon"></i>
             <input
               v-model="password"
@@ -66,7 +66,7 @@
           </InputCustom>
         </div>
         <div class="col-md">
-          <InputCustom>
+          <InputCustom class="mb-3">
             <i class="bi bi-lock-fill" slot="icon"></i>
             <input
               v-model="passwordConfirmation"
