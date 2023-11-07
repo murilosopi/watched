@@ -207,7 +207,7 @@ export default {
         this.notifyUser({
           icon: "exclamation-diamond",
           title: "Senha Fraca",
-          text: "sua senha deve ter no mínimo oito caracteres contendo: letras maiúscula e minúscula, números e caracteres especiais!",
+          text: "sua senha deve ter no mínimo 8 caracteres contendo: letras maiúscula e minúscula, números e caracteres especiais!",
           class: "warning",
         });
         return false;
