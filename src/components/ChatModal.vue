@@ -38,7 +38,6 @@ export default {
       messages: [
         { uid: 2, paragraphs: [ 'Lorem!', 'ipsum', 'dolar'], date: '10/10/2023 20:10' },
         { uid: 2, paragraphs: [ 'sit amet' ], date: '10/10/2023 20:10' },
-        
       ],
     };
   },
@@ -46,9 +45,14 @@ export default {
   methods: {
     sendMessage() {
       if(this.message.length) {
+        const date = new Date();
+        const dateString = date.toLocaleString('pt-BR', { dateStyle: 'medium' });
+        const timeString = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
         this.messages.push({
           uid: this.loggedData.id,
           paragraphs: this.message.split('\n'),
+          date: `${dateString} ${timeString}`
         })
   
         this.message = '';
