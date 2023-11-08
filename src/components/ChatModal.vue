@@ -45,12 +45,14 @@ export default {
 
   methods: {
     sendMessage() {
-      this.messages.push({
-        uid: this.loggedData.id,
-        paragraphs: this.message.split('\n'),
-      })
-
-      this.message = '';
+      if(this.message.length) {
+        this.messages.push({
+          uid: this.loggedData.id,
+          paragraphs: this.message.split('\n'),
+        })
+  
+        this.message = '';
+      }
     }
   },
 };
