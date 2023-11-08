@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade">
-    <div class="modal-dialog modal-dialog-centered" :class=" size ? `modal-${size}` : ''">
+    <div class="modal-dialog modal-dialog-centered" :class="dialogClass">
       <DarkBox class="modal-content rounded">
         <div class="modal-header" v-if="title.length > 0">
           <h1 class="modal-title fs-5">{{ title }}</h1>
@@ -37,7 +37,8 @@ export default {
     size: {
       type: String,
       default: ''
-    }
+    },
+    scroll: Boolean
   },
   data() {
     return {
@@ -47,6 +48,17 @@ export default {
   mounted() {
     this.element = new Modal(this.$el);
   },
+  computed: {
+    dialogClass() {
+      const cls = {
+        'modal-dialog-scrollable': this.scroll
+      };
+
+      if(this.size.length) cls[`modal-${this.size}`] = true;
+
+      return cls;
+    }
+  }
 };
 </script>
 
