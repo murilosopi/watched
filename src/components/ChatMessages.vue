@@ -27,6 +27,9 @@ export default {
   props: {
     messages: Array,
   },
+  updated() {
+    this.$el.querySelector('.chat-message:last-child').scrollIntoView();
+  }
 };
 </script>
 
