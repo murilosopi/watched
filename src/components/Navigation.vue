@@ -27,7 +27,10 @@
                 <i class="bi bi-person-circle"></i>
                 Meu perfil
               </router-link>
-              <a @click.native="closeMenu" class="nav-link fw-bold" href="/logout" @click.prevent="logout">
+              <a class="nav-link fw-bold" href="/logout" @click.prevent="() => {
+                logout();
+                closeMenu();
+              }">
                 <i class="bi bi-box-arrow-left"></i>
                 Sair
               </a>
