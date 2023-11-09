@@ -1,7 +1,6 @@
 <template>
   <form
     action="pesquisar"
-    class="d-none d-sm-flex flex-grow-1 mx-3 mx-md-5"
     id="form-search"
     @keypress.enter.prevent="submit"
     @submit.prevent="submit"
@@ -11,11 +10,11 @@
         type="search"
         autocomplete="off"
         name="pesquisa"
-        placeholder="Busque por filmes e usuários..."
-        class="flex-grow-1"
+        :placeholder="placeholder || ''"
+        class="flex-grow-1 px-sm-3 px-2"
         v-model="search"
       />
-      <button type="submit">
+      <button type="submit" class="px-3">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -25,7 +24,7 @@
 <script>
 import router from '@/routes';
 export default {
-  props: ['value'],
+  props: ['value', 'placeholder'],
   data() {
     return {
       search: this.value || ''
@@ -56,13 +55,4 @@ export default {
   padding-bottom: 0.5rem;
 }
 
-.search-box input {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-.search-box button {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
 </style>

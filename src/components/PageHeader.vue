@@ -8,7 +8,7 @@
           </router-link>
         </Title>
 
-        <SearchBar :value="search" />
+        <SearchBar v-if="search" :value="query" class="d-none d-sm-flex flex-grow-1 mx-3 mx-md-5" placeholder="Pesquisar por perfis e filmes" />
 
         <template v-if="userLogged">
           <ChatIcon class="ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modal-chat" />
@@ -36,9 +36,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    search: {
+    query: {
       type: String,
       default: ''
+    },
+    search: {
+      type: Boolean,
+      default: true,
     }
   },
   components: {

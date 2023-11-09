@@ -7,12 +7,13 @@ const header = () => import('@/components/PageHeader');
 // const Home = () => import('@/pages/home/Home');
 const Login = () => import('@/pages/user/Login');
 const SignUp = () => import('@/pages/user/SignUp');
-const Config = () => import('@/pages/user/Config.vue');
+const Config = () => import('@/pages/user/Config');
 const Search = () => import('@/pages/search/Search');
+const SearchResults = () => import('@/pages/search/SearchResults');
 const Profile = () => import('@/pages/user/Profile');
 const Movie = () => import('@/pages/movie/Movie');
 const Error = () => import('@/pages/error/Error');
-const Explore = () => import('@/pages/home/Explore.vue');
+const Explore = () => import('@/pages/home/Explore');
 
 
 export default new Router({
@@ -61,11 +62,11 @@ export default new Router({
       path: '/pesquisar',
       components: {
         header,
-        page: Search
+        page: SearchResults
       },
       props: {
-        page: route => ({ search: route.params.search.replaceAll('-', ' ')}),
-        header: route => ({ search: route.params.search.replaceAll('-', ' ')}),
+        page: route => ({ query: route.params.search.replaceAll('-', ' ')}),
+        header: route => ({ query: route.params.search.replaceAll('-', ' ')}),
       },
       children: [
         {
@@ -76,6 +77,18 @@ export default new Router({
           },
         },
       ]
+    },
+    {
+      path: '/pesquisa',
+      components: {
+        header,
+        page: Search
+      },
+      props: {
+        header: {
+          search: false
+        }
+      }
     },
     {
       path: '/configuracoes',
