@@ -1,127 +1,151 @@
 <template>
   <main>
-
     <div class="text-center">
-
-      <Title class="display-3">
-        Entre na sua conta
-      </Title>
+      <Title class="display-3"> Entre na sua conta </Title>
       <p>
         Se você ainda não tiver uma conta,
         <router-link to="/cadastro">
-          <a class="text-light">cadastre-se aqui</a>
-        </router-link>.
+          <a class="text-light">cadastre-se aqui</a> </router-link
+        >.
       </p>
     </div>
 
-          
-      <form @submit.prevent="submit">
-        <div class="row justify-content-center">
-          <div class="col-md-10 col-lg-7 col-xl-5">
-            <InputCustom class="mb-3">
-              <i class="bi bi-person-circle" slot="icon"></i>
-              <input type="text" placeholder="Usuário" slot="input" class="form-control" v-model="username" @keypress.enter.prevent>
-            </InputCustom>
+    <form @submit.prevent="submit">
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-7 col-xl-5">
+          <InputCustom class="mb-3">
+            <i class="bi bi-person-circle" slot="icon"></i>
+            <input
+              type="text"
+              placeholder="Usuário"
+              slot="input"
+              class="form-control"
+              v-model="username"
+              @keypress.enter.prevent
+            />
+          </InputCustom>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-7 col-xl-5">
+          <InputCustom class="mb-3" :button="true">
+            <i class="bi bi-lock-fill" slot="icon"></i>
+            <input
+              placeholder="Senha"
+              :type="passwordVisible ? 'text' : 'password'"
+              slot="input"
+              class="form-control"
+              v-model="password"
+              @keypress.enter.prevent="submit"
+            />
+            <InteractiveIcon
+              class="opacity-75"
+              slot="button"
+              type="button"
+              @click.native="passwordVisible = !passwordVisible"
+            >
+              <i
+                class="bi"
+                :class="{
+                  'bi-eye-slash': passwordVisible,
+                  'bi-eye': !passwordVisible,
+                }"
+              ></i>
+            </InteractiveIcon>
+          </InputCustom>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-7 col-xl-5">
+          <div class="d-flex">
+            <ButtonCustom class="me-2" @click.native="back" type="button">
+              Voltar
+            </ButtonCustom>
+            <ButtonCustom variant="azul" class="ms-2" type="submit">
+              Entrar
+            </ButtonCustom>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-md-10 col-lg-7 col-xl-5">
-            <InputCustom class="mb-3">
-              <i class="bi bi-lock-fill" slot="icon"></i>
-              <input type="password" placeholder="Senha" slot="input" class="form-control" v-model="password" @keypress.enter.prevent="submit">
-            </InputCustom>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-md-10 col-lg-7 col-xl-5">
-            <div class="d-flex">
-              <ButtonCustom class="me-2" @click.native="back" type="button">
-                Voltar
-              </ButtonCustom>
-              <ButtonCustom variant="azul" class="ms-2" type="submit">
-                Entrar
-              </ButtonCustom>
-            </div>
-          </div>
-        </div>
-      </form>
-    
-    </main>
+      </div>
+    </form>
+  </main>
 </template>
 
 <script>
-
-import InputCustom from '@/components/InputCustom.vue';
-import Title from '@/components/Title.vue';
-import ButtonCustom from '@/components/ButtonCustom.vue';
-import PageMixin from '@/mixins/PageMixin.js';
-import router from '@/routes';
+import InputCustom from "@/components/InputCustom.vue";
+import Title from "@/components/Title.vue";
+import ButtonCustom from "@/components/ButtonCustom.vue";
+import PageMixin from "@/mixins/PageMixin.js";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
+import router from "@/routes";
 
 export default {
   components: {
     InputCustom,
     Title,
-    ButtonCustom
+    ButtonCustom,
+    InteractiveIcon
   },
   data() {
     return {
-      username: '',
-      password: '',
-    }
+      username: "",
+      password: "",
+      passwordVisible: false,
+    };
   },
   mixins: [PageMixin],
   methods: {
     back() {
-      router.go(-1)
+      router.go(-1);
     },
 
     submit() {
-      if(this.isValid) {
+      if (this.isValid) {
         this.login();
       } else {
         this.notifyUser({
-          icon: 'exclamation-diamond',
-          title: 'Atenção',
+          icon: "exclamation-diamond",
+          title: "Atenção",
           text: "preencha os campos necessários...",
-          class: 'warning'
-        })
+          class: "warning",
+        });
       }
     },
 
     login() {
-      this.auth({ username: this.username, password: this.password })
-          .then(success => {
-            if(success) {
-              this.notifyUser({
-                icon: 'box-arrow-in-left',
-                text: "Login realizado com sucesso!",
-                class: 'success'
-              })              
-              router.push('/');
-            } else {
-              this.notifyUser({
-                icon: 'x-circle',
-                tite: 'Ops!',
-                text: "As credenciais estão incorretas...",
-                class: 'danger'
-              })
-            }
-          })
-    }
+      this.auth({ username: this.username, password: this.password }).then(
+        (success) => {
+          if (success) {
+            this.notifyUser({
+              icon: "box-arrow-in-left",
+              text: "Login realizado com sucesso!",
+              class: "success",
+            });
+            router.push("/");
+          } else {
+            this.notifyUser({
+              icon: "x-circle",
+              tite: "Ops!",
+              text: "As credenciais estão incorretas...",
+              class: "danger",
+            });
+          }
+        }
+      );
+    },
   },
 
   computed: {
     isValid() {
       return this.username.length && this.password.length;
-    }
+    },
   },
   created() {
-    this.changeFavicon('login-sign-up', 'svg');
-    this.changePageTitle('Entre na Sua Conta');
+    this.changeFavicon("login-sign-up", "svg");
+    this.changePageTitle("Entre na Sua Conta");
   },
-}
+};
 </script>
 
 <style>
-
 </style>

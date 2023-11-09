@@ -54,27 +54,55 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-md">
-          <InputCustom class="mb-3">
+          <InputCustom class="mb-3" :button="true">
             <i class="bi bi-lock-fill" slot="icon"></i>
             <input
               v-model="password"
-              type="password"
+              :type="passwordVisible ? 'text' : 'password'"
               placeholder="Senha"
               slot="input"
               class="form-control"
             />
+            <InteractiveIcon
+              class="opacity-75"
+              slot="button"
+              type="button"
+              @click.native="passwordVisible = !passwordVisible"
+            >
+              <i
+                class="bi"
+                :class="{
+                  'bi-eye-slash': passwordVisible,
+                  'bi-eye': !passwordVisible,
+                }"
+              ></i>
+            </InteractiveIcon>
           </InputCustom>
         </div>
         <div class="col-md">
-          <InputCustom class="mb-3">
+          <InputCustom class="mb-3" :button="true">
             <i class="bi bi-lock-fill" slot="icon"></i>
             <input
               v-model="passwordConfirmation"
-              type="password"
+              :type="confPasswordVisible ? 'text' : 'password'"
               placeholder="Confirme sua senha"
               slot="input"
               class="form-control"
             />
+            <InteractiveIcon
+              class="opacity-75"
+              slot="button"
+              type="button"
+              @click.native="confPasswordVisible = !confPasswordVisible"
+            >
+              <i
+                class="bi"
+                :class="{
+                  'bi-eye-slash': confPasswordVisible,
+                  'bi-eye': !confPasswordVisible,
+                }"
+              ></i>
+            </InteractiveIcon>
           </InputCustom>
         </div>
       </div>
@@ -98,12 +126,14 @@ import Title from "@/components/Title.vue";
 import ButtonCustom from "@/components/ButtonCustom.vue";
 import PageMixin from "@/mixins/PageMixin";
 import router from "@/routes";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
 
 export default {
   components: {
     InputCustom,
     Title,
     ButtonCustom,
+    InteractiveIcon,
   },
   mixins: [PageMixin],
   data() {
@@ -113,6 +143,8 @@ export default {
       email: "",
       password: "",
       passwordConfirmation: "",
+      passwordVisible: false,
+      confPasswordVisible: false,
     };
   },
   methods: {
@@ -120,46 +152,48 @@ export default {
       router.go(-1);
     },
     signUp() {
-      if(this.validate()) {
+      if (this.validate()) {
         const params = {
           nome: this.name,
           user: this.tag,
           email: this.email,
-          senha : this.password
-        }
+          senha: this.password,
+        };
 
-        this.$api.post('/usuario/cadastrar', params)
-          .then(res => {
-            const response = res.data;
-            
-            if(response.sucesso) {
-              this.notifyUser({
-                icon: "check",
-                title: "Sucesso",
-                text: "usuário cadastro!",
-                class: "success",
-              });
+        this.$api.post("/usuario/cadastrar", params).then((res) => {
+          const response = res.data;
 
-              this.auth({ username: this.tag, password: this.password })
-                .then(success => {
-                  if(success) {
-                    router.push('/');
-                  }
-                });
-            } else {
-              this.notifyUser({
-                icon: "x-octagon",
-                title: "Erro",
-                text: "não foi possível efetuar o cadastro...",
-                class: "danger",
-              });
-            }
-          });
+          if (response.sucesso) {
+            this.notifyUser({
+              icon: "check",
+              title: "Sucesso",
+              text: "usuário cadastro!",
+              class: "success",
+            });
+
+            this.auth({ username: this.tag, password: this.password }).then(
+              (success) => {
+                if (success) {
+                  router.push("/");
+                }
+              }
+            );
+          } else {
+            this.notifyUser({
+              icon: "x-octagon",
+              title: "Erro",
+              text: "não foi possível efetuar o cadastro...",
+              class: "danger",
+            });
+          }
+        });
       }
     },
-    
+
     validatePassword(password) {
-      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(password);
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
+        password
+      );
     },
 
     validateEmail(email) {
@@ -183,7 +217,7 @@ export default {
         return false;
       }
 
-      if(!this.validateEmail(this.email)) {
+      if (!this.validateEmail(this.email)) {
         this.notifyUser({
           icon: "exclamation-diamond",
           title: "Atenção",
@@ -203,7 +237,7 @@ export default {
         return false;
       }
 
-      if(!this.validatePassword(this.password)) {
+      if (!this.validatePassword(this.password)) {
         this.notifyUser({
           icon: "exclamation-diamond",
           title: "Senha Fraca",

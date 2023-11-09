@@ -4,6 +4,9 @@
         <slot name="icon"></slot>
     </div>
     <slot name="input"></slot>
+    <div class="input-group-text" v-if="button">
+        <slot name="button"></slot>
+    </div>
   </div>
 </template>
 
@@ -13,6 +16,10 @@ export default {
     icon: {
       type: Boolean,
       default: true,
+    },
+    button: {
+      type: Boolean,
+      default: false,
     }
   }
 };
