@@ -1,17 +1,20 @@
 <template>
-  <Dialog id="modal-chat" size="lg" :scroll="true">
+  <Dialog id="modal-chat" size="lg" :scroll="true" >
     <div slot="content" class="row align-items-strech">
       <div class="col d-flex flex-column">
         <ChatMessages :messages="messages"/>
       </div>
     </div>
     <form @submit.prevent="sendMessage" class="mt-auto col-12 input-group chat-input w-100" slot="footer">
-      <input
+      <textarea
+        rows="1"
+        @keydown.enter.exact.prevent="sendMessage"
+        @keydown.enter.shift.prevent="breakLine"
         v-model="message"
         type="text"
         placeholder="Escreva sua mensagem"
         class="form-control form-control-sm"
-      />
+      ></textarea>
       <div class="input-group-text">
         <InteractiveIcon >
           <i class="bi bi-send chat-input-icon"></i>
@@ -33,11 +36,11 @@ export default {
   },
   data() {
     return {
-      dialog: null,
+      textarea: null,
       message: "",
       messages: [
-        { uid: 2, paragraphs: [ 'Lorem!', 'ipsum', 'dolar'], date: '10/10/2023 20:10' },
-        { uid: 2, paragraphs: [ 'sit amet' ], date: '10/10/2023 20:10' },
+        { uid: 2, paragraphs: [ 'Lorem!', 'ipsum', 'dolar'], date: '20:10' },
+        { uid: 2, paragraphs: [ 'sit amet' ], date: '20:10' },
       ],
     };
   },
@@ -46,19 +49,34 @@ export default {
     sendMessage() {
       if(this.message.length) {
         const date = new Date();
-        const dateString = date.toLocaleString('pt-BR', { dateStyle: 'medium' });
         const timeString = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
         this.messages.push({
           uid: this.loggedData.id,
           paragraphs: this.message.split('\n'),
-          date: `${dateString} ${timeString}`
+          date: timeString
         })
   
         this.message = '';
+
+        this.textarea.setAttribute('rows', 1);
+      }
+    },
+
+    breakLine() {
+      this.message += '\n';
+
+      const rowCount = Number(this.textarea.getAttribute('rows'));
+
+      if(rowCount < 3) {
+        this.textarea.setAttribute('rows', rowCount+1);
       }
     }
   },
+
+  mounted() {
+    this.textarea = this.$el.querySelector('.chat-input textarea');
+  }
 };
 </script>
 
@@ -78,6 +96,9 @@ export default {
 
 .chat-input :is(.input-group-text, .form-control){
   background-color: rgb(33, 33, 33) !important;
+  resize:none;
+  height: auto!important;
+  min-height: auto!important;
   border: none!important;
   outline: none!important;
   color: white;

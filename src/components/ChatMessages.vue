@@ -1,7 +1,7 @@
 <template>
   <ul class="list-unstyled m-0">
     <li
-      class="rounded-pill chat-message"
+      class="rounded chat-message"
       v-for="msg in messages"
       :key="msg.id"
       :class="{
@@ -9,13 +9,17 @@
         left: msg.uid != loggedData.id,
       }"
     >
-      <p
-        class="text"
-        v-for="(text, idx) in msg.paragraphs"
-        :key="`${msg.id}${idx}`"
-      >
-        {{ text }}
-      </p>
+      <template v-for="(text, idx) in msg.paragraphs">
+        <p
+          class="text-break text"
+          v-if="text"
+          
+          :key="`${msg.id}${idx}`"
+        >
+          {{ text }}
+        </p>
+        <br v-else :key="`_${msg.id}${idx}`">
+      </template>
 
       <small class="date text-white-50">{{ msg.date }}</small>
     </li>
