@@ -53,7 +53,7 @@ export default {
 
         this.messages.push({
           uid: this.loggedData.id,
-          paragraphs: this.message.split('\n'),
+          paragraphs: this.message.trim().split('\n'),
           date: timeString
         })
   
