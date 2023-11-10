@@ -1,5 +1,19 @@
 <template>
-  <Dialog id="modal-chat" size="lg" :scroll="true">
+  <Dialog
+    id="modal-chat"
+    size="lg"
+    :scroll="true"
+    :customHeader="titleChat.length > 0"
+  >
+    <template slot="header" v-if="id">
+      <h1 class="modal-title fs-5">{{ id }}</h1>
+      <InteractiveIcon class="ms-auto">
+        <i class="bi bi-flag text-danger"></i>
+      </InteractiveIcon>
+      <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x-lg text-danger"></i>
+      </InteractiveIcon>
+    </template>
     <div slot="content" class="row align-items-strech">
       <div class="col d-flex flex-column" v-if="id">
         <ChatMessages :messages="messages" />
@@ -20,7 +34,11 @@
         </ul>
       </div>
     </div>
-    <ChatForm slot="footer" v-if="id" @newMessage="msg => messages.push(msg)"/>
+    <ChatForm
+      slot="footer"
+      v-if="id"
+      @newMessage="(msg) => messages.push(msg)"
+    />
   </Dialog>
 </template>
 
@@ -28,6 +46,7 @@
 import ChatForm from "./ChatForm.vue";
 import ChatMessages from "./ChatMessages.vue";
 import Dialog from "./Dialog.vue";
+import InteractiveIcon from "./InteractiveIcon.vue";
 import Title from "./Title.vue";
 import UserAvatar from "./UserAvatar.vue";
 export default {
@@ -37,6 +56,7 @@ export default {
     UserAvatar,
     Title,
     ChatForm,
+    InteractiveIcon,
   },
   data() {
     return {
@@ -45,6 +65,11 @@ export default {
     };
   },
 
+  computed: {
+    titleChat() {
+      return this.id ? `Esse chat aqui: ${this.id}` : "";
+    },
+  },
 };
 </script>
 
