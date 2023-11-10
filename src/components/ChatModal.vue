@@ -1,88 +1,59 @@
 <template>
-  <Dialog id="modal-chat" size="lg" :scroll="true" >
+  <Dialog id="modal-chat" size="lg" :scroll="true">
     <div slot="content" class="row align-items-strech">
-      <div class="col d-flex flex-column">
-        <ChatMessages :messages="messages"/>
+      <div class="col d-flex flex-column" v-if="id">
+        <ChatMessages :messages="messages" />
+      </div>
+      <div class="col" v-else>
+        <ul class="list-group chat-list list-unstyled">
+          <li
+            @click="id = i"
+            class="list-group-item chat-item bg-transparent d-flex align-items-center fw-bold"
+            v-for="i in 10"
+            :key="i"
+          >
+            <div class="chat-item-icon me-2">
+              <UserAvatar />
+            </div>
+            <Title tag="span">Usuario {{ i }}</Title>
+          </li>
+        </ul>
       </div>
     </div>
-    <form @submit.prevent="sendMessage" class="mt-auto col-12 input-group chat-input w-100" slot="footer">
-      <textarea
-        rows="1"
-        @keydown.enter.exact.prevent="sendMessage"
-        @keydown.enter.shift.prevent="breakLine"
-        v-model="message"
-        type="text"
-        placeholder="Escreva sua mensagem"
-        class="form-control form-control-sm"
-      ></textarea>
-      <div class="input-group-text">
-        <InteractiveIcon >
-          <i class="bi bi-send chat-input-icon"></i>
-        </InteractiveIcon>
-      </div>
-    </form>
+    <ChatForm slot="footer" v-if="id" @newMessage="msg => messages.push(msg)"/>
   </Dialog>
 </template>
 
 <script>
-import ChatMessages from './ChatMessages.vue';
+import ChatForm from "./ChatForm.vue";
+import ChatMessages from "./ChatMessages.vue";
 import Dialog from "./Dialog.vue";
-import InteractiveIcon from "./InteractiveIcon.vue";
+import Title from "./Title.vue";
+import UserAvatar from "./UserAvatar.vue";
 export default {
   components: {
     Dialog,
-    InteractiveIcon,
-    ChatMessages
+    ChatMessages,
+    UserAvatar,
+    Title,
+    ChatForm,
   },
   data() {
     return {
-      textarea: null,
-      message: "",
-      messages: [
-        { uid: 2, paragraphs: [ 'Lorem!', 'ipsum', 'dolar'], date: '20:10' },
-        { uid: 2, paragraphs: [ 'sit amet' ], date: '20:10' },
-      ],
+      id: null,
+      messages: [],
     };
   },
 
-  methods: {
-    sendMessage() {
-      if(this.message.length) {
-        const date = new Date();
-        const timeString = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
-        this.messages.push({
-          uid: this.loggedData.id,
-          paragraphs: this.message.trim().split('\n'),
-          date: timeString
-        })
-  
-        this.message = '';
-
-        this.textarea.setAttribute('rows', 1);
-      }
-    },
-
-    breakLine() {
-      this.message += '\n';
-
-      const rowCount = Number(this.textarea.getAttribute('rows'));
-
-      if(rowCount < 3) {
-        this.textarea.setAttribute('rows', rowCount+1);
-      }
-    }
-  },
-
-  mounted() {
-    this.textarea = this.$el.querySelector('.chat-input textarea');
-  }
 };
 </script>
 
 <style scoped>
+.chat-item-icon {
+  width: 30px;
+}
+
 .chat-item {
-  background-color: #151515;
   color: gray;
   cursor: pointer;
   border-color: #202020;
@@ -92,27 +63,5 @@ export default {
 .chat-item:hover {
   background-color: #1e1e1e;
   color: white;
-}
-
-.chat-input :is(.input-group-text, .form-control){
-  background-color: rgb(33, 33, 33) !important;
-  resize:none;
-  height: auto!important;
-  min-height: auto!important;
-  border: none!important;
-  outline: none!important;
-  color: white;
-}
-
-.chat-input .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.6)!important;
-}
-
-.chat-input .form-control:focus {
-  box-shadow: none!important;
-}
-
-.chat-input-icon {
-  color: var(--cor-ciano);
 }
 </style>
