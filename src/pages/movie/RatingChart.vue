@@ -1,0 +1,73 @@
+<template>
+  <DarkBox class="rating-measurer p-4">
+    <ul class="d-flex flex-column list-unstyled gap-2">
+      <li
+        class="row align-items-center"
+        v-for="(rating, stars) in ratings"
+        :key="stars"
+      >
+        <div class="col-2">
+          <InteractiveIcon :inline="true" class="gap-2">
+            <i class="bi bi-star"></i>
+            {{ stars + 1 }}
+          </InteractiveIcon>
+        </div>
+        <div class="col">
+          <ProgressBar
+            :progress="rating.percentage"
+            class="w-100"
+            :variant="rating.color"
+          />
+        </div>
+        <div class="col-2">
+          {{ rating.total }}
+        </div>
+      </li>
+    </ul>
+  </DarkBox>
+</template>
+
+<script>
+import DarkBox from "@/components/DarkBox.vue";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
+export default {
+  components: { DarkBox, ProgressBar, InteractiveIcon },
+  data() {
+    return {
+      starRating: [
+        { percentage: 40, total: 400 },
+        { percentage: 20, total: 200 },
+        { percentage: 25, total: 250 },
+        { percentage: 10, total: 100 },
+        { percentage: 5, total: 50 },
+      ],
+    };
+  },
+
+  computed: {
+    ratings() {
+      return this.starRating.map((r, i) => {
+        r.color = this.getVariantStyle(i+1);
+        return r;
+      })
+    }
+  },
+
+  methods: {
+    getVariantStyle(rating) {
+      switch(rating) {
+        case 1: return 'cyan';
+        case 2: return 'cyan-muted';
+        case 3: return 'yellow';
+        case 4: return 'yellow-muted';
+        case 5: return 'red';
+        default: return 'light';
+      }
+    }
+  }
+};
+</script>
+
+<style>
+</style>

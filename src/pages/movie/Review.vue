@@ -14,6 +14,9 @@
         @newReview="newReview"
       />
     </Transition>
+
+    <RatingChart class="col-lg-5 col-md-6" />
+
     <ReviewsList class="mt-5" :reviews="list" />
   </section>
 </template>
@@ -22,13 +25,15 @@
 import Title from "@/components/Title.vue";
 import ReviewsList from "./ReviewsList.vue";
 import ReviewForm from "./ReviewForm.vue";
+import RatingChart from "./RatingChart.vue";
 
 export default {
   components: {
     Title,
     ReviewsList,
     ReviewForm,
-  },
+    RatingChart,
+},
 
   props: ["movie"],
 
