@@ -14,13 +14,11 @@
         </div>
         <div class="col">
           <ProgressBar
+            data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`${ rating.total } usuários deram ${stars+1} estrelas.`"
             :progress="rating.percentage"
-            class="w-100"
+            class="w-100 pointer"
             :variant="rating.color"
           />
-        </div>
-        <div class="col-2">
-          {{ rating.total }}
         </div>
       </li>
     </ul>
@@ -31,6 +29,7 @@
 import DarkBox from "@/components/DarkBox.vue";
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
+import { Tooltip } from "bootstrap";
 export default {
   components: { DarkBox, ProgressBar, InteractiveIcon },
   data() {
@@ -64,7 +63,23 @@ export default {
         case 5: return 'red';
         default: return 'light';
       }
+    },
+
+    enableTooltips() {
+      const tooltipTriggerList = this.$el.querySelectorAll('[data-bs-toggle="tooltip"]');
+
+      if(tooltipTriggerList && tooltipTriggerList.length) {
+        tooltipTriggerList.forEach(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
+      }
     }
+  },
+
+  mounted() {
+    this.enableTooltips();
+  },
+
+  updated() {
+    this.enableTooltips();
   }
 };
 </script>
