@@ -41,7 +41,7 @@
     <ChatForm
       slot="footer"
       v-if="id"
-      @newMessage="(msg) => messages.push(msg)"
+      @newMessage="handlerNewMessage"
     />
   </Dialog>
 </template>
@@ -74,6 +74,20 @@ export default {
       return this.id ? `Esse chat aqui: ${this.id}` : "";
     },
   },
+
+  methods: {
+    handlerNewMessage(msg) {
+      this.messages.push(msg);
+    }
+  },
+
+  updated() {
+    this.dialogBody.scrollTop = this.dialogBody.scrollHeight;
+  },
+
+  mounted() {
+    this.dialogBody = this.$el.querySelector('.modal-body');
+  }
 };
 </script>
 
