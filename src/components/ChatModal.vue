@@ -6,12 +6,16 @@
     :customHeader="titleChat.length > 0"
   >
     <template slot="header" v-if="id">
+      <InteractiveIcon class="me-1" @click.native="id = null">
+        <i class="bi bi-chevron-left fs-5"></i>
+      </InteractiveIcon>
       <h1 class="modal-title fs-5">{{ id }}</h1>
-      <InteractiveIcon class="ms-auto">
-        <i class="bi bi-flag text-danger"></i>
+
+      <InteractiveIcon class="ms-auto me-1">
+        <i class="bi bi-flag text-danger fs-5"></i>
       </InteractiveIcon>
       <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
-        <i class="bi bi-x-lg text-danger"></i>
+        <i class="bi bi-x-lg text-danger fs-5"></i>
       </InteractiveIcon>
     </template>
     <div slot="content" class="row align-items-strech">
