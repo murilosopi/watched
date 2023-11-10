@@ -1,5 +1,11 @@
 <template>
-  <component :is="tag" class="interactive-icon d-flex flex-column align-items-center">
+  <component
+    :is="tag"
+    class="interactive-icon d-flex align-items-center"
+    :class="{
+      'flex-column': !inline,
+    }"
+  >
     <slot></slot>
   </component>
 </template>
@@ -8,9 +14,13 @@
 export default {
   props: {
     tag: {
-      default: 'button'
-    }
-  }
+      default: "button",
+    },
+    inline: {
+      default: false,
+      type: Boolean,
+    },
+  },
 };
 </script>
 
