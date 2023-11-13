@@ -9,7 +9,7 @@
         Fique por dentro de tudo que está acontecendo no universo cinematográfico. <span class="d-none d-md-inline">Acompanhe os filmes em alta, postagens, resenhas e muito mais!</span>
       </p>
     </div>
-
+    <ButtonPost></ButtonPost>
     <Scroller>
       <MoviesPanel :movies="movies" :inline="true"/>
     </Scroller>
@@ -21,11 +21,13 @@ import Title from "@/components/Title.vue";
 import MoviesPanel from "@/components/MoviesPanel.vue";
 import Scroller from "@/components/Scroller.vue";
 import PageMixin from "@/mixins/PageMixin.js";
+import ButtonPost from "@/components/ButtonPost.vue";
 export default {
   components: {
     Title,
     MoviesPanel,
-    Scroller
+    Scroller,
+    ButtonPost
   },
   mixins: [PageMixin],
   data() {
