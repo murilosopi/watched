@@ -18,6 +18,9 @@ CREATE TABLE tbUsuarios(
     visualizacoes INT DEFAULT 0
 );
 
+-- adm
+INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(1, 'Administrador', 'adm', 'adm@watched.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
+
 CREATE TABLE tbAdministradores(
     usuario INT,
     status BOOLEAN DEFAULT TRUE,
