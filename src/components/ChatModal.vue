@@ -95,16 +95,4 @@ export default {
 .chat-item-icon {
   width: 30px;
 }
-
-.chat-item {
-  color: gray;
-  cursor: pointer;
-  border-color: #202020;
-  transition: 0.35s;
-}
-
-.chat-item:hover {
-  background-color: #1e1e1e;
-  color: white;
-}
 </style>
