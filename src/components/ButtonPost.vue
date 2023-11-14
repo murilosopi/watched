@@ -40,8 +40,8 @@ export default {
     padding: 10px;
 }
 .post-icon{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     z-index: 101;    
 }
 </style>
