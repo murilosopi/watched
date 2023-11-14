@@ -8,11 +8,13 @@ import 'animate.css';
 import store from './store';
 import AuthMixin from './mixins/AuthMixin';
 import NotificationMixin from './mixins/NotificationMixin';
+import ChatMixin from './mixins/ChatMixin';
 
 Vue.config.productionTip = false
 
 Vue.mixin(NotificationMixin);
 Vue.mixin(AuthMixin);
+Vue.mixin(ChatMixin);
 
 new Vue({
   render: h => h(App),

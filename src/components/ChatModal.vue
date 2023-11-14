@@ -9,7 +9,7 @@
       <InteractiveIcon class="me-1" @click.native="id = null">
         <i class="bi bi-chevron-left fs-5"></i>
       </InteractiveIcon>
-      <h1 class="modal-title fs-5">{{ id }}</h1>
+      <h1 class="modal-title fs-5">{{ titleChat }}</h1>
 
       <InteractiveIcon class="ms-auto me-1">
         <i class="bi bi-flag text-danger fs-5"></i>
@@ -23,18 +23,21 @@
         <ChatMessages :messages="messages" />
       </div>
       <div class="col" v-else>
-        <ListGroup>
-          <ListGroupItem
-            @click.native="id = i"
-            v-for="i in 10"
-            :key="i"
-          >
-            <div class="chat-item-icon me-2">
-              <UserAvatar />
-            </div>
-            <Title tag="span">Usuario {{ i }}</Title>
-          </ListGroupItem>
-        </ListGroup>
+
+        <template v-if="recentChatsFetched && recentChats.length">
+          <Title tag="h2" class="h3 mb-2">Recentes</Title>
+          <ListGroup class="mb-4">
+            <ListGroupItem
+              v-for="chat in recentChats"
+              :key="chat.id"
+            >
+              <div class="chat-item-icon me-2">
+                <UserAvatar />
+              </div>
+              <Title tag="span">{{ chat.name }}</Title>
+            </ListGroupItem>
+          </ListGroup>
+        </template>
       </div>
     </div>
     <ChatForm
@@ -71,12 +74,19 @@ export default {
       id: null,
       connection: null,
       messages: [],
+
+      recentChats: [],
+      recentChatsFetched: false,
+
+      chatSuggestions: [],
+      chatSuggestionsFetched: false,
+
     };
   },
 
   computed: {
     titleChat() {
-      return this.id ? `Esse chat aqui: ${this.id}` : "";
+      return this.id ? `[NOME] (${this.id})` : "";
     },
   },
 

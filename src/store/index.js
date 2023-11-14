@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 import auth from './modules/auth';
 import notification from './modules/notification';
+import chat from './modules/chat';
 
 export default new Vuex.Store({
-  modules: { auth, notification }
+  modules: { auth, notification, chat }
 });
