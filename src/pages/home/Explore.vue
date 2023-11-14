@@ -9,7 +9,6 @@
         Fique por dentro de tudo que está acontecendo no universo cinematográfico. <span class="d-none d-md-inline">Acompanhe os filmes em alta, postagens, resenhas e muito mais!</span>
       </p>
     </div>
-
     <Scroller>
       <MoviesPanel :movies="movies" :inline="true"/>
     </Scroller>

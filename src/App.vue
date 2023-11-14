@@ -3,16 +3,19 @@
     <router-view name="header"/>
     <NotificationList />
     <router-view name="page" class="container my-auto px-4 placeholder-glow"/>
+    <ButtonPost v-if="userLogged" />
   </div>
 </template>
 
 <script>
+import ButtonPost from './components/ButtonPost.vue';
 import NotificationList from './components/NotificationList.vue';
 export default {
   name: "App",
   components: {
-    NotificationList
-  },
+    NotificationList,
+    ButtonPost
+},
   created() {
     this.checkAuth();
   }
