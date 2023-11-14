@@ -1,5 +1,5 @@
 <template>
-  <DarkBox class="rating-measurer p-4">
+  <DarkBox class="rating-measurer p-4" variant="gray">
     <ul class="d-flex flex-column list-unstyled gap-2">
       <li
         class="row align-items-center"
@@ -7,14 +7,20 @@
         :key="stars"
       >
         <div class="col-2">
-          <InteractiveIcon :inline="true" class="gap-2">
+          <InteractiveIcon :inline="true" class="gap-2 ms-auto">
+            {{ 5 - stars }}
             <i class="bi bi-star"></i>
-            {{ stars + 1 }}
           </InteractiveIcon>
         </div>
-        <div class="col">
+        <div
+          class="col"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          :data-bs-title="`${rating.total} usuários avaliaram com ${
+            stars + 1
+          } estrela${ stars+1 >= 1 ? 's' : '' }.`"
+        >
           <ProgressBar
-            data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`${ rating.total } usuários deram ${stars+1} estrelas.`"
             :progress="rating.percentage"
             class="w-100 pointer"
             :variant="rating.color"
@@ -47,31 +53,41 @@ export default {
   computed: {
     ratings() {
       return this.starRating.map((r, i) => {
-        r.color = this.getVariantStyle(i+1);
+        r.color = this.getVariantStyle(i + 1);
         return r;
-      })
-    }
+      });
+    },
   },
 
   methods: {
     getVariantStyle(rating) {
-      switch(rating) {
-        case 1: return 'cyan';
-        case 2: return 'cyan-muted';
-        case 3: return 'yellow';
-        case 4: return 'yellow-muted';
-        case 5: return 'red';
-        default: return 'light';
+      switch (rating) {
+        case 1:
+          return "cyan";
+        case 2:
+          return "cyan-muted";
+        case 3:
+          return "yellow";
+        case 4:
+          return "yellow-muted";
+        case 5:
+          return "red";
+        default:
+          return "light";
       }
     },
 
     enableTooltips() {
-      const tooltipTriggerList = this.$el.querySelectorAll('[data-bs-toggle="tooltip"]');
+      const tooltipTriggerList = this.$el.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
 
-      if(tooltipTriggerList && tooltipTriggerList.length) {
-        tooltipTriggerList.forEach(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
+      if (tooltipTriggerList && tooltipTriggerList.length) {
+        tooltipTriggerList.forEach(
+          (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+        );
       }
-    }
+    },
   },
 
   mounted() {
@@ -80,9 +96,8 @@ export default {
 
   updated() {
     this.enableTooltips();
-  }
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
