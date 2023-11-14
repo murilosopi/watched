@@ -23,10 +23,9 @@
         <ChatMessages :messages="messages" />
       </div>
       <div class="col" v-else>
-        <ul class="list-group chat-list list-unstyled">
-          <li
-            @click="id = i"
-            class="list-group-item chat-item bg-transparent d-flex align-items-center fw-bold"
+        <ListGroup>
+          <ListGroupItem
+            @click.native="id = i"
             v-for="i in 10"
             :key="i"
           >
@@ -34,8 +33,8 @@
               <UserAvatar />
             </div>
             <Title tag="span">Usuario {{ i }}</Title>
-          </li>
-        </ul>
+          </ListGroupItem>
+        </ListGroup>
       </div>
     </div>
     <ChatForm
@@ -51,6 +50,8 @@ import ChatForm from "./ChatForm.vue";
 import ChatMessages from "./ChatMessages.vue";
 import Dialog from "./Dialog.vue";
 import InteractiveIcon from "./InteractiveIcon.vue";
+import ListGroup from "./ListGroup.vue";
+import ListGroupItem from "./ListGroupItem.vue";
 import Title from "./Title.vue";
 import UserAvatar from "./UserAvatar.vue";
 export default {
@@ -61,7 +62,9 @@ export default {
     Title,
     ChatForm,
     InteractiveIcon,
-  },
+    ListGroupItem,
+    ListGroup,
+},
   data() {
     return {
       id: null,
