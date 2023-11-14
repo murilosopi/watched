@@ -1,11 +1,9 @@
 <template>
     <div class="container">
         <div class="content">
-            <button type="button" class="fixed-btn" >
-                <InteractiveIcon tag="span" title="Escrever">
+                <InteractiveIcon class="fixed-btn" tag="span" title="Escrever">
                     <img class="post-icon" src="/assets/img/icons/post-icon.svg">
                 </InteractiveIcon>
-            </button>
         </div>
     </div>
 </template>
@@ -26,7 +24,8 @@ export default {
 }
 .content {
     position:absolute;
-    align-items:center
+    align-items:center;
+    justify-items: center;
 }
 .fixed-btn {
     cursor:pointer;
@@ -37,11 +36,12 @@ export default {
     border-radius:50%;
     bottom: 35px;
     right: 35px;
-    border-width: 1px;
+    border-top: 10px;
+    padding: 10px;
 }
 .post-icon{
-    width: 25px;
-    height: 25px;
-    z-index: 101;
+    width: 30px;
+    height: 30px;
+    z-index: 101;    
 }
 </style>
