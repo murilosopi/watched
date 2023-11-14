@@ -7,7 +7,7 @@
     <Title tag="h2" class="h1 mt-3 mb-2">Configurações</Title>
 
     <div class="row row-gap-3">
-      <div class="col-lg-4 col-sm-6">
+      <div class="col-lg-4 col-sm-6 config-item">
         <DarkBox
           class="card text-light pointer"
           @click.native="showChangeAvatar"
@@ -25,7 +25,7 @@
         </DarkBox>
       </div>
 
-      <div class="col-lg-4 col-sm-6">
+      <div class="col-lg-4 col-sm-6 config-item">
         <DarkBox
           class="card text-light pointer"
         >
@@ -41,7 +41,7 @@
         </DarkBox>
       </div>
 
-      <div class="col-lg-4 col-sm-6">
+      <div class="col-lg-4 col-sm-6 config-item">
         <DarkBox
           class="card text-light pointer"
         >
@@ -82,7 +82,20 @@ export default {
     const modal = this.$el.querySelector(".modal-change-avatar");
     this.avatarDialog = new Modal(modal);
   },
+  watch: {
+    userLogged() {
+      if(!this.userLogged) {
+        this.notifyAuthRequired();
+        this.$router.push('/');
+      }
+    }
+  }
 };
 </script>
 <style scoped>
+.config-item:hover {
+  transform: scale(1.05);
+  transition: .1s transform;
+
+}
 </style>
