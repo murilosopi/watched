@@ -37,7 +37,7 @@ export default {
     bottom: 35px;
     right: 35px;
     border-top: 10px;
-    padding: 10px;
+    padding: 12px;
 }
 .post-icon{
     width: 25px;
