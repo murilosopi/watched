@@ -50,15 +50,15 @@ export default {
     sendMessage() {
       if (this.message.length) {
         const date = new Date();
-        const timeString = date.toLocaleTimeString("pt-BR", {
+        const time = date.toLocaleTimeString("pt-BR", {
           hour: "2-digit",
           minute: "2-digit",
         });
 
         this.$emit('newMessage', {
-          uid: this.loggedData.id,
           paragraphs: this.message.trim().split("\n"),
-          date: timeString,
+          text: this.message,
+          time,
         });
 
         this.message = "";

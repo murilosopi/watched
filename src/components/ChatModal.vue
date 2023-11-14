@@ -38,8 +38,9 @@
       </div>
     </div>
     <ChatForm
-      slot="footer"
       v-if="id"
+      :to="id"
+      slot="footer"
       @newMessage="handlerNewMessage"
     />
   </Dialog>
@@ -68,6 +69,7 @@ export default {
   data() {
     return {
       id: null,
+      connection: null,
       messages: [],
     };
   },
@@ -80,7 +82,24 @@ export default {
 
   methods: {
     handlerNewMessage(msg) {
+      msg = {
+        ...msg,
+        to: this.id,
+        from: this.loggedData.id
+      }
+
       this.messages.push(msg);
+      this.connection.send(JSON.stringify(msg));
+    },
+
+    onMessageReceived({ data }) {
+      const message = JSON.parse(data);
+
+      if(this.id == message.from) {
+        this.messages.push(message);
+      } else {
+        alert('voce recebeu uma mensagem do usuario: ' + message.from);
+      }
     }
   },
 
@@ -90,6 +109,18 @@ export default {
 
   mounted() {
     this.dialogBody = this.$el.querySelector('.modal-body');
+  },
+
+  created() {
+    
+    let wsUrl = `ws://localhost:8082?uid=${this.loggedData.id}`;
+    this.connection = new WebSocket(wsUrl);
+    
+    this.connection.onopen = () => {
+      console.log('Conectado');
+    }
+
+    this.connection.onmessage = this.onMessageReceived;
   }
 };
 </script>

@@ -5,8 +5,8 @@
       v-for="msg in messages"
       :key="msg.id"
       :class="{
-        right: msg.uid == loggedData.id,
-        left: msg.uid != loggedData.id,
+        right: msg.from == loggedData.id,
+        left: msg.from != loggedData.id,
       }"
     >
       <template v-for="(text, idx) in msg.paragraphs">
@@ -21,7 +21,7 @@
         <br v-else :key="`_${msg.id}${idx}`">
       </template>
 
-      <small class="date text-white-50">{{ msg.date }}</small>
+      <small class="date text-white-50">{{ msg.time }}</small>
     </li>
   </ul>
 </template>

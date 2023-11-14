@@ -7,6 +7,7 @@
   "require": {
     "guzzlehttp/guzzle": "^7.8",
     "phpmailer/phpmailer": "^6.8",
-    "league/oauth2-client": "^2.7"
+    "league/oauth2-client": "^2.7",
+    "cboden/ratchet": "^0.4.4"
   }
 }
