@@ -86,6 +86,37 @@ class Chat extends Model
     return $conversas;
   }
 
+  public function buscarSeguidoresSemConversa()
+  {
+    $sql = "SELECT
+              tc.*,
+              tpc.entrada, 
+              tu.id, 
+              tu.nome, 
+              tu.username
+            FROM
+              tbUsuariosSeguidores tus
+            JOIN tbUsuarios tu on
+              tu.id = tus.usuario
+            LEFT JOIN tbParticipantesChat tpc on
+              tpc.participante = tus.usuario
+            LEFT JOIN tbParticipantesChat tpc2 on
+              tpc2.participante = tus.seguidor
+            LEFT JOIN tbChats tc on
+              tc.id = tpc2.chat AND tpc2.chat = tpc.chat
+            WHERE
+              tc.id IS NULL
+              AND seguidor = :participante";
+
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':participante', $this->participante);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  }
+
   public function obterParticipantesConversa()
   {
     $sql = "SELECT

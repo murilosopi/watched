@@ -4,8 +4,9 @@
     size="lg"
     :scroll="true"
     :customHeader="true"
+    :fullHeight="true"
   >
-    <template  v-if="hasChat">
+    <template v-if="hasChat">
       <template slot="header">
         <InteractiveIcon class="me-1" @click.native="removeActiveChat">
           <i class="bi bi-chevron-left fs-5"></i>
@@ -22,10 +23,12 @@
       <ChatForm
         :to="chatId"
         slot="footer"
-        @newMessage="msg => {
-          sendMessage(msg);
-          $forceUpdate();
-        }"
+        @newMessage="
+          (msg) => {
+            sendMessage(msg);
+            $forceUpdate();
+          }
+        "
       />
 
       <div slot="content" class="row align-items-strech">
@@ -42,16 +45,39 @@
           <i class="bi bi-x-lg fs-5"></i>
         </InteractiveIcon>
       </template>
-      
-      <div slot="content" class="row align-items-strech">
-        <div class="col" v-if="recentChats.length">
+
+      <div slot="content" class="row align-items-strech h-100">
+        <div class="col-lg-6" v-if="recentChats.length">
           <Title tag="h3" class="opacity-50 fs-4 mb-2">Recentes</Title>
           <ListGroup class="mb-4">
-            <ListGroupItem v-for="chat in recentChats" :key="chat.id" @click.native="setActiveChat(chat)">
+            <ListGroupItem
+              v-for="chat in recentChats"
+              :key="chat.id"
+              @click.native="setActiveChat(chat)"
+            >
               <div class="chat-item-icon me-2">
-                <UserAvatar :username="chat.participants[0].username"/>
+                <UserAvatar :username="chat.participants[0].username" />
               </div>
-              <Title tag="span">{{ chat.participants.map(p => p.username).join(', ') }}</Title>
+              <Title tag="span">{{
+                chat.participants.map((p) => p.username).join(", ")
+              }}</Title>
+            </ListGroupItem>
+          </ListGroup>
+        </div>
+        <div class="col-lg-6" v-if="followingChats.length">
+          <Title tag="h3" class="opacity-50 fs-4 mb-2">Sua Rede</Title>
+          <ListGroup class="mb-4">
+            <ListGroupItem
+              v-for="chat in followingChats"
+              :key="chat.participants[0].username"
+              @click.native="setActiveChat(chat)"
+            >
+              <div class="chat-item-icon me-2">
+                <UserAvatar :username="chat.participants[0].username" />
+              </div>
+              <Title tag="span">{{
+                chat.participants.map((p) => p.username).join(", ")
+              }}</Title>
             </ListGroupItem>
           </ListGroup>
         </div>
@@ -86,9 +112,6 @@ export default {
   data() {
     return {
       dialogBody: null,
-
-      chatSuggestions: [],
-      chatSuggestionsFetched: false,
     };
   },
 
@@ -104,6 +127,6 @@ export default {
 
 <style scoped>
 .chat-item-icon {
-  width: 30px;
+  width: calc(2vw + 40px);
 }
 </style>

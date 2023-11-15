@@ -7,30 +7,37 @@ export default {
     };
   },
   methods: {
-    ...mapActions("chat", ["getRecentChats", "registerMessage"]),
-    ...mapMutations("chat", ["setActiveChat", "removeActiveChat"]),
+    ...mapActions("chat", [
+      "getRecentChats",
+      "getFollowingChats",
+      "registerMessage",
+    ]),
+    ...mapMutations("chat", [
+      "setActiveChat",
+      "removeActiveChat",
+      "addMessage",
+    ]),
 
     sendMessage(data) {
-      data = {
+      const msg = {
         ...data,
-        id: this.chatId,
+        chat: this.chatId,
         to: this.allParticipants,
         from: this.loggedData.id,
       };
 
-      this.wsConnection.send(JSON.stringify(data));
-      
-      
+      this.wsConnection.send(JSON.stringify(msg));
+
+      this.addMessage(msg);
+
       // this.registerMessage().then((res) => {
       // });
-
-      return data;
     },
 
     onMessageReceived({ data }) {
       const message = JSON.parse(data);
 
-      if (message.id == this.chatId) {
+      if (message.chat == this.chatId) {
         this.messages.push(message);
       } else {
         alert("voce recebeu uma mensagem do usuario: " + message.from);
@@ -39,9 +46,9 @@ export default {
   },
   computed: {
     ...mapGetters("chat", [
-      "lastChatId",
       "chatId",
       "recentChats",
+      "followingChats",
       "hasChat",
       "titleChat",
       "allParticipants",
@@ -49,6 +56,7 @@ export default {
   },
   created() {
     this.getRecentChats();
+    this.getFollowingChats();
 
     let wsUrl = `ws://localhost:8082?uid=${this.loggedData.id}`;
     this.wsConnection = new WebSocket(wsUrl);

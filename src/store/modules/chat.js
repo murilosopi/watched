@@ -7,6 +7,7 @@ export default {
       messages: [],
     },
     recentChats: [],
+    followingChats: []
   },
   getters: {
     chatId(state) {
@@ -14,6 +15,9 @@ export default {
     },
     recentChats(state) {
       return state.recentChats || [];
+    },
+    followingChats(state) {
+      return state.followingChats || [];
     },
     hasChat(state) {
       return state.activeChat.id !== null;
@@ -50,6 +54,15 @@ export default {
         };
       });
     },
+    setFollowingChats(state, payload) {
+      state.followingChats = payload.map((chat) => {
+        return {
+          id: chat.id,
+          participants: [{ entrada: chat.entrada, id: chat.id, nome: chat.nome, username: chat.username }],
+          messages: [],
+        };
+      });
+    },
     addMessage(state, msg) {
       state.activeChat.messages.push(msg);
     },
@@ -63,5 +76,15 @@ export default {
         })
         .catch(() => {});
     },
+    getFollowingChats({ commit }) {
+      this._vm.$api
+        .get("/bate-papo/seguindo")
+        .then((res) => {
+          commit("setFollowingChats", res.data.dados);
+        })
+        .catch(() => {});
+    },
+
+    
   },
 };

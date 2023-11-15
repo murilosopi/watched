@@ -59,4 +59,20 @@ class ChatController extends Action
       $response->enviar();
     }
   }
+
+  public function buscarConversasSeguindo() {
+    $response = new Response;
+    if (empty($_SESSION['usuario'])) {
+      $response->sucesso = false;
+      $response->descricao = "É necessário estar logado para registrar uma resenha.";
+      $response->enviar();
+    } else {
+      $chat = new Chat;
+      $chat->participante = $_SESSION['usuario']['id'];
+      $conversas = $chat->buscarSeguidoresSemConversa();
+
+      $response->dados = $conversas;
+      $response->enviar();
+    }
+  }
 }

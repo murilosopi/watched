@@ -190,6 +190,11 @@
         'action' => 'buscarConversasRecentes'
       );
 
+      $routes['bate-papo-seguindo'] = array(
+        'route' => '/bate-papo/seguindo',
+        'controller' => 'ChatController',
+        'action' => 'buscarConversasSeguindo'
+      );
       
       $this->setRoutes($routes); 
     }

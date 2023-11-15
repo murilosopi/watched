@@ -25,7 +25,9 @@ class Chat implements MessageComponentInterface
     $mensagem = json_decode($msg);
 
     foreach($mensagem->to as $destinatario) {
-      $this->conexoes[$destinatario]->send($msg);
+      if (isset($this->conexoes[$destinatario])) {
+        $this->conexoes[$destinatario]->send($msg);
+      }
     }
   }
 
