@@ -1,18 +1,21 @@
 <?php
+
 namespace App\Models;
 
 use App\Model;
 
-class Chat extends Model {
+class Chat extends Model
+{
   protected $id;
   protected $tipo;
   protected $data;
   protected $descricao;
   protected $participante;
 
-  public function novoChat() {
+  public function novoChat()
+  {
     $sql = "INSERT INTO tbChats(tipo) VALUES(:tipo)";
-    
+
     $stmt = $this->conexao->prepare($sql);
     $stmt->bindValue(':tipo', $this->tipo);
 
@@ -21,19 +24,20 @@ class Chat extends Model {
     return $execute ? $this->conexao->lastInsertId() : false;
   }
 
-  public function adicionarParticipante() {
+  public function adicionarParticipante()
+  {
 
     $sql = "INSERT INTO tbParticipantesChat(chat, participante) VALUES(:chat, :participante)";
-    
+
     $stmt = $this->conexao->prepare($sql);
     $stmt->bindValue(':participante', $this->participante);
     $stmt->bindValue(':chat', $this->id);
 
     return $stmt->execute();
-
   }
 
-  public function removerParticipantes() {
+  public function removerParticipantes()
+  {
     $sql = "DELETE FROM tbParticipantesChat WHERE chat = :chat";
 
     $stmt = $this->conexao->prepare($sql);
@@ -41,10 +45,10 @@ class Chat extends Model {
     $stmt->bindValue(':chat', $this->id);
 
     return $stmt->execute();
-
   }
 
-  public function excluirChat() {
+  public function excluirChat()
+  {
     $sql = "DELETE FROM tbChatsChat WHERE id = :chat";
 
     $stmt = $this->conexao->prepare($sql);
@@ -52,10 +56,10 @@ class Chat extends Model {
     $stmt->bindValue(':chat', $this->id);
 
     return $stmt->execute();
-
   }
 
-  public function buscarConversasRecentesUsuario() {
+  public function buscarConversasRecentesUsuario()
+  {
     $sql = "SELECT
               tc.*
             FROM
@@ -73,7 +77,7 @@ class Chat extends Model {
 
     $conversas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-    foreach($conversas as &$conversa) {
+    foreach ($conversas as &$conversa) {
       $this->id = $conversa['id'];
       $conversa['participantes'] = $this->obterParticipantesConversa();
       unset($this->id);
@@ -82,23 +86,24 @@ class Chat extends Model {
     return $conversas;
   }
 
-  public function obterParticipantesConversa() {
+  public function obterParticipantesConversa()
+  {
     $sql = "SELECT
               tpc.entrada, tu.id, tu.nome, tu.username
             FROM
               tbParticipantesChat tpc
             JOIN 
-              tbUsuarios tu on tpc.participante = tu.id 
+              tbUsuarios tu ON tpc.participante = tu.id 
             WHERE 
-              tpc.chat = :id";
+              tpc.chat = :id AND tpc.participante <> :participante";
 
     $stmt = $this->conexao->prepare($sql);
 
     $stmt->bindValue(':id', $this->id);
+    $stmt->bindValue(':participante', $this->participante);
 
     $stmt->execute();
 
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
   }
 }
-?>

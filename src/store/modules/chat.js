@@ -2,38 +2,52 @@ export default {
   namespaced: true,
   state: {
     activeChat: {
-      id: '1234',
+      id: null,
       participants: [],
-      name: '',
     },
     recentChats: [],
   },
   getters: {
-    lastChatId(state) {
-      return state.chat.lastId || false;
-    },
     chatId(state) {
-      return state.chat.id || false;
+      return state.activeChat.id || false;
+    },
+    recentChats(state) {
+      return state.recentChats || [];
+    },
+    hasChat(state) {
+      return state.activeChat.id !== null;
+    },
+    titleChat(state) {
+      return state.activeChat.participants.map(p => `@${p.username}`).join(', ');
     }
   },
   mutations: {
-    setId(state, newId) {
-      state.chat.id = newId;
+    setActiveChat(state, chat) {
+      state.activeChat = chat;
     },
-    updateLastId(state) {
-      state.chat.lastId = state.chat.id;
+    removeActiveChat(state) {
+      state.activeChat = {
+        id: null,
+        participants: [],
+      };
     },
     setRecentChats(state, payload) {
-      state.recentChats = payload;
-    }
+      state.recentChats = payload.map((chat) => {
+        return {
+          id: chat.id,
+          participants: chat.participantes,
+        };
+      });
+    },
   },
   actions: {
     getRecentChats({ commit }) {
-      this._vm.$api.get('/bate-papo/recentes')
-        .then(res => {
-          commit('setRecentChats'), res.data.dados;
-        }).catch(() => {});
-      
-    }
-  }
-}
+      this._vm.$api
+        .get("/bate-papo/recentes")
+        .then((res) => {
+          commit("setRecentChats", res.data.dados);
+        })
+        .catch(() => {});
+    },
+  },
+};
