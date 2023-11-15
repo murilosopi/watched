@@ -19,6 +19,9 @@ export default {
     },
     titleChat(state) {
       return state.activeChat.participants.map(p => `@${p.username}`).join(', ');
+    },
+    allParticipants(state) {
+      return state.activeChat.participants.map(p => p.id);
     }
   },
   mutations: {

@@ -24,7 +24,9 @@ class Chat implements MessageComponentInterface
   {
     $mensagem = json_decode($msg);
 
-    $this->conexoes[$mensagem->to]->send($msg);
+    foreach($mensagem->to as $destinatario) {
+      $this->conexoes[$destinatario]->send($msg);
+    }
   }
 
   public function onClose(ConnectionInterface $conn)
