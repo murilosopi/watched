@@ -22,12 +22,15 @@
       <ChatForm
         :to="chatId"
         slot="footer"
-        @newMessage="handlerNewMessage"
+        @newMessage="msg => {
+          sendMessage(msg);
+          $forceUpdate();
+        }"
       />
 
       <div slot="content" class="row align-items-strech">
         <div class="col d-flex flex-column" v-if="hasChat">
-          <ChatMessages :messages="messages" />
+          <ChatMessages />
         </div>
       </div>
     </template>
@@ -82,19 +85,11 @@ export default {
   mixins: [ChatMixin],
   data() {
     return {
-      messages: [],
+      dialogBody: null,
 
       chatSuggestions: [],
       chatSuggestionsFetched: false,
     };
-  },
-
-  methods: {
-    handlerNewMessage(msg) {
-
-      const sendedMessage = this.sendMessage(msg);
-      this.messages.push(sendedMessage);
-    },
   },
 
   updated() {

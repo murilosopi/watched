@@ -4,6 +4,7 @@ export default {
     activeChat: {
       id: null,
       participants: [],
+      messages: [],
     },
     recentChats: [],
   },
@@ -18,11 +19,16 @@ export default {
       return state.activeChat.id !== null;
     },
     titleChat(state) {
-      return state.activeChat.participants.map(p => `@${p.username}`).join(', ');
+      return state.activeChat.participants
+        .map((p) => `@${p.username}`)
+        .join(", ");
     },
     allParticipants(state) {
-      return state.activeChat.participants.map(p => p.id);
-    }
+      return state.activeChat.participants.map((p) => p.id);
+    },
+    messages(state) {
+      return state.activeChat.messages && state.activeChat.messages.length ? state.activeChat.messages : [];
+    },
   },
   mutations: {
     setActiveChat(state, chat) {
@@ -32,6 +38,7 @@ export default {
       state.activeChat = {
         id: null,
         participants: [],
+        messages: [],
       };
     },
     setRecentChats(state, payload) {
@@ -39,8 +46,12 @@ export default {
         return {
           id: chat.id,
           participants: chat.participantes,
+          messages: [],
         };
       });
+    },
+    addMessage(state, msg) {
+      state.activeChat.messages.push(msg);
     },
   },
   actions: {
