@@ -3,7 +3,7 @@
     id="modal-chat"
     size="lg"
     :scroll="true"
-    :customHeader="titleChat.length > 0"
+    :customHeader="true"
   >
     <template  v-if="hasChat">
       <template slot="header">
@@ -19,8 +19,6 @@
         </InteractiveIcon>
       </template>
 
-
-
       <ChatForm
         :to="chatId"
         slot="footer"
@@ -33,14 +31,18 @@
         </div>
       </div>
     </template>
-    
-    <div slot="content" class="row align-items-strech" v-else>
-      <div class="col d-flex flex-column" v-if="hasChat">
-        <ChatMessages :messages="messages" />
-      </div>
-      <div class="col">
-        <template v-if="recentChats.length">
-          <Title tag="h2" class="h3 mb-2">Recentes</Title>
+
+    <template v-else>
+      <template slot="header">
+        <Title tag="h2">Bate-Papo</Title>
+        <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
+          <i class="bi bi-x-lg fs-5"></i>
+        </InteractiveIcon>
+      </template>
+      
+      <div slot="content" class="row align-items-strech">
+        <div class="col" v-if="recentChats.length">
+          <Title tag="h3" class="opacity-50 fs-4 mb-2">Recentes</Title>
           <ListGroup class="mb-4">
             <ListGroupItem v-for="chat in recentChats" :key="chat.id" @click.native="setActiveChat(chat)">
               <div class="chat-item-icon me-2">
@@ -49,9 +51,9 @@
               <Title tag="span">{{ chat.participants.map(p => p.username).join(', ') }}</Title>
             </ListGroupItem>
           </ListGroup>
-        </template>
+        </div>
       </div>
-    </div>
+    </template>
   </Dialog>
 </template>
 
