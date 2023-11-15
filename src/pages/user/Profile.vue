@@ -41,7 +41,11 @@
                   Bate-Papo
                 </ButtonCustom>
 
-                <ButtonCustom variant="azul">
+                <ButtonCustom variant="azul" @click.native="unfollowUser" v-if="following">
+                  <i class="bi bi-check fs-5"></i>
+                  Seguindo
+                </ButtonCustom>
+                <ButtonCustom variant="azul" @click.native="followUser" v-else>
                   <i class="bi bi-plus-lg fs-5"></i>
                   Seguir
                 </ButtonCustom>
@@ -50,7 +54,7 @@
           </div>
         </article>
 
-        <UserStats :id="id" />
+        <UserStats :id="id" :key="componentKey" />
       </div>
     </DarkBox>
 
@@ -124,6 +128,9 @@ export default {
       reviews: [],
       lists: [],
       stats: [],
+      following: false,
+
+      componentKey: 0,
 
       newAbout: '',
     };
@@ -183,6 +190,8 @@ export default {
             this.name = data.nome;
             this.subscriber = data.assinante;
 
+            if(this.userLogged) this.following = data.seguindo;
+
             this.changePageTitle(`@${this.username}`);
             this.getReviews();
           } else {
@@ -219,7 +228,34 @@ export default {
 
     goToConfig() {
       this.$router.push('/configuracoes')
-    }
+    },
+
+    forceUpdateStats() {
+      this.componentKey += 1;
+    },
+
+    followUser() {
+      this.following = true;
+
+      this.$api.post('/seguir-usuario', { uid: this.id }).then(res => {
+        const { sucesso } = res.data;
+        if(!sucesso) {
+          this.following = false;
+        }
+      }).then(this.forceUpdateStats)
+    },
+
+    unfollowUser() {
+      this.following = false;
+
+      this.$api.post('/parar-seguir-usuario', { uid: this.id }).then(res => {
+        const { sucesso } = res.data;
+
+        if(!sucesso) {
+          this.following = true;
+        }
+      }).then(this.forceUpdateStats)
+    },
   },
 
   beforeRouteEnter(to, from, next) {

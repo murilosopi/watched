@@ -70,6 +70,12 @@ export default {
         this.getStats();
       }
     }
+  },
+
+  created() {
+    if(this.id) {
+      this.getStats();
+    }
   }
 };
 </script>

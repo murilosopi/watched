@@ -20,6 +20,7 @@ CREATE TABLE tbUsuarios(
 
 -- adm
 INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(1, 'Administrador', 'adm', 'adm@watched.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
+INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(2, 'Usuario', 'user', 'user@watched.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
 
 CREATE TABLE tbAdministradores(
     usuario INT,
@@ -49,7 +50,8 @@ CREATE TABLE tbResenhas (
     dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
     reacao INT,
     FOREIGN KEY (usuario) REFERENCES tbUsuarios (id),
-    FOREIGN KEY (reacao) REFERENCES tbReacoes (id)
+    FOREIGN KEY (reacao) REFERENCES tbReacoes (id),
+    UNIQUE (usuario, filme)
 );
 
 /*Chat: */
@@ -63,7 +65,7 @@ CREATE TABLE tbChats(
 CREATE TABLE tbParticipantesChat(
     chat INT NOT NULL,
     participante INT NOT NULL,
-    adm BOOLEAN DEFAULT FALSE,
+    adm BOOLEAN,
     entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
     saida DATETIME,
     expulso BOOLEAN
@@ -92,7 +94,9 @@ CREATE TABLE tbUsuariosSeguidores (
     usuario INT NOT NULL,
     seguidor INT NOT NULL,
     FOREIGN KEY(usuario) REFERENCES tbUsuarios(id),
-    FOREIGN KEY(seguidor) REFERENCES tbUsuarios(id)
+    FOREIGN KEY(seguidor) REFERENCES tbUsuarios(id),
+
+    UNIQUE (usuario, seguidor)
 );
 
 CREATE TABLE tbPostagens(

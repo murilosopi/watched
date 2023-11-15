@@ -10,6 +10,7 @@
     protected $fotoPerfil;
     protected $email;
     protected $senha;
+    protected $seguidor;
 
     // Retorna um usuário que tenha um username ou email e senha compatíveis
     public function obterUsuarioPorId() {
@@ -147,33 +148,52 @@
       return $stmt->fetchColumn(0);
     }
 
+    public function existeSeguidor() {
+      $sql = "
+	    	SELECT 
+          coalesce(count(*), 0)
+        FROM
+          tbUsuariosSeguidores as us          
+        WHERE
+          us.seguidor = :seguidor
+          and us.usuario = :usuario
+      ";
+      
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':seguidor', $this->seguidor);
+      $stmt->bindValue(':usuario', $this->id);
+      $stmt->execute();
+
+      return ($stmt->fetchColumn(0) ?? 0) > 0;
+    }
+
     // Registra um seguidor ao usuário
-    public function registrarSeguidor(int $idSeguidor) {
+    public function registrarSeguidor() {
       $sql = "
         INSERT INTO 
-          tbUsuariosSeguidores (id, seguidor)
+          tbUsuariosSeguidores (usuario, seguidor)
         VALUES
-          (:id, :seguidor)
+          (:usuario, :seguidor)
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id', $this->id);
-      $stmt->bindValue(':seguidor', $idSeguidor);
+      $stmt->bindValue(':usuario', $this->id);
+      $stmt->bindValue(':seguidor', $this->seguidor);
 
       return $stmt->execute();
     }
 
-    public function removerSeguidor(int $idSeguidor) {
+    public function removerSeguidor() {
       $sql = "
         DELETE FROM 
-          tbUsuariosseguidores
+          tbUsuariosSeguidores
         WHERE
-          id = :id && id = :id
+          usuario = :usuario AND seguidor = :seguidor
       ";
 
       $stmt = $this->conexao->prepare($sql);
-      $stmt->bindValue(':id', $this->id);
-      $stmt->bindValue(':seguidor', $idSeguidor);
+      $stmt->bindValue(':usuario', $this->id);
+      $stmt->bindValue(':seguidor', $this->seguidor);
 
       return $stmt->execute();
     }

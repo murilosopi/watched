@@ -20,7 +20,15 @@ class UsuarioController extends Action
     $usuario = $model->obterUsuarioPorUsername();
 
     if(!empty($usuario)) {
+      
       $model->id = $usuario['id'];
+
+      if(isset($_SESSION['usuario'])) {
+        $model->seguidor = $_SESSION['usuario']['id'];
+
+        $usuario['seguindo'] = $model->existeSeguidor();
+      }
+
       $model->adicionarVisualizacaoPerfil();
     }
 
@@ -73,6 +81,40 @@ class UsuarioController extends Action
     } else {
       $response->sucesso = false;
       $response->descricao = 'Necessário estar autenticado para realizar esta alteração';
+    }
+
+    $response->enviar();
+  }
+
+  public function seguirUsuario() {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $usuario = new Usuario;
+      $usuario->id = $_POST['uid'] ?? NULL;
+      $usuario->seguidor = $_SESSION['usuario']['id'];
+
+      $response->sucesso = $usuario->registrarSeguidor();
+    } else {
+      $response->sucesso = false;
+      $response->descricao = 'Necessário estar autenticado para realizar esta ação';
+    }
+
+    $response->enviar();
+  }
+
+  public function pararSeguirUsuario() {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $usuario = new Usuario;
+      $usuario->id = $_POST['uid'] ?? NULL;
+      $usuario->seguidor = $_SESSION['usuario']['id'];
+
+      $response->sucesso = $usuario->removerSeguidor();
+    } else {
+      $response->sucesso = false;
+      $response->descricao = 'Necessário estar autenticado para realizar esta ação';
     }
 
     $response->enviar();

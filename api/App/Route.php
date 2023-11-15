@@ -172,6 +172,18 @@
         'action' => 'pesquisarUsuarios'
       );
 
+      $routes['seguir-usuario'] = array(
+        'route' => '/seguir-usuario',
+        'controller' => 'UsuarioController',
+        'action' => 'seguirUsuario'
+      );
+
+      $routes['parar-seguir-usuario'] = array(
+        'route' => '/parar-seguir-usuario',
+        'controller' => 'UsuarioController',
+        'action' => 'pararSeguirUsuario'
+      );
+
       $routes['bate-papo-recentes'] = array(
         'route' => '/bate-papo/recentes',
         'controller' => 'ChatController',
