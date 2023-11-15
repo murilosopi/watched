@@ -43,4 +43,20 @@ class ChatController extends Action
 
 
   }
+
+  public function buscarConversasRecentes() {
+    $response = new Response;
+    if (empty($_SESSION['usuario'])) {
+      $response->sucesso = false;
+      $response->descricao = "É necessário estar logado para registrar uma resenha.";
+      $response->enviar();
+    } else {
+      $chat = new Chat;
+      $chat->participante = $_SESSION['usuario']['id'];
+      $conversas = $chat->buscarConversasRecentesUsuario();
+
+      $response->dados = $conversas;
+      $response->enviar();
+    }
+  }
 }

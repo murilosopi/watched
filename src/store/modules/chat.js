@@ -1,12 +1,12 @@
 export default {
   namespaced: true,
   state: {
-    chat: {
+    activeChat: {
       id: '1234',
-      lastId: '',
       participants: [],
-      name: ''
-    }
+      name: '',
+    },
+    recentChats: [],
   },
   getters: {
     lastChatId(state) {
@@ -16,18 +16,23 @@ export default {
       return state.chat.id || false;
     }
   },
-  mutation: {
+  mutations: {
     setId(state, newId) {
       state.chat.id = newId;
     },
     updateLastId(state) {
       state.chat.lastId = state.chat.id;
+    },
+    setRecentChats(state, payload) {
+      state.recentChats = payload;
     }
   },
   actions: {
-    getRecentChats() {
-      if(!this.userLogged) return;
-
+    getRecentChats({ commit }) {
+      this._vm.$api.get('/bate-papo/recentes')
+        .then(res => {
+          commit('setRecentChats'), res.data.dados;
+        }).catch(() => {});
       
     }
   }

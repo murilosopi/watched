@@ -172,6 +172,13 @@
         'action' => 'pesquisarUsuarios'
       );
 
+      $routes['bate-papo-recentes'] = array(
+        'route' => '/bate-papo/recentes',
+        'controller' => 'ChatController',
+        'action' => 'buscarConversasRecentes'
+      );
+
+      
       $this->setRoutes($routes); 
     }
 
