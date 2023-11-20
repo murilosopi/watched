@@ -15,7 +15,15 @@
       />
     </Transition>
 
-    <RatingChart class="col-lg-5 col-md-6" />
+    <div class="row justify-content-evenly mt-4">
+      <div class="col-md-6 mb-3 mb-md-0 ps-md-0">
+        <RatingChart :movie="movie" />
+      </div>
+      <div class="col-md-6 pe-md-0">
+        <ReactionChart :movie="movie" />
+      </div>
+    </div>
+
 
     <ReviewsList class="mt-5" :reviews="list" />
   </section>
@@ -26,6 +34,7 @@ import Title from "@/components/Title.vue";
 import ReviewsList from "./ReviewsList.vue";
 import ReviewForm from "./ReviewForm.vue";
 import RatingChart from "./RatingChart.vue";
+import ReactionChart from "./ReactionChart.vue";
 
 export default {
   components: {
@@ -33,6 +42,7 @@ export default {
     ReviewsList,
     ReviewForm,
     RatingChart,
+    ReactionChart
 },
 
   props: ["movie"],
