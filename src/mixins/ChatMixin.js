@@ -11,6 +11,7 @@ export default {
       "getRecentChats",
       "getFollowingChats",
       "registerMessage",
+      "newChat"
     ]),
     ...mapMutations("chat", [
       "setActiveChat",
