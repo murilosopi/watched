@@ -17,8 +17,8 @@
           data-bs-toggle="tooltip"
           data-bs-placement="top"
           :data-bs-title="`${rating.total} usuários avaliaram com ${
-            stars + 1
-          } estrela${ stars+1 >= 1 ? 's' : '' }.`"
+            5 - stars
+          } estrela${ 5 - stars >= 1 ? 's' : '' }.`"
         >
           <ProgressBar
             :progress="rating.percentage"
