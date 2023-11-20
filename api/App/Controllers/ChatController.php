@@ -8,8 +8,10 @@ use App\Models\Chat;
 
 class ChatController extends Action
 {
-  public function novoChatIndividual() {
-    if(isset($_SESSION['usuario'])) {
+  public function novoChatIndividual()
+  {
+    $response = new Response;
+    if (isset($_SESSION['usuario'])) {
       $uid = $_POST['uid'] ?? 0;
 
       $participantes = [
@@ -17,34 +19,39 @@ class ChatController extends Action
         $uid
       ];
 
-      if(count($participantes) == 2) {
-        $chat = new Chat;
+      $chat = new Chat;
 
-        $chat->tipo = 'I';
-        $chat->id = $chat->novoChat();
+      $chat->tipo = 'I';
+      $chat->id = $chat->novoChat();
 
-        if(!empty($chat->id)) {
+      if ($chat->id !== false) {
 
-          foreach($participantes as $usuario) {
-  
-            $chat->idParticipante = $usuario;
-  
-            $inseriu = $chat->adicionarParticipante();
+        foreach ($participantes as $usuario) {
 
-            if(!$inseriu) {
-              $chat->removerParticipantes();
-              $chat->excluirChat();
-            }
+          $chat->participante = $usuario;
+          $inseriu = $chat->adicionarParticipante();
+
+          if (!$inseriu) {
+            $chat->removerParticipantes();
+            $chat->excluirChat();
+            
+            $response->erro("Ocorreu um erro ao adicionar o usuario {$usuario} ao chat.");
           }
         }
+      } else {
+        $response->erro("Ocorreu um erro ao iniciar o chat.");
       }
+      
+      $response->dados = $chat->id;
+      $response->sucesso = !empty($response->dados);
+      $response->enviar();
+    } else {
+      $response->erro("É necessário estar logado para registrar uma resenha.");
     }
-
-
-
   }
 
-  public function buscarConversasRecentes() {
+  public function buscarConversasRecentes()
+  {
     $response = new Response;
     if (empty($_SESSION['usuario'])) {
       $response->sucesso = false;
@@ -60,7 +67,8 @@ class ChatController extends Action
     }
   }
 
-  public function buscarConversasSeguindo() {
+  public function buscarConversasSeguindo()
+  {
     $response = new Response;
     if (empty($_SESSION['usuario'])) {
       $response->sucesso = false;

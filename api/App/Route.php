@@ -195,6 +195,12 @@
         'controller' => 'ChatController',
         'action' => 'buscarConversasSeguindo'
       );
+
+      $routes['bate-papo-novo-chat'] = array(
+        'route' => '/bate-papo/novo-chat',
+        'controller' => 'ChatController',
+        'action' => 'novoChatIndividual'
+      );
       
       $this->setRoutes($routes); 
     }

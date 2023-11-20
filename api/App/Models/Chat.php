@@ -21,7 +21,7 @@ class Chat extends Model
 
     $execute = $stmt->execute();
 
-    return $execute ? $this->conexao->lastInsertId() : false;
+    return $execute ? (int)$this->conexao->lastInsertId() : false;
   }
 
   public function adicionarParticipante()
@@ -91,7 +91,7 @@ class Chat extends Model
     $sql = "SELECT
               tc.*,
               tpc.entrada, 
-              tu.id, 
+              tu.id as idUsuario, 
               tu.nome, 
               tu.username
             FROM
@@ -103,7 +103,7 @@ class Chat extends Model
             LEFT JOIN tbParticipantesChat tpc2 on
               tpc2.participante = tus.seguidor
             LEFT JOIN tbChats tc on
-              tc.id = tpc2.chat AND tpc2.chat = tpc.chat
+              tc.id = tpc.chat
             WHERE
               tc.id IS NULL
               AND seguidor = :participante";
