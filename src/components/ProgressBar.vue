@@ -13,6 +13,10 @@ export default {
       default: 'light'
     }
   },
+
+  created() {
+    console.log(this.variant)
+  }
 };
 </script>
 
@@ -26,7 +30,7 @@ export default {
   height: 100%;
 }
 
-.progress-bar .light {
+.progress-bar.light .progress-line {
   background-color: white;
 }
 
