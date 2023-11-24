@@ -38,7 +38,7 @@
     public function obterTodasResenhasPorFilme() {
       $sql = '
         SELECT 
-          r.id, r.usuario, r.titulo, r.descricao, r.nota, DATE_FORMAT(r.dataHora, "%d/%m/%Y %I:%i") as data, u.username
+          r.id, r.filme, r.usuario, r.titulo, r.descricao, r.nota, DATE_FORMAT(r.dataHora, "%d/%m/%Y %I:%i") as data, u.username
         FROM 
           tbResenhas as r 
         JOIN 
@@ -107,9 +107,8 @@
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':filme', $this->filme);
       $stmt->bindValue(':usuario', $this->usuario);
-      $stmt->execute();
 
-      return $stmt->fetch(\PDO::FETCH_ASSOC);
+      return $stmt->execute();
     }
 
     public function obterNotaFilme() {
