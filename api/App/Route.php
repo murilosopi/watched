@@ -211,13 +211,13 @@
       $routes['usuario-avatar-personalizado'] = array(
         'route' => '/usuario/avatar-personalizado',
         'controller' => 'UsuarioController',
-        'action' => 'AtualizarAvatarPersonalizado'
+        'action' => 'atualizarAvatarPersonalizado'
       );
 
       $routes['usuario/avatar'] = array(
         'route' => '/usuario/avatar',
         'controller' => 'UsuarioController',
-        'action' => 'AvatarUsuario'
+        'action' => 'avatarUsuario'
       );
       
       $this->setRoutes($routes); 

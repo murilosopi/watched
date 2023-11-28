@@ -121,7 +121,7 @@ class UsuarioController extends Action
     $response->enviar();
   }
 
-  public function AtualizarAvatarPersonalizado()
+  public function atualizarAvatarPersonalizado()
   {
     $response = new Response;
 
@@ -159,7 +159,7 @@ class UsuarioController extends Action
     $response->erro('Não foi possível salvar o arquivo.');
   }
 
-  public function AvatarUsuario() {
+  public function avatarUsuario() {
     $usuario = new Usuario;
     $usuario->username = $_GET['username'] ?? null;
 
@@ -167,12 +167,11 @@ class UsuarioController extends Action
     
     $response = new Response('imagem');
     
-    if(!empty($caminho)) {
-      $response->dados = UPLOAD_PATH . "/{$caminho}";
-    } else {
-      $response->dados = PUBLIC_PATH . "/assets/img/users/default.svg";
-    }
+    $padrao = PUBLIC_PATH . "/assets/img/users/default.svg";
 
+    $avatar = UPLOAD_PATH . "/{$caminho}";
+    
+    $response->dados = !empty($caminho) && file_exists($avatar) ? $avatar : $padrao;
     $response->enviar();
   }
 }
