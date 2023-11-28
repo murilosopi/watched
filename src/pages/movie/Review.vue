@@ -1,18 +1,12 @@
 <template>
-  <section class="col" v-if="list.length || userLogged && !existsUserReview">
+  <section class="col" v-if="reviewsList.length || userLogged && !existsUserReview">
     <Title tag="h3" class="text-center">
       Opinião do Público
       <i class="bi bi-chat-left-text"></i>&nbsp;
     </Title>
     <hr class="w-25 mx-auto" />
-    <Transition
-      leave-active-class="animate__animated animate__fadeOut animate__faster"
-    >
-      <ReviewForm
-        :movie="movie"
-        v-if="!existsUserReview"
-        @newReview="newReview"
-      />
+    <Transition leave-active-class="animate__animated animate__fadeOut animate__faster">
+      <ReviewForm :movie="movie" v-if="!existsUserReview" @newReview="newReview" />
     </Transition>
 
     <div class="row justify-content-evenly mt-4">
@@ -25,7 +19,7 @@
     </div>
 
 
-    <ReviewsList class="mt-5" :reviews="list" />
+    <ReviewsList class="mt-5" />
   </section>
 </template>
 
@@ -35,6 +29,7 @@ import ReviewsList from "./ReviewsList.vue";
 import ReviewForm from "./ReviewForm.vue";
 import RatingChart from "./RatingChart.vue";
 import ReactionChart from "./ReactionChart.vue";
+import ReviewMixin from "@/mixins/ReviewMixin";
 
 export default {
   components: {
@@ -43,35 +38,19 @@ export default {
     ReviewForm,
     RatingChart,
     ReactionChart
-},
+  },
+
+  mixins: [ReviewMixin],
 
   props: ["movie"],
 
   data() {
     return {
-      list: [],
       existsUserReview: false,
     };
   },
 
   methods: {
-    getReviews() {
-      const params = { filme: this.movie };
-      this.$api.get("/obter-resenhas-filme", { params }).then((res) => {
-        const response = res.data;
-
-        if (response.sucesso) {
-          this.list = response.dados.map((review) => {
-            return {
-              user: review.username,
-              rating: Number(review.nota),
-              text: review.descricao,
-              date: review.data,
-            };
-          });
-        }
-      });
-    },
 
     checkUserReview() {
       if (this.userLogged) {
@@ -81,7 +60,6 @@ export default {
           .get("/existe-resenha-filme-usuario", { params })
           .then((res) => {
             const response = res.data;
-
             this.existsUserReview = response.sucesso;
           });
       }
@@ -94,11 +72,10 @@ export default {
   },
 
   created() {
-    this.getReviews();
+    this.fetchReviews(this.movie);
     this.checkUserReview();
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

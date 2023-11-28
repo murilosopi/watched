@@ -154,6 +154,12 @@
         'action' => 'existeResenhaFilmeUsuario'
       );
 
+      $routes['excluir-resenha'] = array(
+        'route' => '/excluir-resenha',
+        'controller' => 'ResenhaController',
+        'action' => 'excluirResenha'
+      );
+
       $routes['interacoes-filme'] = array(
         'route' => '/interacoes-filme',
         'controller' => 'InteracoesController',

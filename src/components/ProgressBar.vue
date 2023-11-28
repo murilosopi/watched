@@ -13,10 +13,6 @@ export default {
       default: 'light'
     }
   },
-
-  created() {
-    console.log(this.variant)
-  }
 };
 </script>
 
