@@ -19,11 +19,11 @@ class UsuarioController extends Action
 
     $usuario = $model->obterUsuarioPorUsername();
 
-    if(!empty($usuario)) {
-      
+    if (!empty($usuario)) {
+
       $model->id = $usuario['id'];
 
-      if(isset($_SESSION['usuario'])) {
+      if (isset($_SESSION['usuario'])) {
         $model->seguidor = $_SESSION['usuario']['id'];
 
         $usuario['seguindo'] = $model->existeSeguidor();
@@ -86,7 +86,8 @@ class UsuarioController extends Action
     $response->enviar();
   }
 
-  public function seguirUsuario() {
+  public function seguirUsuario()
+  {
     $response = new Response;
 
     if (isset($_SESSION['usuario'])) {
@@ -102,7 +103,8 @@ class UsuarioController extends Action
     $response->enviar();
   }
 
-  public function pararSeguirUsuario() {
+  public function pararSeguirUsuario()
+  {
     $response = new Response;
 
     if (isset($_SESSION['usuario'])) {
@@ -118,28 +120,29 @@ class UsuarioController extends Action
     $response->enviar();
   }
 
-  public function AtualizarAvatarPersonalizado() {
+  public function AtualizarAvatarPersonalizado()
+  {
     $response = new Response;
 
     $imagem = $_FILES['avatar'] ?? null;
-    
+
     $tamanhoMaximo = 1024 * 1024 * 4; // 4 MB
-    if($imagem['size'] > $tamanhoMaximo) $response->erro('O arquivo atingiu o tamanho máximo.');
-    if(empty($imagem)) $response->erro('O arquivo não foi enviado.');
-    if(empty($_SESSION['usuario'])) $response->erro('Necessário estar autenticado para realizar esta ação.');
+    if ($imagem['size'] > $tamanhoMaximo) $response->erro('O arquivo atingiu o tamanho máximo.');
+    if (empty($imagem)) $response->erro('O arquivo não foi enviado.');
+    if (empty($_SESSION['usuario'])) $response->erro('Necessário estar autenticado para realizar esta ação.');
 
     $tipo = explode('/', $imagem['type'])[0];
-    if($tipo != 'image') $response->erro('O arquivo enviado não é válido.');
-    
-    $diretorio = UPLOAD_PATH . "/{$_SESSION['usuario']['id']}";
-    if(!file_exists($diretorio)) mkdir($diretorio, 0777, true);
-    
+    if ($tipo != 'image') $response->erro('O arquivo enviado não é válido.');
+
+    $diretorio = UPLOAD_PATH . "{$_SESSION['usuario']['id']}";
+    if (!file_exists($diretorio)) mkdir($diretorio, 0777, true);
+
     $ext = explode('/', $imagem['type'])[1];
-    $nomeArquivo = "avatar_". date('ymd') .".{$ext}";
+    $nomeArquivo = "avatar_" . date('ymd') . ".{$ext}";
 
-    $movido = move_uploaded_file($imagem['tmp_name'], "{$diretorio}/{$nomeArquivo}");
+    $movido = move_uploaded_file(($imagem['tmp_name']), "{$diretorio}/{$nomeArquivo}");
 
-    if($movido) {
+    if ($movido) {
       $usuario = new Usuario;
       $usuario->id = $_SESSION['usuario']['id'];
       $usuario->avatar = $nomeArquivo;
