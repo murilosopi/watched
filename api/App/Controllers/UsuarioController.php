@@ -96,8 +96,7 @@ class UsuarioController extends Action
 
       $response->sucesso = $usuario->registrarSeguidor();
     } else {
-      $response->sucesso = false;
-      $response->descricao = 'Necessário estar autenticado para realizar esta ação';
+      $response->erro('Necessário estar autenticado para realizar esta ação');
     }
 
     $response->enviar();
@@ -113,10 +112,28 @@ class UsuarioController extends Action
 
       $response->sucesso = $usuario->removerSeguidor();
     } else {
-      $response->sucesso = false;
-      $response->descricao = 'Necessário estar autenticado para realizar esta ação';
+      $response->erro('Necessário estar autenticado para realizar esta ação');
     }
 
     $response->enviar();
+  }
+
+  public function AtualizarAvatarPersonalizado() {
+    $imagem = $_FILES['avatar'] ?? null;
+
+    if(empty($imagem)) (new Response())->erro('O arquivo não foi enviado');
+    if(empty($_SESSION['usuario'])) (new Response())->erro('Necessário estar autenticado para realizar esta ação');
+
+    $diretorio = UPLOAD_PATH . "/{$_SESSION['usuario']['id']}";
+    if(!file_exists($diretorio)) mkdir($diretorio, 0777, true);
+    $ext = explode('/', $imagem['type'])[1];
+
+    $nomeArquivo = "avatar_". date('ymd') .".{$ext}";
+
+    move_uploaded_file($imagem['tmp_name'], "{$diretorio}/{$nomeArquivo}");
+
+    
+    $usuario = new Usuario;
+    $usuario->id = $_SESSION['usuario']
   }
 }

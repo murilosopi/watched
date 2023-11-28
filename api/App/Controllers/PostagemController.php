@@ -30,7 +30,6 @@ class PostagemController extends Action
       $postagem->id = $postagem->novaPostagem();
 
       if($imagem) {
-        $ext = explode('/', $imagem['type'])[1];
         $path = UPLOAD_PATH . "img/posts/{$uid}/{$postagem->id}.{$ext}";
 
         $movido = move_uploaded_file($imagem['uri'], $path);

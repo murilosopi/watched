@@ -201,6 +201,12 @@
         'controller' => 'ChatController',
         'action' => 'novoChatIndividual'
       );
+
+      $routes['usuario-avatar-personalizado'] = array(
+        'route' => '/usuario/avatar-personalizado',
+        'controller' => 'UsuarioController',
+        'action' => 'AtualizarAvatarPersonalizado'
+      );
       
       $this->setRoutes($routes); 
     }
