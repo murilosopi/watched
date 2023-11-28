@@ -3,11 +3,16 @@
     <div slot="content">
       <div class="row">
         <div class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0">
-          <UserAvatar v-if="userHasAvatar" :username="loggedData.tag"/>
-
-          <div class="ratio ratio-1x1 m-auto" v-else>
-            <UploadImage @newFile="uploadCustomAvatar" class="rounded-circle"/>
+          <div class="ratio ratio-1x1 m-auto">
+            <UploadImage @newFile="uploadCustomAvatar" class="rounded-circle" />
           </div>
+        </div>
+
+        <div
+          v-if="userHasAvatar"
+          class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0"
+        >
+          <UserAvatar :key="updateCounter" :username="loggedData.tag" />
         </div>
       </div>
     </div>
@@ -22,35 +27,48 @@ import Swal from "sweetalert2";
 
 export default {
   components: { Dialog, UploadImage, UserAvatar },
-  data() { 
+  data() {
     return {
-      userHasAvatar: false
-    }
+      userHasAvatar: false,
+      updateCounter: 0
+    };
   },
   methods: {
     uploadCustomAvatar(file) {
       const maxSize = 1024 * 1024 * 4; // 4 MBs
-      
+
       if (file.size > maxSize) {
-        Swal.fire('OPS!', 'O tamanho máximo do arquivo deve ser de 4 MB.', 'warning');
+        Swal.fire(
+          "OPS!",
+          "O tamanho máximo do arquivo deve ser de 4 MB.",
+          "warning"
+        );
       } else {
-
         const formData = new FormData();
-        formData.append('avatar', file);
-        const headers = { 'Content-Type': 'multipart/form-data' };
+        formData.append("avatar", file);
+        const headers = { "Content-Type": "multipart/form-data" };
 
-        this.$api.post('/usuario/avatar-personalizado', formData, { headers }).then((res) => {
+        this.$api
+          .post("/usuario/avatar-personalizado", formData, { headers })
+          .then((res) => {
+            const response = res.data;
 
-          const response = res.data;
+            if (response.sucesso) {
+              this.userHasAvatar = true;
 
-          if(response.sucesso) {
-            this.userHasAvatar = true;
-          } else {
-            Swal.fire('OPS!', response.descricao || 'Ocorreu um problema... Tente novamente mais tarde.', 'error');
-          }
-        }).catch(e => console.log(e));
+              this.updateCounter++;
+            } else {
+              Swal.fire(
+                "OPS!",
+                response.descricao ||
+                  "Ocorreu um problema... Tente novamente mais tarde.",
+                "error"
+              );
+            }
+          })
+          .catch((e) => console.log(e));
       }
-    }
+    },
   },
 };
 </script>

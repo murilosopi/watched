@@ -10,10 +10,14 @@ export default {
 
   data() {
     return {
-      path: `${this.$api.getUri()}/usuario/avatar?username=${this.username}`,
+      path: '',
       alt: `Foto de perfil do usuário @${this.username}`
     }
   },
+
+  mounted() {
+    this.path = `${this.$api.getUri()}/usuario/avatar?username=${this.username}&time=${Date.now()}`;
+  }
 }
 </script>
 
