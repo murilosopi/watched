@@ -7,7 +7,7 @@
     protected $nome;
     protected $username;
     protected $sobre;
-    protected $fotoPerfil;
+    protected $avatar;
     protected $email;
     protected $senha;
     protected $seguidor;
@@ -239,6 +239,16 @@
 
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':id', $this->id);
+
+      return $stmt->execute();
+    }
+
+    public function registrarAvatarUsuario() {
+      $sql = "UPDATE tbUsuarios SET avatar = :avatar WHERE id = :id";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':id', $this->id);
+      $stmt->bindValue(':avatar', $this->avatar);
 
       return $stmt->execute();
     }

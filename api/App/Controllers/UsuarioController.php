@@ -119,21 +119,35 @@ class UsuarioController extends Action
   }
 
   public function AtualizarAvatarPersonalizado() {
+    $response = new Response;
+
     $imagem = $_FILES['avatar'] ?? null;
+    
+    $tamanhoMaximo = 1024 * 1024 * 4; // 4 MB
+    if($imagem['size'] > $tamanhoMaximo) $response->erro('O arquivo atingiu o tamanho máximo.');
+    if(empty($imagem)) $response->erro('O arquivo não foi enviado.');
+    if(empty($_SESSION['usuario'])) $response->erro('Necessário estar autenticado para realizar esta ação.');
 
-    if(empty($imagem)) (new Response())->erro('O arquivo não foi enviado');
-    if(empty($_SESSION['usuario'])) (new Response())->erro('Necessário estar autenticado para realizar esta ação');
-
+    $tipo = explode('/', $imagem['type'])[0];
+    if($tipo != 'image') $response->erro('O arquivo enviado não é válido.');
+    
     $diretorio = UPLOAD_PATH . "/{$_SESSION['usuario']['id']}";
     if(!file_exists($diretorio)) mkdir($diretorio, 0777, true);
+    
     $ext = explode('/', $imagem['type'])[1];
-
     $nomeArquivo = "avatar_". date('ymd') .".{$ext}";
 
-    move_uploaded_file($imagem['tmp_name'], "{$diretorio}/{$nomeArquivo}");
+    $movido = move_uploaded_file($imagem['tmp_name'], "{$diretorio}/{$nomeArquivo}");
 
-    
-    $usuario = new Usuario;
-    $usuario->id = $_SESSION['usuario']
+    if($movido) {
+      $usuario = new Usuario;
+      $usuario->id = $_SESSION['usuario']['id'];
+      $usuario->avatar = $diretorio;
+
+      $response->sucesso = $usuario->registrarAvatarUsuario();
+      $response->enviar();
+    }
+
+    $response->erro('Não foi possível salvar o arquivo.');
   }
 }
