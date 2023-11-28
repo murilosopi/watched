@@ -1,7 +1,15 @@
 <template>
-  <Dialog class="modal-change-avatar">
+  <Dialog class="modal-change-avatar" size="lg">
     <div slot="content">
-      <UploadImage @newFile="uploadCustomAvatar" />
+      <div class="row">
+        <div class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0">
+          <UserAvatar v-if="userHasAvatar" :username="loggedData.tag"/>
+
+          <div class="ratio ratio-1x1 m-auto" v-else>
+            <UploadImage @newFile="uploadCustomAvatar" class="rounded-circle"/>
+          </div>
+        </div>
+      </div>
     </div>
   </Dialog>
 </template>
@@ -9,10 +17,16 @@
 <script>
 import Dialog from "@/components/Dialog.vue";
 import UploadImage from "@/components/UploadImage.vue";
+import UserAvatar from "@/components/UserAvatar.vue";
 import Swal from "sweetalert2";
 
 export default {
-  components: { Dialog, UploadImage },
+  components: { Dialog, UploadImage, UserAvatar },
+  data() { 
+    return {
+      userHasAvatar: false
+    }
+  },
   methods: {
     uploadCustomAvatar(file) {
       const maxSize = 1024 * 1024 * 4; // 4 MBs
@@ -20,14 +34,21 @@ export default {
       if (file.size > maxSize) {
         Swal.fire('OPS!', 'O tamanho máximo do arquivo deve ser de 4 MB.', 'warning');
       } else {
-        
+
         const formData = new FormData();
         formData.append('avatar', file);
         const headers = { 'Content-Type': 'multipart/form-data' };
 
         this.$api.post('/usuario/avatar-personalizado', formData, { headers }).then((res) => {
-          console.log(res)
-        })
+
+          const response = res.data;
+
+          if(response.sucesso) {
+            this.userHasAvatar = true;
+          } else {
+            Swal.fire('OPS!', response.descricao || 'Ocorreu um problema... Tente novamente mais tarde.', 'error');
+          }
+        }).catch(e => console.log(e));
       }
     }
   },

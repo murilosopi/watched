@@ -252,5 +252,24 @@
 
       return $stmt->execute();
     }
+
+    public function buscarCaminhoAvatar() {
+      $sql = "
+        SELECT 
+          id,
+          avatar
+        FROM 
+          tbUsuarios 
+        WHERE 
+          username = :username
+      ";
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':username', $this->username);
+      $stmt->execute();
+      
+      $dados = $stmt->fetch(\PDO::FETCH_OBJ);
+
+      return empty($dados) ? false : "{$dados->id}/{$dados->avatar}";
+    }
   }
 ?>

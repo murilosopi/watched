@@ -213,6 +213,12 @@
         'controller' => 'UsuarioController',
         'action' => 'AtualizarAvatarPersonalizado'
       );
+
+      $routes['usuario/avatar'] = array(
+        'route' => '/usuario/avatar',
+        'controller' => 'UsuarioController',
+        'action' => 'AvatarUsuario'
+      );
       
       $this->setRoutes($routes); 
     }

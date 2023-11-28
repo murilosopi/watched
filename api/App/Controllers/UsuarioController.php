@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use App\Models\Filme;
 use App\Models\Interacoes;
 use App\Models\Resenha;
+use Exception;
 
 class UsuarioController extends Action
 {
@@ -134,14 +135,18 @@ class UsuarioController extends Action
     $tipo = explode('/', $imagem['type'])[0];
     if ($tipo != 'image') $response->erro('O arquivo enviado não é válido.');
 
-    $diretorio = UPLOAD_PATH . "{$_SESSION['usuario']['id']}";
+    $diretorio = UPLOAD_PATH . "/{$_SESSION['usuario']['id']}";
     if (!file_exists($diretorio)) mkdir($diretorio, 0777, true);
 
     $ext = explode('/', $imagem['type'])[1];
     $nomeArquivo = "avatar_" . date('ymd') . ".{$ext}";
 
-    $movido = move_uploaded_file(($imagem['tmp_name']), "{$diretorio}/{$nomeArquivo}");
+    $caminho = "{$diretorio}/{$nomeArquivo}";
 
+    if(file_exists($caminho)) unlink($caminho);
+
+    $movido = move_uploaded_file($imagem['tmp_name'], $caminho);
+    
     if ($movido) {
       $usuario = new Usuario;
       $usuario->id = $_SESSION['usuario']['id'];
@@ -152,5 +157,22 @@ class UsuarioController extends Action
     }
 
     $response->erro('Não foi possível salvar o arquivo.');
+  }
+
+  public function AvatarUsuario() {
+    $usuario = new Usuario;
+    $usuario->username = $_GET['username'] ?? null;
+
+    $caminho = $usuario->buscarCaminhoAvatar();
+    
+    $response = new Response('imagem');
+    
+    if(!empty($caminho)) {
+      $response->dados = UPLOAD_PATH . "/{$caminho}";
+    } else {
+      $response->dados = PUBLIC_PATH . "/assets/img/users/default.svg";
+    }
+
+    $response->enviar();
   }
 }
