@@ -142,7 +142,7 @@ class UsuarioController extends Action
     if($movido) {
       $usuario = new Usuario;
       $usuario->id = $_SESSION['usuario']['id'];
-      $usuario->avatar = $diretorio;
+      $usuario->avatar = $nomeArquivo;
 
       $response->sucesso = $usuario->registrarAvatarUsuario();
       $response->enviar();
