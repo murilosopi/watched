@@ -27,10 +27,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  props: {
-    messages: Array,
-  },
+  computed: mapGetters('chat', ['messages'])
 };
 </script>
 

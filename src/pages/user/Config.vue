@@ -58,21 +58,18 @@
         </DarkBox>
       </div>
     </div>
-
-    <Dialog class="modal-change-avatar">
-      <div slot="content"></div>
-    </Dialog>
+    <AvatarDialog class="modal-change-avatar" />
   </main>
 </template>
   
 <script>
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import Title from "@/components/Title.vue";
-import Dialog from "@/components/Dialog.vue";
 import { Modal } from "bootstrap";
 import DarkBox from "@/components/DarkBox.vue";
+import AvatarDialog from "./AvatarDialog.vue";
 export default {
-  components: { Title, InteractiveIcon, Dialog, DarkBox },
+  components: { Title, InteractiveIcon, DarkBox, AvatarDialog },
   methods: {
     showChangeAvatar() {
       this.avatarDialog.show();

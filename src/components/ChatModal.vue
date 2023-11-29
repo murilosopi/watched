@@ -3,50 +3,96 @@
     id="modal-chat"
     size="lg"
     :scroll="true"
-    :customHeader="titleChat.length > 0"
+    :customHeader="true"
+    :fullHeight="true"
   >
-    <template slot="header" v-if="id">
-      <InteractiveIcon class="me-1" @click.native="id = null">
-        <i class="bi bi-chevron-left fs-5"></i>
-      </InteractiveIcon>
-      <h1 class="modal-title fs-5">{{ id }}</h1>
+    <template v-if="hasChat">
+      <template slot="header">
+        <InteractiveIcon class="me-1" @click.native="removeActiveChat">
+          <i class="bi bi-chevron-left fs-5"></i>
+        </InteractiveIcon>
+        <h1 class="modal-title fs-5">{{ titleChat }}</h1>
+        <InteractiveIcon class="ms-auto me-1">
+          <i class="bi bi-flag text-danger fs-5"></i>
+        </InteractiveIcon>
+        <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
+          <i class="bi bi-x-lg text-danger fs-5"></i>
+        </InteractiveIcon>
+      </template>
 
-      <InteractiveIcon class="ms-auto me-1">
-        <i class="bi bi-flag text-danger fs-5"></i>
-      </InteractiveIcon>
-      <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
-        <i class="bi bi-x-lg text-danger fs-5"></i>
-      </InteractiveIcon>
+      <ChatForm
+        :to="chatId"
+        slot="footer"
+        @newMessage="
+          (msg) => {
+            sendMessage(msg);
+            $forceUpdate();
+          }
+        "
+      />
+
+      <div slot="content" class="row align-items-strech">
+        <div class="col d-flex flex-column" v-if="hasChat">
+          <ChatMessages />
+        </div>
+      </div>
     </template>
-    <div slot="content" class="row align-items-strech">
-      <div class="col d-flex flex-column" v-if="id">
-        <ChatMessages :messages="messages" />
+
+    <template v-else>
+      <template slot="header">
+        <Title tag="h2">Bate-Papo</Title>
+        <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
+          <i class="bi bi-x-lg fs-5"></i>
+        </InteractiveIcon>
+      </template>
+
+      <div slot="content" class="row align-items-strech h-100">
+        <div class="col-lg-6" v-if="recentChats.length">
+          <Title tag="h3" class="opacity-50 fs-4 mb-2">Recentes</Title>
+          <ListGroup class="mb-4">
+            <TransitionGroup
+              leave-active-class="animate__animated animate__fadeIn animate__faster"
+            >
+              <ListGroupItem
+                v-for="chat in recentChats"
+                :key="chat.id"
+                @click.native="setActiveChat(chat)"
+              >
+                <div class="chat-item-icon me-2">
+                  <UserAvatar :username="chat.participants[0].username" />
+                </div>
+                <Title tag="span">{{
+                  chat.participants.map((p) => p.username).join(", ")
+                }}</Title>
+              </ListGroupItem>
+            </TransitionGroup>
+          </ListGroup>
+        </div>
+        <div class="col-lg-6" v-if="followingChats.length">
+          <Title tag="h3" class="opacity-50 fs-4 mb-2">Sua Rede</Title>
+          <ListGroup class="mb-4">
+            <ListGroupItem
+              v-for="(chat, idx) in followingChats"
+              :key="chat.participants[0].username"
+              @click.native="newChatHandler(chat, idx)"
+            >
+              <div class="chat-item-icon me-2">
+                <UserAvatar :username="chat.participants[0].username" />
+              </div>
+              <Title tag="span">{{
+                chat.participants.map((p) => p.username).join(", ")
+              }}</Title>
+            </ListGroupItem>
+          </ListGroup>
+        </div>
       </div>
-      <div class="col" v-else>
-        <ListGroup>
-          <ListGroupItem
-            @click.native="id = i"
-            v-for="i in 10"
-            :key="i"
-          >
-            <div class="chat-item-icon me-2">
-              <UserAvatar />
-            </div>
-            <Title tag="span">Usuario {{ i }}</Title>
-          </ListGroupItem>
-        </ListGroup>
-      </div>
-    </div>
-    <ChatForm
-      v-if="id"
-      :to="id"
-      slot="footer"
-      @newMessage="handlerNewMessage"
-    />
+    </template>
   </Dialog>
 </template>
 
 <script>
+import ChatMixin from "@/mixins/ChatMixin";
+import PageMixin from "@/mixins/PageMixin";
 import ChatForm from "./ChatForm.vue";
 import ChatMessages from "./ChatMessages.vue";
 import Dialog from "./Dialog.vue";
@@ -55,6 +101,8 @@ import ListGroup from "./ListGroup.vue";
 import ListGroupItem from "./ListGroupItem.vue";
 import Title from "./Title.vue";
 import UserAvatar from "./UserAvatar.vue";
+import Swal from 'sweetalert2';
+
 export default {
   components: {
     Dialog,
@@ -65,41 +113,30 @@ export default {
     InteractiveIcon,
     ListGroupItem,
     ListGroup,
-},
+  },
+  mixins: [ChatMixin, PageMixin],
   data() {
     return {
-      id: null,
-      connection: null,
-      messages: [],
+      modal: null,
+      dialogBody: null,
+      c: 0
     };
   },
 
-  computed: {
-    titleChat() {
-      return this.id ? `Esse chat aqui: ${this.id}` : "";
-    },
-  },
-
   methods: {
-    handlerNewMessage(msg) {
-      msg = {
-        ...msg,
-        to: this.id,
-        from: this.loggedData.id
-      }
+    async newChatHandler(chat, originPosition) {
+      this.newChat(chat).then(res => {
 
-      this.messages.push(msg);
-      this.connection.send(JSON.stringify(msg));
-    },
-
-    onMessageReceived({ data }) {
-      const message = JSON.parse(data);
-
-      if(this.id == message.from) {
-        this.messages.push(message);
-      } else {
-        alert('voce recebeu uma mensagem do usuario: ' + message.from);
-      }
+        if(res) {
+          this.followingChats.splice(originPosition, 1);
+  
+          this.setActiveChat(chat)
+        } else {
+          throw(res);
+        }
+      }).catch(() => {
+        Swal.fire('Ops', 'Não é possível participar desse bate-papo no momento...', 'warning')
+      })
     }
   },
 
@@ -108,25 +145,24 @@ export default {
   },
 
   mounted() {
-    this.dialogBody = this.$el.querySelector('.modal-body');
+    this.dialogBody = this.$el.querySelector(".modal-body");
+
+    this.modal = this.$el;
+
+    this.modal.addEventListener('show.bs.modal', () => {
+      this.getFollowingChats();
+    });
   },
 
   created() {
-    
-    let wsUrl = `ws://localhost:8082?uid=${this.loggedData.id}`;
-    this.connection = new WebSocket(wsUrl);
-    
-    this.connection.onopen = () => {
-      console.log('Conectado');
-    }
-
-    this.connection.onmessage = this.onMessageReceived;
-  }
+    this.changeFavicon("config", "svg");
+    this.changePageTitle("Configurações");
+  },
 };
 </script>
 
 <style scoped>
 .chat-item-icon {
-  width: 30px;
+  width: calc(2vw + 40px);
 }
 </style>

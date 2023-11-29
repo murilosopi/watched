@@ -7,7 +7,7 @@
         :key="stars"
       >
         <div class="col-2">
-          <InteractiveIcon :inline="true" class="gap-2 ms-auto">
+          <InteractiveIcon tag="span" :inline="true" class="gap-2 ms-auto">
             {{ 5 - stars }}
             <i class="bi bi-star"></i>
           </InteractiveIcon>
@@ -17,8 +17,8 @@
           data-bs-toggle="tooltip"
           data-bs-placement="top"
           :data-bs-title="`${rating.total} usuários avaliaram com ${
-            stars + 1
-          } estrela${ stars+1 >= 1 ? 's' : '' }.`"
+            5 - stars
+          } estrela${ 5 - stars >= 1 ? 's' : '' }.`"
         >
           <ProgressBar
             :progress="rating.percentage"
@@ -35,9 +35,11 @@
 import DarkBox from "@/components/DarkBox.vue";
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
-import { Tooltip } from "bootstrap";
+import BsTooltipMixin from "@/mixins/BsTooltipMixin";
 export default {
   components: { DarkBox, ProgressBar, InteractiveIcon },
+  mixins: [BsTooltipMixin],
+  props: ['movie'],
   data() {
     return {
       starRating: [
@@ -76,26 +78,6 @@ export default {
           return "light";
       }
     },
-
-    enableTooltips() {
-      const tooltipTriggerList = this.$el.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-      );
-
-      if (tooltipTriggerList && tooltipTriggerList.length) {
-        tooltipTriggerList.forEach(
-          (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
-        );
-      }
-    },
-  },
-
-  mounted() {
-    this.enableTooltips();
-  },
-
-  updated() {
-    this.enableTooltips();
   },
 };
 </script>

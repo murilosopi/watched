@@ -1,7 +1,7 @@
 <template>
   <div class="modal fade">
     <div class="modal-dialog modal-dialog-centered" :class="dialogClass">
-      <DarkBox class="modal-content rounded">
+      <DarkBox class="modal-content rounded" :class="{ 'h-100': fullHeight }">
         <div class="modal-header" v-if="customHeader">
           <slot name="header"></slot>
         </div>
@@ -42,6 +42,10 @@ export default {
     size: {
       type: String,
       default: "",
+    },
+    fullHeight: {
+      type: Boolean,
+      default: false,
     },
     scroll: Boolean,
     customHeader: Boolean,

@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    class="interactive-icon d-flex align-items-center"
+    class="interactive-icon d-flex align-items-center justify-content-center"
     :class="{
       'flex-column': !inline,
     }"

@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use App\Models\Filme;
 use App\Models\Interacoes;
 use App\Models\Resenha;
+use Exception;
 
 class UsuarioController extends Action
 {
@@ -19,8 +20,16 @@ class UsuarioController extends Action
 
     $usuario = $model->obterUsuarioPorUsername();
 
-    if(!empty($usuario)) {
+    if (!empty($usuario)) {
+
       $model->id = $usuario['id'];
+
+      if (isset($_SESSION['usuario'])) {
+        $model->seguidor = $_SESSION['usuario']['id'];
+
+        $usuario['seguindo'] = $model->existeSeguidor();
+      }
+
       $model->adicionarVisualizacaoPerfil();
     }
 
@@ -75,6 +84,94 @@ class UsuarioController extends Action
       $response->descricao = 'Necessário estar autenticado para realizar esta alteração';
     }
 
+    $response->enviar();
+  }
+
+  public function seguirUsuario()
+  {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $usuario = new Usuario;
+      $usuario->id = $_POST['uid'] ?? NULL;
+      $usuario->seguidor = $_SESSION['usuario']['id'];
+
+      $response->sucesso = $usuario->registrarSeguidor();
+    } else {
+      $response->erro('Necessário estar autenticado para realizar esta ação');
+    }
+
+    $response->enviar();
+  }
+
+  public function pararSeguirUsuario()
+  {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $usuario = new Usuario;
+      $usuario->id = $_POST['uid'] ?? NULL;
+      $usuario->seguidor = $_SESSION['usuario']['id'];
+
+      $response->sucesso = $usuario->removerSeguidor();
+    } else {
+      $response->erro('Necessário estar autenticado para realizar esta ação');
+    }
+
+    $response->enviar();
+  }
+
+  public function atualizarAvatarPersonalizado()
+  {
+    $response = new Response;
+
+    $imagem = $_FILES['avatar'] ?? null;
+
+    $tamanhoMaximo = 1024 * 1024 * 4; // 4 MB
+    if ($imagem['size'] > $tamanhoMaximo) $response->erro('O arquivo atingiu o tamanho máximo.');
+    if (empty($imagem)) $response->erro('O arquivo não foi enviado.');
+    if (empty($_SESSION['usuario'])) $response->erro('Necessário estar autenticado para realizar esta ação.');
+
+    $tipo = explode('/', $imagem['type'])[0];
+    if ($tipo != 'image') $response->erro('O arquivo enviado não é válido.');
+
+    $diretorio = UPLOAD_PATH . "/{$_SESSION['usuario']['id']}";
+    if (!file_exists($diretorio)) mkdir($diretorio, 0777, true);
+
+    $ext = explode('/', $imagem['type'])[1];
+    $nomeArquivo = "avatar_" . date('ymd') . ".{$ext}";
+
+    $caminho = "{$diretorio}/{$nomeArquivo}";
+
+    if(file_exists($caminho)) unlink($caminho);
+
+    $movido = move_uploaded_file($imagem['tmp_name'], $caminho);
+    
+    if ($movido) {
+      $usuario = new Usuario;
+      $usuario->id = $_SESSION['usuario']['id'];
+      $usuario->avatar = $nomeArquivo;
+
+      $response->sucesso = $usuario->registrarAvatarUsuario();
+      $response->enviar();
+    }
+
+    $response->erro('Não foi possível salvar o arquivo.');
+  }
+
+  public function avatarUsuario() {
+    $usuario = new Usuario;
+    $usuario->username = $_GET['username'] ?? null;
+
+    $caminho = $usuario->buscarCaminhoAvatar();
+    
+    $response = new Response('imagem');
+    
+    $padrao = PUBLIC_PATH . "/assets/img/users/default.svg";
+
+    $avatar = UPLOAD_PATH . "/{$caminho}";
+    
+    $response->dados = !empty($caminho) && file_exists($avatar) ? $avatar : $padrao;
     $response->enviar();
   }
 }

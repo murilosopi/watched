@@ -87,4 +87,18 @@ class ResenhaController extends Action
     $response->sucesso = !empty($total);
     $response->enviar();
   }
+
+  public function excluirResenha() {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $resenha = new Resenha;
+      $resenha->filme = $_POST['movie'];
+      $resenha->usuario = $_SESSION['usuario']['id'];
+      $response->sucesso = $resenha->deletarResenhaPorFilmeUsuario();
+      $response->enviar();
+    } else {
+      $response->erro("É necessário estar logado para registrar uma resenha.");
+    }
+  }
 }

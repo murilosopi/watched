@@ -64,31 +64,7 @@ export default {
   },
   methods: {
     deleteReview() {
-      const params = {
-        id: this.comment.id,
-      };
-
-      this.$api.post("excluir-resenha", params).then((res) => {
-        const response = res.data;
-
-        if (response.sucesso) {
-          this.notifyUser({
-            icon: "check",
-            title: "Sucesso",
-            text: "a resenha foi excluída.",
-            class: "success",
-          });
-        } else {
-          throw response;
-        }
-      }).catch(() => {
-        this.notifyUser({
-          icon: "x-octagon",
-          title: "Erro",
-          text: "não foi possível excluir a resenha.",
-          class: "danger",
-        });
-      });
+      this.$emit('delete');
     },
   },
 };

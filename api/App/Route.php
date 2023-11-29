@@ -154,6 +154,12 @@
         'action' => 'existeResenhaFilmeUsuario'
       );
 
+      $routes['excluir-resenha'] = array(
+        'route' => '/excluir-resenha',
+        'controller' => 'ResenhaController',
+        'action' => 'excluirResenha'
+      );
+
       $routes['interacoes-filme'] = array(
         'route' => '/interacoes-filme',
         'controller' => 'InteracoesController',
@@ -172,6 +178,48 @@
         'action' => 'pesquisarUsuarios'
       );
 
+      $routes['seguir-usuario'] = array(
+        'route' => '/seguir-usuario',
+        'controller' => 'UsuarioController',
+        'action' => 'seguirUsuario'
+      );
+
+      $routes['parar-seguir-usuario'] = array(
+        'route' => '/parar-seguir-usuario',
+        'controller' => 'UsuarioController',
+        'action' => 'pararSeguirUsuario'
+      );
+
+      $routes['bate-papo-recentes'] = array(
+        'route' => '/bate-papo/recentes',
+        'controller' => 'ChatController',
+        'action' => 'buscarConversasRecentes'
+      );
+
+      $routes['bate-papo-seguindo'] = array(
+        'route' => '/bate-papo/seguindo',
+        'controller' => 'ChatController',
+        'action' => 'buscarConversasSeguindo'
+      );
+
+      $routes['bate-papo-novo-chat'] = array(
+        'route' => '/bate-papo/novo-chat',
+        'controller' => 'ChatController',
+        'action' => 'novoChatIndividual'
+      );
+
+      $routes['usuario-avatar-personalizado'] = array(
+        'route' => '/usuario/avatar-personalizado',
+        'controller' => 'UsuarioController',
+        'action' => 'atualizarAvatarPersonalizado'
+      );
+
+      $routes['usuario/avatar'] = array(
+        'route' => '/usuario/avatar',
+        'controller' => 'UsuarioController',
+        'action' => 'avatarUsuario'
+      );
+      
       $this->setRoutes($routes); 
     }
 

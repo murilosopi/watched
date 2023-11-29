@@ -1,13 +1,14 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './routes'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './routes';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './plugins/axios'
+import './plugins/axios';
 import 'animate.css';
 import store from './store';
 import AuthMixin from './mixins/AuthMixin';
 import NotificationMixin from './mixins/NotificationMixin';
+
 
 Vue.config.productionTip = false
 
@@ -19,6 +20,3 @@ new Vue({
   router,
   store
 }).$mount('#app')
-
-
-import 'bootstrap/dist/js/bootstrap';

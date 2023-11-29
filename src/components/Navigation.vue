@@ -13,7 +13,7 @@
           </InteractiveIcon>
         </div>
         <div class="offcanvas-body">
-          <nav class="navbar-nav text-end gap-3">
+          <nav class="navbar-nav text-end gap-3 h-100">
             <router-link @click.native="closeMenu" class="nav-link fw-bold" to="/">
               <i class="bi bi-house"></i>
               Home
@@ -27,7 +27,7 @@
                 <i class="bi bi-person-circle"></i>
                 Meu perfil
               </router-link>
-              <a class="nav-link fw-bold" href="/logout" @click.prevent="() => {
+              <a class="nav-link fw-bold mt-auto" href="/logout" @click.prevent="() => {
                 logout();
                 closeMenu();
               }">
