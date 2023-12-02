@@ -1,6 +1,6 @@
 <template>
-  <DarkBox class="reaction-measurer p-4" variant="gray">
-    <ul class="row list-unstyled row-gap-3">
+  <DarkBox class="reaction-measurer" variant="gray">
+    <ul class="row list-unstyled p-4 row-gap-3" v-if="reactions.length > 0">
       <li class="col-sm-6" v-for="reaction in reactions" :key="reaction.id">
         <div class="row align-items-center">
           <div class="col-2 pe-0">

@@ -57,9 +57,17 @@ export default {
     setStats(state, payload) {
       state.stats = payload;
     },
+
+    clearStats(state) {
+      state.stats = {
+        rating: [],
+        reaction: [],
+      }
+    }
   },
   actions: {
     fetchReviews({ commit }, movie) {
+      commit('clearStats');
       const params = { filme: movie };
       this._vm.$api.get("/obter-resenhas-filme", { params }).then((res) => {
         const response = res.data;

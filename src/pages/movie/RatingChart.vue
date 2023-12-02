@@ -1,6 +1,6 @@
 <template>
-  <DarkBox class="rating-measurer p-4" variant="gray">
-    <ul class="d-flex flex-column list-unstyled gap-2">
+  <DarkBox class="rating-measurer" variant="gray">
+    <ul class="d-flex flex-column list-unstyled gap-2 p-4" v-if="ratings.length > 0">
       <li
         class="row align-items-center"
         v-for="(rating, stars) in ratings"
