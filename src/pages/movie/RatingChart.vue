@@ -8,7 +8,7 @@
       >
         <div class="col-2">
           <InteractiveIcon tag="span" :inline="true" class="gap-2 ms-auto">
-            {{ 5 - stars }}
+            {{ rating.stars }}
             <i class="bi bi-star"></i>
           </InteractiveIcon>
         </div>
@@ -16,9 +16,13 @@
           class="col"
           data-bs-toggle="tooltip"
           data-bs-placement="top"
-          :data-bs-title="`${rating.total} usuários avaliaram com ${
-            5 - stars
-          } estrela${ 5 - stars >= 1 ? 's' : '' }.`"
+          :data-bs-title="`${
+            rating.total == 0
+              ? 'Nenhum usuário avaliou'
+              : rating.total == 1
+              ? '1 usuário avaliou'
+              : `${rating.total} usuários avaliaram`
+          } com ${rating.stars} estrela${rating.stars >= 1 ? 's' : ''}.`"
         >
           <ProgressBar
             :progress="rating.percentage"
@@ -36,26 +40,17 @@ import DarkBox from "@/components/DarkBox.vue";
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import BsTooltipMixin from "@/mixins/BsTooltipMixin";
+import ReviewMixin from "@/mixins/ReviewMixin";
 export default {
   components: { DarkBox, ProgressBar, InteractiveIcon },
-  mixins: [BsTooltipMixin],
-  props: ['movie'],
-  data() {
-    return {
-      starRating: [
-        { percentage: 40, total: 400 },
-        { percentage: 20, total: 200 },
-        { percentage: 25, total: 250 },
-        { percentage: 10, total: 100 },
-        { percentage: 5, total: 50 },
-      ],
-    };
-  },
+  mixins: [BsTooltipMixin, ReviewMixin],
+  props: ["movie"],
 
   computed: {
     ratings() {
-      return this.starRating.map((r, i) => {
+      return [...this.starRating].reverse().map((r, i) => {
         r.color = this.getVariantStyle(i + 1);
+        r.stars = 5 - i;
         return r;
       });
     },

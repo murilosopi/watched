@@ -144,5 +144,15 @@
 
       return $stmt->fetchColumn(0);
     }
+
+    public function avaliacoesPorFilme() {
+      $sql = "SELECT nota FROM tbResenhas WHERE filme = :filme";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
   }
 ?>

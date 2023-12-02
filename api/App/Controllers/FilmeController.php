@@ -125,4 +125,32 @@ class FilmeController extends Action
     if ($response->sucesso) $response->dados = $filme;
     $response->enviar();
   }
+
+  public function obterEstatisticasFilmes() {
+    $resenha = new Resenha;
+    $resenha->filme = $_GET['id'] ?? 0;
+    $avaliacoes = $resenha->avaliacoesPorFilme();
+
+    $totalGeral = count($avaliacoes);
+    
+    $totaisAvaliacao = [0, 0, 0, 0, 0];
+
+    foreach($avaliacoes as $a) {
+      $totaisAvaliacao[round($a['nota'])-1]++;
+    }
+    
+    $avaliacoes = array_map(function($avaliacao) use ($totalGeral) {
+      return [
+        'total' => $avaliacao,
+        'porcentagem' => $avaliacao / $totalGeral * 100
+      ];
+    }, $totaisAvaliacao);
+
+    $response = new Response;
+    $response->dados = [
+      'avaliacao' => $avaliacoes,
+      'reacao' => []
+    ];
+    $response->enviar();    
+  }
 }

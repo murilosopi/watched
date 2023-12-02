@@ -1,70 +1,107 @@
 export default {
-    namespaced: true,
-    state: {
-        movie: null,
-        userHasReview: false,
-        list: []
+  namespaced: true,
+  state: {
+    movie: null,
+    userHasReview: false,
+    list: [],
+    stats: {
+      rating: [],
+      reaction: [],
     },
-    getters: {
-        getList(state) {
-            return state.list;
-        },
+  },
+  getters: {
+    getList(state) {
+      return state.list;
+    },
 
-        userHasReview(state) {
-            return state.userHasReview;
+    userHasReview(state) {
+      return state.userHasReview;
+    },
+
+    getRatingStats(state) {
+      try {
+        return state.stats.rating;
+      } catch (error) {
+        return [];
+      }
+    },
+  },
+  mutations: {
+    setList(state, payload) {
+      state.list = payload.map((review) => {
+        return {
+          user: review.username,
+          rating: Number(review.nota),
+          text: review.descricao,
+          date: review.data,
+        };
+      });
+    },
+
+    setMovie(state, payload) {
+      state.movie = payload;
+    },
+
+    deleteReview(state, review) {
+      const position = state.list.indexOf(review);
+
+      if (position != -1) {
+        state.list.splice(position, 1);
+      }
+    },
+
+    setUserHasReview(state, exists) {
+      state.userHasReview = exists;
+    },
+
+    setStats(state, payload) {
+      state.stats = payload;
+    },
+  },
+  actions: {
+    fetchReviews({ commit }, movie) {
+      const params = { filme: movie };
+      this._vm.$api.get("/obter-resenhas-filme", { params }).then((res) => {
+        const response = res.data;
+        if (response.sucesso) {
+          commit("setList", res.data.dados);
+          commit("setMovie", movie);
         }
+      });
     },
-    mutations: {
-        setList(state, payload) {
-            state.list = payload.map((review) => {
-                return {
-                    user: review.username,
-                    rating: Number(review.nota),
-                    text: review.descricao,
-                    date: review.data
-                };
-            });
-        },
 
-        setMovie(state, payload) {
-            state.movie = payload;
-        },
+    deleteReview({ commit, state }, review) {
+      return this._vm.$api
+        .post("/excluir-resenha", { movie: state.movie })
+        .then((res) => {
+          const response = res.data;
 
-        deleteReview(state, review) {
-            const position = state.list.indexOf(review);
+          if (response.sucesso) {
+            commit("deleteReview", review);
+            commit("setUserHasReview", false);
+          }
 
-            if(position != -1) {
-                state.list.splice(position, 1);
-            }
-        },
-
-        setUserHasReview(state, exists) {
-            state.userHasReview = exists;
-        }
+          return response.sucesso;
+        });
     },
-    actions: {
-        fetchReviews({ commit }, movie) {
-            const params = { filme: movie };
-            this._vm.$api.get("/obter-resenhas-filme", { params }).then((res) => {
-                const response = res.data;
-                if (response.sucesso) {
-                    commit("setList", res.data.dados);
-                    commit("setMovie", movie);
-                }
-            });
-        },
 
-        deleteReview({ commit, state }, review) {
-            return this._vm.$api.post("/excluir-resenha", { movie: state.movie }).then((res) => {
-                const response = res.data;
+    fetchMovieStats({ state, commit }) {
+      const params = { id: state.movie };
+      this._vm.$api
+        .get("/obter-estatisticas-filme", { params })
+        .then((res) => {
+          const response = res.data;
 
-                if (response.sucesso) {
-                    commit('deleteReview', review);
-                    commit('setUserHasReview', false);
-                }
+          let { avaliacao, reacao } = response.dados;
+          const rating = avaliacao.map((r) => ({
+            total: r.total,
+            percentage: r.porcentagem,
+          }));
+          const reaction = reacao;
 
-                return response.sucesso;
-            })
-        }
+          commit("setStats", { rating, reaction });
+        })
+        .catch(() => {});
     },
+  },
 };

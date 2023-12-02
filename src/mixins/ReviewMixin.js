@@ -3,7 +3,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   props: ['movie'],
   methods: {
-    ...mapActions('review', ['fetchReviews', 'deleteReview']),
+    ...mapActions('review', ['fetchReviews', 'deleteReview', 'fetchMovieStats']),
     ...mapMutations('review', ['setMovie','setUserHasReview']),
 
     checkUserReview() {
@@ -23,7 +23,8 @@ export default {
   computed: {
     ...mapGetters('review', {
       reviewsList: 'getList',
-      existsUserReview: 'userHasReview'
+      existsUserReview: 'userHasReview',
+      starRating: 'getRatingStats'
     })
   },
 

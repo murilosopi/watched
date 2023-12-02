@@ -219,6 +219,14 @@
         'controller' => 'UsuarioController',
         'action' => 'avatarUsuario'
       );
+
+      $routes['obter-estatisticas-filme'] = array(
+        'route' => '/obter-estatisticas-filme',
+        'controller' => 'FilmeController',
+        'action' => 'obterEstatisticasFilmes'
+      );
+
+      
       
       $this->setRoutes($routes); 
     }

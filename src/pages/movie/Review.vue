@@ -56,6 +56,7 @@ export default {
     this.fetchReviews(this.movie);
 
     this.checkUserReview();
+    this.fetchMovieStats();
   },
 
   watch: {
