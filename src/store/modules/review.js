@@ -38,6 +38,10 @@ export default {
       });
     },
 
+    clearList(state) {
+      state.list = [];
+    },
+
     setMovie(state, payload) {
       state.movie = payload;
     },
@@ -66,19 +70,18 @@ export default {
     }
   },
   actions: {
-    fetchReviews({ commit }, movie) {
-      commit('clearStats');
-      const params = { filme: movie };
+    fetchReviews({ state, commit }) {
+      const params = { filme: state.movie };
+      commit('clearList');
       this._vm.$api.get("/obter-resenhas-filme", { params }).then((res) => {
         const response = res.data;
         if (response.sucesso) {
           commit("setList", res.data.dados);
-          commit("setMovie", movie);
         }
       });
     },
 
-    deleteReview({ commit, state }, review) {
+    deleteReview({ commit, state, dispatch }, review) {
       return this._vm.$api
         .post("/excluir-resenha", { movie: state.movie })
         .then((res) => {
@@ -87,6 +90,9 @@ export default {
           if (response.sucesso) {
             commit("deleteReview", review);
             commit("setUserHasReview", false);
+
+            dispatch('fetchMovieStats');
+            dispatch('fetchReviews');
           }
 
           return response.sucesso;
@@ -94,6 +100,7 @@ export default {
     },
 
     fetchMovieStats({ state, commit }) {
+      commit('clearStats');
       const params = { id: state.movie };
       this._vm.$api
         .get("/obter-estatisticas-filme", { params })

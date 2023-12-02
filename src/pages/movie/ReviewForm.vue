@@ -62,7 +62,7 @@ import InputCustom from "@/components/InputCustom.vue";
 import Reaction from "@/components/Reaction.vue";
 import DarkBox from "@/components/DarkBox.vue";
 import ButtonCustom from '@/components/ButtonCustom.vue';
-import Swal from "sweetalert2";
+import ReviewMixin from "@/mixins/ReviewMixin";
 
 export default {
   components: {
@@ -78,6 +78,8 @@ export default {
       required: true
     }
   },
+
+  mixins: [ReviewMixin],
 
   data() {
     return {
@@ -100,14 +102,13 @@ export default {
       let isValid = this.review.text.length > 0;
       
       if(isValid && this.review.rating == 0) {
-        isValid = await Swal.fire({
+        this.notifyUser({
+          icon: 'exclamation-diamond',
           title: 'Atenção',
-          icon: 'warning',
-          text: 'Você está prestes a avaliar o filme como nota 0, deseja confirmar?',
-          confirmButtonText: 'Sim',
-          denyButtonText: 'Não',
-          showDenyButton: true,
-        }).then(res => res.isConfirmed);
+          text: "não é possível dar 0 estrelas...",
+          class: 'warning'
+        })
+        return false;
       } else if (!isValid){
         this.notifyUser({
           icon: 'exclamation-diamond',
@@ -133,7 +134,9 @@ export default {
 
         if (response) {
           this.resetReview();
-          this.$emit('newReview');
+          this.fetchMovieStats();
+          this.fetchReviews();
+          this.checkUserReview();
         }
       });
     },

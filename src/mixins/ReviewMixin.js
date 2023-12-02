@@ -28,8 +28,4 @@ export default {
       reactions: 'getReactionStats'
     })
   },
-
-  created() {
-    this.setMovie(this.movie);
-  },
 }

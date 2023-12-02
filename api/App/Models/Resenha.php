@@ -157,19 +157,19 @@
 
     public function reacaoPorFilme() {
       $sql = "SELECT
-                reacao.icone as icone,
-                reacao.descricao as descricao,
-                reacao.id as id,
-                count(resenha.id) as total
+              reacao.icone as icone,
+              reacao.descricao as descricao,
+              reacao.id as id,
+              (
+              SELECT
+                count(*)
               FROM
-                tbReacoes reacao
-              LEFT JOIN
-                tbResenhas resenha ON reacao.id = resenha.reacao
-              WHERE 
-                resenha.filme = :filme
-	              OR resenha.id IS NULL
-              GROUP BY 
-                reacao.descricao, reacao.id, reacao.icone";
+                tbResenhas
+              WHERE
+                tbResenhas.filme = :filme
+                AND tbResenhas.reacao = reacao.id) AS total
+            FROM
+              tbReacoes reacao";
 
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':filme', $this->filme);
