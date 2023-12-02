@@ -92,7 +92,6 @@
 
 <script>
 import ChatMixin from "@/mixins/ChatMixin";
-import PageMixin from "@/mixins/PageMixin";
 import ChatForm from "./ChatForm.vue";
 import ChatMessages from "./ChatMessages.vue";
 import Dialog from "./Dialog.vue";
@@ -114,7 +113,7 @@ export default {
     ListGroupItem,
     ListGroup,
   },
-  mixins: [ChatMixin, PageMixin],
+  mixins: [ChatMixin],
   data() {
     return {
       modal: null,
@@ -152,11 +151,6 @@ export default {
     this.modal.addEventListener('show.bs.modal', () => {
       this.getFollowingChats();
     });
-  },
-
-  created() {
-    this.changeFavicon("config", "svg");
-    this.changePageTitle("Configurações");
   },
 };
 </script>
