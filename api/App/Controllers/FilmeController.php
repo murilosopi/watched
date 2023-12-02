@@ -139,7 +139,7 @@ class FilmeController extends Action
     $avaliacoes = array_map(function($avaliacao) use ($totalGeralNotas) {
       return [
         'total' => $avaliacao,
-        'porcentagem' => $avaliacao / $totalGeralNotas * 100
+        'porcentagem' => $totalGeralNotas == 0 ? 0: $avaliacao / $totalGeralNotas * 100
       ];
     }, $totaisNotas);
 
@@ -147,7 +147,7 @@ class FilmeController extends Action
     $totalGeralReacoes = array_sum(array_column($reacoes, 'total'));
     $reacoes = array_map(function($reacao) use ($totalGeralReacoes) {
       return array_merge([
-        'porcentagem' => $reacao['total'] / $totalGeralReacoes * 100
+        'porcentagem' => $totalGeralReacoes == 0 ? 0 : $reacao['total'] / $totalGeralReacoes * 100
       ], $reacao);
     }, $reacoes);
 
