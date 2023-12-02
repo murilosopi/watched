@@ -21,7 +21,7 @@
           <InteractiveIcon
             title="Excluir"
             v-if="comment.user == loggedData.tag"
-            @click.native="deleteReview"
+            @click.native="deleteComment"
           >
             <i class="bi bi-trash text-danger fs-6"></i>
           </InteractiveIcon>
@@ -61,7 +61,7 @@ export default {
     comment: Object,
   },
   methods: {
-    deleteReview() {
+    deleteComment() {
       this.$emit('delete');
     },
   },

@@ -2,11 +2,16 @@ export default {
     namespaced: true,
     state: {
         movie: null,
+        userHasReview: false,
         list: []
     },
     getters: {
         getList(state) {
             return state.list;
+        },
+
+        userHasReview(state) {
+            return state.userHasReview;
         }
     },
     mutations: {
@@ -31,6 +36,10 @@ export default {
             if(position != -1) {
                 state.list.splice(position, 1);
             }
+        },
+
+        setUserHasReview(state, exists) {
+            state.userHasReview = exists;
         }
     },
     actions: {
@@ -49,7 +58,10 @@ export default {
             return this._vm.$api.post("/excluir-resenha", { movie: state.movie }).then((res) => {
                 const response = res.data;
 
-                if (response.sucesso) commit('deleteReview', review); 
+                if (response.sucesso) {
+                    commit('deleteReview', review);
+                    commit('setUserHasReview', false);
+                }
 
                 return response.sucesso;
             })

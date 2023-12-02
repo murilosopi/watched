@@ -4,14 +4,30 @@ export default {
   props: ['movie'],
   methods: {
     ...mapActions('review', ['fetchReviews', 'deleteReview']),
-    ...mapMutations('review', ['setMovie'])
+    ...mapMutations('review', ['setMovie','setUserHasReview']),
+
+    checkUserReview() {
+      if (this.userLogged) {
+        const params = { filme: this.movie, usuario: this.loggedData.id };
+
+        this.$api
+          .get("/existe-resenha-filme-usuario", { params })
+          .then((res) => {
+            const response = res.data;
+
+            this.setUserHasReview(response.sucesso);
+          });
+      }
+    },
   },
   computed: {
     ...mapGetters('review', {
-      reviewsList: 'getList'
+      reviewsList: 'getList',
+      existsUserReview: 'userHasReview'
     })
   },
+
   created() {
     this.setMovie(this.movie);
-  }
+  },
 }

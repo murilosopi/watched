@@ -44,37 +44,25 @@ export default {
 
   props: ["movie"],
 
-  data() {
-    return {
-      existsUserReview: false,
-    };
-  },
-
   methods: {
 
-    checkUserReview() {
-      if (this.userLogged) {
-        const params = { filme: this.movie, usuario: this.loggedData.id };
-
-        this.$api
-          .get("/existe-resenha-filme-usuario", { params })
-          .then((res) => {
-            const response = res.data;
-            this.existsUserReview = response.sucesso;
-          });
-      }
-    },
-
     newReview() {
-      this.getReviews();
+      this.fetchReviews(this.movie);
       this.checkUserReview();
     },
   },
 
   created() {
     this.fetchReviews(this.movie);
+
     this.checkUserReview();
   },
+
+  watch: {
+    userLogged() {
+      this.checkUserReview();
+    }
+  }
 };
 </script>
 
