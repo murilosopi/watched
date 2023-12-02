@@ -19,11 +19,11 @@ export default {
     },
 
     getRatingStats(state) {
-      try {
-        return state.stats.rating;
-      } catch (error) {
-        return [];
-      }
+      return state.stats.rating;
+    },
+
+    getReactionStats(state) {
+      return state.stats.reaction;
     },
   },
   mutations: {
@@ -97,7 +97,12 @@ export default {
             total: r.total,
             percentage: r.porcentagem,
           }));
-          const reaction = reacao;
+          const reaction = reacao.map((r) => ({
+            total: r.total,
+            percentage: r.porcentagem,
+            icon: r.icone,
+            name: r.descricao,
+          }));
 
           commit("setStats", { rating, reaction });
         })

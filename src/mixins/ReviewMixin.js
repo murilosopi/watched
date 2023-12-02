@@ -24,7 +24,8 @@ export default {
     ...mapGetters('review', {
       reviewsList: 'getList',
       existsUserReview: 'userHasReview',
-      starRating: 'getRatingStats'
+      starRating: 'getRatingStats',
+      reactions: 'getReactionStats'
     })
   },
 

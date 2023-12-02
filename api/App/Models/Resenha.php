@@ -154,5 +154,29 @@
 
       return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function reacaoPorFilme() {
+      $sql = "SELECT
+                reacao.icone as icone,
+                reacao.descricao as descricao,
+                reacao.id as id,
+                count(resenha.id) as total
+              FROM
+                tbReacoes reacao
+              LEFT JOIN
+                tbResenhas resenha ON reacao.id = resenha.reacao
+              WHERE 
+                resenha.filme = :filme
+	              OR resenha.id IS NULL
+              GROUP BY 
+                reacao.descricao, reacao.id, reacao.icone";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
   }
 ?>

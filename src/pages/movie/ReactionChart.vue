@@ -19,13 +19,16 @@
               class="small pointer"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
-              :data-bs-title="`${reaction.total} usuários reagiram`"
+              :data-bs-title="
+                reaction.total == 0
+                  ? 'Nenhum usuário reagiu'
+                  : reaction.total == 1
+                  ? '1 usuário reagiu'
+                  : `${reaction.total} usuários reagiram`
+              "
             >
               {{ reaction.percentage }}%
-              <ProgressBar
-                :progress="reaction.percentage"
-                class="mt-1 w-100"
-              />
+              <ProgressBar :progress="reaction.percentage" class="mt-1 w-100" />
             </div>
           </div>
         </div>
@@ -40,58 +43,11 @@ import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import Title from "@/components/Title.vue";
 import BsTooltipMixin from "@/mixins/BsTooltipMixin";
+import ReviewMixin from "@/mixins/ReviewMixin";
 
 export default {
-  mixins: [BsTooltipMixin],
-  props: ['movie'],
-  data() {
-    return {
-      reactions: [
-        {
-          name: "triste",
-          icon: "emoji-frown",
-          id: 1,
-          total: 0,
-          percentage: 25,
-        },
-        {
-          name: "tedioso",
-          icon: "emoji-neutral",
-          id: 2,
-          total: 0,
-          percentage: 12,
-        },
-        {
-          name: "satisfeito",
-          icon: "emoji-smile",
-          id: 3,
-          total: 0,
-          percentage: 20,
-        },
-        {
-          name: "animado",
-          icon: "emoji-laughing",
-          id: 4,
-          total: 0,
-          percentage: 34,
-        },
-        {
-          name: "abismado",
-          icon: "emoji-dizzy",
-          id: 5,
-          total: 0,
-          percentage: 3,
-        },
-        {
-          name: "amei",
-          icon: "emoji-heart-eyes",
-          id: 6,
-          total: 0,
-          percentage: 5,
-        },
-      ],
-    };
-  },
+  mixins: [BsTooltipMixin, ReviewMixin],
+  props: ["movie"],
   components: { ProgressBar, DarkBox, InteractiveIcon, Title },
 };
 </script>

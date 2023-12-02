@@ -129,27 +129,32 @@ class FilmeController extends Action
   public function obterEstatisticasFilmes() {
     $resenha = new Resenha;
     $resenha->filme = $_GET['id'] ?? 0;
+
     $avaliacoes = $resenha->avaliacoesPorFilme();
-
-    $totalGeral = count($avaliacoes);
-    
-    $totaisAvaliacao = [0, 0, 0, 0, 0];
-
+    $totalGeralNotas = count($avaliacoes);
+    $totaisNotas = [0, 0, 0, 0, 0];
     foreach($avaliacoes as $a) {
-      $totaisAvaliacao[round($a['nota'])-1]++;
+      $totaisNotas[round($a['nota'])-1]++;
     }
-    
-    $avaliacoes = array_map(function($avaliacao) use ($totalGeral) {
+    $avaliacoes = array_map(function($avaliacao) use ($totalGeralNotas) {
       return [
         'total' => $avaliacao,
-        'porcentagem' => $avaliacao / $totalGeral * 100
+        'porcentagem' => $avaliacao / $totalGeralNotas * 100
       ];
-    }, $totaisAvaliacao);
+    }, $totaisNotas);
+
+    $reacoes = $resenha->reacaoPorFilme();
+    $totalGeralReacoes = array_sum(array_column($reacoes, 'total'));
+    $reacoes = array_map(function($reacao) use ($totalGeralReacoes) {
+      return array_merge([
+        'porcentagem' => $reacao['total'] / $totalGeralReacoes * 100
+      ], $reacao);
+    }, $reacoes);
 
     $response = new Response;
     $response->dados = [
       'avaliacao' => $avaliacoes,
-      'reacao' => []
+      'reacao' => $reacoes
     ];
     $response->enviar();    
   }
