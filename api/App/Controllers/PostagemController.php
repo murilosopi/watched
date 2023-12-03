@@ -9,18 +9,19 @@ use App\Models\Postagem;
 class PostagemController extends Action
 {
 
-  public function registrarPostagem() {
+  public function registrarPostagem()
+  {
     $response = new Response();
 
     $uid = isset($_SESSION['usuario']) ? $_SESSION['usuario']['id'] : false;
 
-    if($uid) {
+    if ($uid) {
 
       $texto = $_POST['postagem'] ?? false;
 
       $imagem = isset($_POST['imagem']) ? $_FILES['imagem'] : false;
 
-      if(empty($texto) && empty($imagem)) {
+      if (empty($texto) && empty($imagem)) {
         $response->erro("Não foi enviado nenhum texto ou imagem.");
       }
 
@@ -29,13 +30,13 @@ class PostagemController extends Action
       $postagem->usuario = $uid;
       $postagem->id = $postagem->novaPostagem();
 
-      if($imagem) {
+      if ($imagem) {
         $ext = explode('/', $imagem['type'])[1];
 
         $path = "img/posts/{$uid}/{$postagem->id}.{$ext}";
 
         $movido = move_uploaded_file($imagem['uri'], UPLOAD_PATH . $path);
-        if($movido) {
+        if ($movido) {
           $postagem->imagem = $path;
           $postagem->adicionarImagem();
         }
@@ -48,7 +49,8 @@ class PostagemController extends Action
     }
   }
 
-  public function buscarTodasPostagens() {
+  public function buscarTodasPostagens()
+  {
     $pagina = (int)($_GET['pagina'] ?? 1);
 
     $postagem = new Postagem;
@@ -66,22 +68,51 @@ class PostagemController extends Action
       'totalPaginas' => $totalPaginas
     ];
 
-    
+
     $response->enviar();
   }
 
-  public function buscarPostagensRecentes() {
-    
+  public function buscarPostagensRecentes()
+  {
+
     $postagem = new Postagem;
-    
+
     $postagem->id = (int)($_GET['id'] ?? 0);
 
     $resultados = $postagem->buscarPostagens();
-    
+
     $response = new Response();
     $response->dados = empty($resultados) ? [] : $resultados;
 
-    
+
     $response->enviar();
+  }
+
+  public function registrarVoto()
+  {
+    $response = new Response;
+
+    if(isset($_SESSION['usuario'])) {
+      $postagem = new Postagem;
+      $postagem->id = (int)($_POST['id'] ?? 0);
+      $postagem->voto = $_POST['voto'] ?? null;
+      $postagem->usuario = $_SESSION['usuario']['id'];
+      
+      if ($postagem->voto != 'U' && $postagem->voto != 'D') {
+        $response->erro("Voto inválido.");
+      }
+      
+      $existeVoto = $postagem->existeVoto();
+      
+      if($existeVoto) {
+        $response->sucesso = $postagem->atualizarVoto();
+      } else {
+        $response->sucesso = $postagem->registrarVoto();
+      }
+
+      $response->enviar();
+    } else {
+      $response->erro("É necessário estar logado para realizar esta ação.");
+    }
   }
 }

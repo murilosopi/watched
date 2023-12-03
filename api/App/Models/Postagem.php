@@ -10,6 +10,7 @@ class Postagem extends Model
   protected $texto;
   protected $imagem;
   protected $usuario;
+  protected $voto;
 
   public function novaPostagem()
   {
@@ -60,7 +61,7 @@ class Postagem extends Model
 
     $stmt = $this->conexao->prepare($sql);
 
-    if(!empty($this->limit)) {
+    if (!empty($this->limit)) {
       $sql = $sql . ' LIMIT :limit OFFSET :offset';
 
       $stmt = $this->conexao->prepare($sql);
@@ -84,5 +85,45 @@ class Postagem extends Model
     $stmt->execute();
 
     return $stmt->fetchColumn(0);
+  }
+
+  public function existeVoto()
+  {
+    $sql = "SELECT ifnull(count(*), 0) FROM tbPostagemVoto WHERE usuario = :usuario AND postagem = :postagem";
+    
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':postagem', $this->id);
+
+    $stmt->execute();
+
+    $total = (int)$stmt->fetchColumn(0);
+    return $total > 0;
+  }
+
+  public function atualizarVoto() {
+    $sql = "UPDATE tbPostagemVoto SET voto = :voto WHERE usuario = :usuario AND postagem = :postagem";
+    
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':voto', $this->voto);
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':postagem', $this->id);
+
+    return $stmt->execute();
+  }
+
+  public function registrarVoto() {
+    $sql = "INSERT INTO tbPostagemVoto(usuario, postagem, voto)
+            VALUES (:usuario, :postagem, :voto)";
+    
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':postagem', $this->id);
+    $stmt->bindValue(':voto', $this->voto);
+
+    return $stmt->execute();
   }
 }

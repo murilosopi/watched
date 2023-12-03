@@ -116,6 +116,14 @@ CREATE TABLE tbPostagens(
     data DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE tbPostagemVoto(
+    postagem INT,
+    FOREIGN KEY(postagem) REFERENCES tbPostagens(id),
+    usuario INT,
+    FOREIGN KEY(usuario) REFERENCES tbUsuarios(id),
+    voto CHAR(1) 
+);
+
 INSERT INTO tbReacoes(id, icone, descricao)
 VALUES 
     (1, 'emoji-frown', 'triste'),
