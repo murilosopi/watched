@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     async reportReview() {
-      await Swal.fire({
+      let { value } = await Swal.fire({
         input: "textarea",
         inputLabel: "Denunciar",
         inputPlaceholder: "Descreva o motivo da sua denúncia...",
@@ -36,7 +36,7 @@ export default {
         }
       });
 
-      Swal.fire('Denúncia Registrada', 'Sua denúncia foi registrada e logo será analisada pela nossa equipe.', 'info')
+      if(value) Swal.fire('Denúncia Registrada', 'Sua denúncia foi registrada e logo será analisada pela nossa equipe.', 'info')
     }
   },
   mixins: [ReviewMixin],

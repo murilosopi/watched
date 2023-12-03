@@ -1,5 +1,6 @@
 <template>
   <Dialog
+    data-bs-focus="false"
     id="modal-chat"
     size="lg"
     :scroll="true"
@@ -12,7 +13,7 @@
           <i class="bi bi-chevron-left fs-5"></i>
         </InteractiveIcon>
         <h1 class="modal-title fs-5">{{ titleChat }}</h1>
-        <InteractiveIcon class="ms-auto me-1">
+        <InteractiveIcon class="ms-auto me-1" @click.native="report">
           <i class="bi bi-flag text-danger fs-5"></i>
         </InteractiveIcon>
         <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
@@ -136,6 +137,25 @@ export default {
       }).catch(() => {
         Swal.fire('Ops', 'Não é possível participar desse bate-papo no momento...', 'warning')
       })
+    },
+
+    async report() {
+      let { value } = await Swal.fire({
+        input: "textarea",
+        inputLabel: "Denunciar",
+        inputPlaceholder: "Descreva o motivo da sua denúncia...",
+        inputAttributes: {
+          "aria-label": "Descreva o motivo da sua denúncia"
+        },
+        showCancelButton: true,
+        inputValidator(value) {
+          if(value.length < 15) {
+            return 'A sua denúncia deve conter, no mínimo, 15 caracteres.'
+          }
+        }
+      });
+
+      if(value) Swal.fire('Denúncia Registrada', 'Sua denúncia foi registrada e logo será analisada pela nossa equipe.', 'info')
     }
   },
 
