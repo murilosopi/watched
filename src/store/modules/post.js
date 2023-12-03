@@ -4,11 +4,14 @@ export default {
     list: [],
     lastPage: 0,
   },
+  getters: {
+    list(state) {
+      return state.list;
+    }
+  },
   mutations: {
     appendPosts(state, posts) {
-      posts.forEach((post) => {
-        state.list[post.id] = post;
-      });
+      state.list.push(...posts);
     }
   },
   actions: {
@@ -25,7 +28,7 @@ export default {
               commit('appendPosts', data.postagens);
             }
 
-            if(data.pagina != data.totalPaginas) {
+            if(data.pagina < data.totalPaginas) {
               dispatch('fetchPosts', data.pagina + 1);
             }
 
@@ -35,7 +38,7 @@ export default {
     },
 
     send(store, payload) {
-      this._vm.$api.post('/registrar-postagem', { postagem: payload.text })
+      return this._vm.$api.post('/registrar-postagem', { postagem: payload.text })
     },
   }
 }

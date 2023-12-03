@@ -12,6 +12,7 @@
     <Scroller>
       <MoviesPanel :movies="movies" :inline="true"/>
     </Scroller>
+    <PostsList />
   </main>
 </template>
 
@@ -20,12 +21,14 @@ import Title from "@/components/Title.vue";
 import MoviesPanel from "@/components/MoviesPanel.vue";
 import Scroller from "@/components/Scroller.vue";
 import PageMixin from "@/mixins/PageMixin.js";
+import PostsList from "@/components/PostsList.vue";
 export default {
   components: {
     Title,
     MoviesPanel,
-    Scroller
-  },
+    Scroller,
+    PostsList
+},
   mixins: [PageMixin],
   data() {
     return {
