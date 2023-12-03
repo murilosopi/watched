@@ -231,6 +231,20 @@
         'action' => 'obterEstatisticasFilmes'
       );
 
+      $routes['registrar-postagem'] = array(
+        'route' => '/registrar-postagem',
+        'controller' => 'PostagemController',
+        'action' => 'registrarPostagem'
+      );
+
+      $routes['buscar-postagens'] = array(
+        'route' => '/buscar-postagens',
+        'controller' => 'PostagemController',
+        'action' => 'buscarPostagensRecentes'
+      );
+
+      
+      
       
       
       $this->setRoutes($routes); 

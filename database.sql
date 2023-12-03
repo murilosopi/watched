@@ -112,7 +112,8 @@ CREATE TABLE tbPostagens(
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario INT NOT NULL,
     texto VARCHAR(1500),
-    imagem VARCHAR(1500)
+    imagem VARCHAR(1500),
+    data DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO tbReacoes(id, icone, descricao)
