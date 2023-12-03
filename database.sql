@@ -124,3 +124,8 @@ VALUES
     (4, 'emoji-laughing', 'animado'),
     (5, 'emoji-dizzy', 'abismado'),
     (6, 'emoji-heart-eyes', 'amei');
+
+ALTER TABLE tbPostagens CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbResenhas  CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbUsuarios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbChats CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
