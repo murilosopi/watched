@@ -10,7 +10,7 @@
           class="form-control border-bottom-0"
           :maxlength="800"
           v-model="text"
-          @keypress.ctrl.enter="registerPost({ text })"
+          @keypress.ctrl.enter="sendPost()"
           @input="verifyTextSize"
         ></textarea>
       </InputCustom>
@@ -26,7 +26,7 @@
         </ButtonCustom>
       </div>
       <div class="col">
-        <ButtonCustom>
+        <ButtonCustom @click.native="sendPost">
           Postar
         </ButtonCustom>
       </div>
@@ -51,6 +51,33 @@ export default {
     ...mapActions('post', {
       registerPost: 'send'
     }),
+
+    sendPost() {
+      if(this.text.length)  {
+        this.registerPost({ text: this.text })
+          .then(res => {
+            const response = res.data;
+            
+            if(response.sucesso) {
+              this.notifyUser({
+                icon: "check",
+                title: "Sucesso",
+                text: "postagem publicada!",
+                class: "success",
+              });
+            } else {
+              this.notifyUser({
+                icon: "x-circle",
+                title: "Ops",
+                text: "não foi possível registrar sua postagem...",
+                class: "danger",
+              });
+            }
+
+          })
+          this.clear();
+      }
+    },
 
     verifyTextSize() {
       if (this.text.length >= 800) {
