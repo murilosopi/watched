@@ -2,7 +2,6 @@
   <main id="search-results">
 
     <div class="row">
-      <ResultFilter class="col-10" />
       <SortingMenu class="col d-flex align-items-end justify-content-end" @change="sortBy"/>
     </div>
     <div class="row">
@@ -40,7 +39,6 @@
 </template>
 
 <script>
-import ResultFilter from "./ResultFilter.vue";
 import SortingMenu from "@/components/SortingMenu.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import ResultGroup from "@/components/ResultGroup.vue";
@@ -53,7 +51,6 @@ export default {
   mixins: [PageMixin],
 
   components: {
-    ResultFilter,
     SortingMenu,
     UserAvatar,
     ResultGroup,
