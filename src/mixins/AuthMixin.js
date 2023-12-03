@@ -6,6 +6,7 @@ export default {
       auth: 'doLogin',
       checkAuth: 'doCheck',
       logout: 'doLogout',
+      checkToken: 'doLoginToken'
     }),
   },
   computed: {

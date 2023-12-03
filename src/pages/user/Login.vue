@@ -78,13 +78,14 @@ import ButtonCustom from "@/components/ButtonCustom.vue";
 import PageMixin from "@/mixins/PageMixin.js";
 import InteractiveIcon from "@/components/InteractiveIcon.vue";
 import router from "@/routes";
+import Swal from "sweetalert2";
 
 export default {
   components: {
     InputCustom,
     Title,
     ButtonCustom,
-    InteractiveIcon
+    InteractiveIcon,
   },
   data() {
     return {
@@ -113,15 +114,66 @@ export default {
     },
 
     login() {
+      Swal.fire({
+        title: "Carregando...",
+        html: `
+        <p>Aguarde alguns instantes, estamos validando suas informações.</p>
+        <div class="pb-4">
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>  
+        </div>`,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+      });
+
       this.auth({ username: this.username, password: this.password }).then(
-        (success) => {
-          if (success) {
+        (response) => {
+          Swal.close();
+
+          if (response.success) {
             this.notifyUser({
               icon: "box-arrow-in-left",
               text: "Login realizado com sucesso!",
               class: "success",
             });
             router.push("/");
+          } else if (response.descricao == "validacao") {
+            Swal.fire({
+              title:
+                '<i class="bi bi-envelope-check"></i> Verificação de E-mail',
+              text: "Por favor, insira abaixo o token que te enviamos em seu e-mail: ",
+              input: "text",
+              inputLabel: "Seu Token",
+              inputValidator: async (token) => {
+                if (!token) {
+                  return "Preencha seu token!";
+                }
+
+                const { sucesso: valid } = await this.checkToken({
+                  token,
+                  username: this.username,
+                  password: this.password,
+                });
+
+                if (!valid) {
+                  return "Token incorreto!";
+                } else {
+                  this.notifyUser({
+                    icon: "box-arrow-in-left",
+                    text: "Acesso autorizado!",
+                    class: "success",
+                  });
+                }
+              },
+            });
           } else {
             this.notifyUser({
               icon: "x-circle",
@@ -143,9 +195,19 @@ export default {
   created() {
     this.changeFavicon("login-sign-up", "svg");
     this.changePageTitle("Entre na Sua Conta");
+
+    if(this.userLogged) {
+      router.push('/');
+    }
   },
+  watch: {
+    userLogged() {
+      if(this.userLogged) {
+        router.push('/');
+      }
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

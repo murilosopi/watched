@@ -260,7 +260,18 @@ export default {
   created() {
     this.changeFavicon("login-sign-up", "svg");
     this.changePageTitle("Crie Sua Conta");
+  
+    if(this.userLogged) {
+      router.push('/');
+    }
   },
+  watch: {
+    userLogged() {
+      if(this.userLogged) {
+        router.push('/');
+      }
+    }
+  }
 };
 </script>
 

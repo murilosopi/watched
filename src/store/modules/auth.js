@@ -55,7 +55,26 @@ export default {
           dispatch('setUser', response.dados)
         }
 
-        return response.sucesso || false;
+        return response;
+      });
+    },
+
+    doLoginToken({ dispatch }, payload) {
+
+      const params = {
+        usuario: payload.username,
+        senha: payload.password,
+        token: payload.token
+      };
+
+      return this._vm.$api.post('/usuario/token', params).then(res => {
+        const response = res.data;
+
+        if(response.sucesso) {
+          dispatch('setUser', response.dados)
+        }
+
+        return response;
       });
     },
 
