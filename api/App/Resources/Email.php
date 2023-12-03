@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Resources;
 
 use \PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-class Email {
+class Email
+{
   private array $destinatario = [];
   private string $conteudo;
   private string $assunto;
@@ -24,34 +26,50 @@ class Email {
     $this->mail->Username = EMAIL;
     $this->mail->Password = SENHA_EMAIL;
     $this->mail->setFrom(EMAIL, 'Watched!');
+    $this->mail->CharSet = "UTF-8";
+    $this->mail->Encoding = 'base64';
   }
 
-  public function setConteudo(string $conteudo) {
+  public function setConteudo(string $conteudo)
+  {
     $this->conteudo = $conteudo;
   }
 
-  public function setAssunto(string $assunto) {
+  public function setAssunto(string $assunto)
+  {
     $this->assunto = $assunto;
   }
 
-  public function setConteudoAlternativo(string $conteudo) {
+  public function setConteudoAlternativo(string $conteudo)
+  {
     $this->conteudoAlternativo = $conteudo;
   }
 
-  public function setDestinatario(string $conteudo) {
+  public function setDestinatario(string $conteudo)
+  {
     $this->destinatario[] = $conteudo;
   }
 
-  public function enviar() {
+  public function enviar()
+  {
+
+    foreach($this->destinatario as $dest) {
+      $this->mail->addAddress($dest);
+    }
+    $this->mail->Subject = $this->assunto;
+    $this->mail->Body = $this->conteudo;
+    $this->mail->AltBody = $this->conteudo;
+
     $enviado = $this->mail->send();
     if (!$enviado) {
-        $erro = $this->mail->ErrorInfo;
+      $erro = $this->mail->ErrorInfo;
 
-        $logger = new Logger('email');
-        $logger->registrar($erro);
-
+      $logger = new Logger('email');
+      $logger->registrar($erro);
+      
+      return false;
     } else {
-        return true;
+      return true;
     }
   }
 }

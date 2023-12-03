@@ -81,6 +81,11 @@
         'action' => 'autenticarUsuario'
       );
 
+      $routes['token'] = array(
+        'route' => '/usuario/token',
+        'controller' => 'AuthController',
+        'action' => 'autenticarToken'
+      );
       
       $routes['logout-usuario'] = array(
         'route' => '/usuario/logout', 
