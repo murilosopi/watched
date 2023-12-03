@@ -49,6 +49,23 @@ class Auth extends Model
     return $stmt->execute();
   }
 
+  public function atualizarStatusVerificado()
+  {
+    $sql = "
+      UPDATE 
+        tbUsuarios
+      SET
+        status = 1
+      WHERE 
+        id = :id
+    ";
+
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':id', $this->id);
+    
+    return $stmt->execute();
+  }
+
 
   // Retorna um usuário que tenha um username ou email e senha compatíveis
   public function obterUsuarioLogin()

@@ -138,13 +138,12 @@ export default {
         (response) => {
           Swal.close();
 
-          if (response.success) {
+          if (response.sucesso) {
             this.notifyUser({
               icon: "box-arrow-in-left",
               text: "Login realizado com sucesso!",
               class: "success",
             });
-            router.push("/");
           } else if (response.descricao == "validacao") {
             Swal.fire({
               title:
