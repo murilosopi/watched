@@ -126,6 +126,7 @@ class AuthController extends Action
             'sobre' => $usuario['sobre'],
           ];
   
+          $this->authModel->removerToken();
           $this->authModel->atualizarAcesso();
         }
       }
