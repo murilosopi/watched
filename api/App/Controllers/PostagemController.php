@@ -48,7 +48,7 @@ class PostagemController extends Action
     }
   }
 
-  public function buscarPostagensRecentes() {
+  public function buscarTodasPostagens() {
     $pagina = (int)($_GET['pagina'] ?? 1);
 
     $postagem = new Postagem;
@@ -65,6 +65,21 @@ class PostagemController extends Action
       'pagina' => $pagina,
       'totalPaginas' => $totalPaginas
     ];
+
+    
+    $response->enviar();
+  }
+
+  public function buscarPostagensRecentes() {
+    
+    $postagem = new Postagem;
+    
+    $postagem->id = (int)($_GET['id'] ?? 0);
+
+    $resultados = $postagem->buscarPostagens();
+    
+    $response = new Response();
+    $response->dados = empty($resultados) ? [] : $resultados;
 
     
     $response->enviar();

@@ -240,10 +240,14 @@
       $routes['buscar-postagens'] = array(
         'route' => '/buscar-postagens',
         'controller' => 'PostagemController',
-        'action' => 'buscarPostagensRecentes'
+        'action' => 'buscarTodasPostagens'
       );
 
-      
+      $routes['buscar-postagens-recentes'] = array(
+        'route' => '/buscar-postagens-recentes',
+        'controller' => 'PostagemController',
+        'action' => 'buscarPostagensRecentes'
+      );
       
       
       

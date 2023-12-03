@@ -22,6 +22,7 @@ import MoviesPanel from "@/components/MoviesPanel.vue";
 import Scroller from "@/components/Scroller.vue";
 import PageMixin from "@/mixins/PageMixin.js";
 import PostsList from "@/components/PostsList.vue";
+import { mapActions } from 'vuex';
 export default {
   components: {
     Title,
@@ -39,8 +40,13 @@ export default {
     this.changeFavicon("home", "svg");
     this.changePageTitle("Explorar");
     this.searchAllMovies();
+    
+
+    // busca novos posts a cada 3min
+    setInterval(this.fetchNewPosts, 3 * 1000 * 60);
   },
   methods: {
+    ...mapActions('post', ['fetchNewPosts']),
     searchAllMovies(offset = 0, limit = 0) {
       const params = {
         offset,

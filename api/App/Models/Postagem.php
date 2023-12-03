@@ -54,15 +54,22 @@ class Postagem extends Model
                 tbPostagens as tp
               JOIN tbUsuarios as tu on
                 tu.id = tp.usuario
-              WHERE tp.data >= CURDATE() - INTERVAL 7 DAY
+              WHERE tp.data >= CURDATE() - INTERVAL 7 DAY AND tp.id > :id
               ORDER BY
-                tp.id DESC
-              LIMIT :limit OFFSET :offset";
+                tp.id DESC";
 
     $stmt = $this->conexao->prepare($sql);
 
-    $stmt->bindValue(':limit', $this->limit ?? 0, \PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $this->offset ?? 0, \PDO::PARAM_INT);
+    if(!empty($this->limit)) {
+      $sql = $sql . ' LIMIT :limit OFFSET :offset';
+
+      $stmt = $this->conexao->prepare($sql);
+
+      $stmt->bindValue(':limit', $this->limit ?? 0, \PDO::PARAM_INT);
+      $stmt->bindValue(':offset', $this->offset ?? 0, \PDO::PARAM_INT);
+    }
+
+    $stmt->bindValue(':id', $this->id ?? 0);
 
     $stmt->execute();
 
