@@ -4,7 +4,7 @@
       <Navigation>
         <Title>
           <router-link to="/">
-            <a class="fw-normal" href="/">Watched!</a>
+            Watched!
           </router-link>
         </Title>
 

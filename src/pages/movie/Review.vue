@@ -6,7 +6,7 @@
     </Title>
     <hr class="w-25 mx-auto" />
     <Transition leave-active-class="animate__animated animate__fadeOut animate__faster">
-      <ReviewForm :movie="movie" v-if="!existsUserReview" @newReview="newReview" />
+      <ReviewForm :movie="movie" v-if="!existsUserReview" />
     </Transition>
 
     <div class="row justify-content-evenly mt-4">
@@ -44,37 +44,19 @@ export default {
 
   props: ["movie"],
 
-  data() {
-    return {
-      existsUserReview: false,
-    };
-  },
-
-  methods: {
-
-    checkUserReview() {
-      if (this.userLogged) {
-        const params = { filme: this.movie, usuario: this.loggedData.id };
-
-        this.$api
-          .get("/existe-resenha-filme-usuario", { params })
-          .then((res) => {
-            const response = res.data;
-            this.existsUserReview = response.sucesso;
-          });
-      }
-    },
-
-    newReview() {
-      this.getReviews();
-      this.checkUserReview();
-    },
-  },
 
   created() {
-    this.fetchReviews(this.movie);
+    this.setMovie(this.movie);
+    this.fetchReviews();
     this.checkUserReview();
+    this.fetchMovieStats();
   },
+
+  watch: {
+    userLogged() {
+      this.checkUserReview();
+    }
+  }
 };
 </script>
 

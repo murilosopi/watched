@@ -144,5 +144,39 @@
 
       return $stmt->fetchColumn(0);
     }
+
+    public function avaliacoesPorFilme() {
+      $sql = "SELECT nota FROM tbResenhas WHERE filme = :filme";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function reacaoPorFilme() {
+      $sql = "SELECT
+              reacao.icone as icone,
+              reacao.descricao as descricao,
+              reacao.id as id,
+              (
+              SELECT
+                count(*)
+              FROM
+                tbResenhas
+              WHERE
+                tbResenhas.filme = :filme
+                AND tbResenhas.reacao = reacao.id) AS total
+            FROM
+              tbReacoes reacao";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':filme', $this->filme);
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
   }
 ?>

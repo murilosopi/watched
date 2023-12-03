@@ -16,11 +16,19 @@ CREATE TABLE tbUsuarios(
     assinante BOOLEAN DEFAULT FALSE,
     ultimoAcesso DATETIME,
     dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status INT DEFAULT 0, -- Pendente (0) | Autorizado (1)
     visualizacoes INT DEFAULT 0
 );
 
+CREATE TABLE tbTokens (
+    usuario INT,
+    FOREIGN KEY (usuario) REFERENCES tbUsuarios(id),
+    token VARCHAR(50),
+    data DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- adm
-INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(1, 'Administrador', 'adm', 'adm@watched.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
+INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(1, 'Administrador', 'adm', 'murilosousa.pinheiro@gmail.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
 INSERT INTO tbUsuarios(id, nome, username, email, senha) VALUES(2, 'Usuario', 'user', 'user@watched.com', '$2y$10$8GIyHBTqmQfKWyyFRW9QjerpRIO8.PQSTvIj7iFZYzZ8tXMZ1tO7G');
 
 CREATE TABLE tbAdministradores(

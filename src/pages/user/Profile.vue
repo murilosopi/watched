@@ -235,6 +235,12 @@ export default {
     },
 
     followUser() {
+
+      if(!this.userLogged) {
+        this.notifyAuthRequired();
+        return;
+      }
+
       this.following = true;
 
       this.$api.post('/seguir-usuario', { uid: this.id }).then(res => {

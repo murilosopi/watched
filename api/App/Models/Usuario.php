@@ -262,6 +262,7 @@
           tbUsuarios 
         WHERE 
           username = :username
+          AND avatar IS NOT NULL
       ";
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':username', $this->username);

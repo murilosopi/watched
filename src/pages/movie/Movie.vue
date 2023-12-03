@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div class="order-sm-0 order-1 col-sm-2 ps-5 p-md-0 mt-2 mt-sm-0">
+      <div class="order-sm-0 order-1 col-sm-2 mt-2 mt-sm-0">
         <div
           class="d-flex flex-wrap justify-content-end gap-3"
           :class="{ placeholder: !movieHasLoaded }"

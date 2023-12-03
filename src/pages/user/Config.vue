@@ -68,8 +68,10 @@ import Title from "@/components/Title.vue";
 import { Modal } from "bootstrap";
 import DarkBox from "@/components/DarkBox.vue";
 import AvatarDialog from "./AvatarDialog.vue";
+import PageMixin from "@/mixins/PageMixin";
 export default {
   components: { Title, InteractiveIcon, DarkBox, AvatarDialog },
+  mixins: [PageMixin],
   methods: {
     showChangeAvatar() {
       this.avatarDialog.show();
@@ -86,7 +88,11 @@ export default {
         this.$router.push('/');
       }
     }
-  }
+  },
+  created() {
+    this.changeFavicon("config", "svg");
+    this.changePageTitle("Configurações");
+  },
 };
 </script>
 <style scoped>

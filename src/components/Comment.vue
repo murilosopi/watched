@@ -1,20 +1,16 @@
 <template>
   <article class="comment">
     <div class="row align-items-center mb-2">
-      <figure class="col-1 p-0 mb-0">
-        <img
-          class="user-photo w-100"
-          src="/assets/img/users/default.svg"
-          :alt="`Foto de perfil de @${comment.user}`"
-        />
-      </figure>
+      <div class="col-1 p-0 mb-0">
+        <UserAvatar :username="comment.user" />
+      </div>
 
       <div class="col">
         <router-link
           :to="`/usuario/${comment.user}`"
-          class="text-white fw-bold"
+          class="text-white"
         >
-          <Title tag="h4">@{{ comment.user }}</Title>
+          <Title tag="h4" class="fw-bold">@{{ comment.user }}</Title>
         </router-link>
       </div>
 
@@ -25,7 +21,7 @@
           <InteractiveIcon
             title="Excluir"
             v-if="comment.user == loggedData.tag"
-            @click.native="deleteReview"
+            @click.native="deleteComment"
           >
             <i class="bi bi-trash text-danger fs-6"></i>
           </InteractiveIcon>
@@ -53,17 +49,19 @@
 import Title from "./Title.vue";
 import StarRating from "./StarRating.vue";
 import InteractiveIcon from "./InteractiveIcon.vue";
+import UserAvatar from "./UserAvatar.vue";
 export default {
   components: {
     Title,
     StarRating,
     InteractiveIcon,
-  },
+    UserAvatar
+},
   props: {
     comment: Object,
   },
   methods: {
-    deleteReview() {
+    deleteComment() {
       this.$emit('delete');
     },
   },

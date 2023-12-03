@@ -81,6 +81,11 @@
         'action' => 'autenticarUsuario'
       );
 
+      $routes['token'] = array(
+        'route' => '/usuario/token',
+        'controller' => 'AuthController',
+        'action' => 'autenticarToken'
+      );
       
       $routes['logout-usuario'] = array(
         'route' => '/usuario/logout', 
@@ -219,6 +224,14 @@
         'controller' => 'UsuarioController',
         'action' => 'avatarUsuario'
       );
+
+      $routes['obter-estatisticas-filme'] = array(
+        'route' => '/obter-estatisticas-filme',
+        'controller' => 'FilmeController',
+        'action' => 'obterEstatisticasFilmes'
+      );
+
+      
       
       $this->setRoutes($routes); 
     }
