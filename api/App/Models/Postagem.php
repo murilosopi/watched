@@ -81,7 +81,7 @@ class Postagem extends Model
               tu.id = tp.usuario
             WHERE
               tp.data >= CURDATE() - INTERVAL 7 DAY
-              AND tp.id > :id
+              AND tp.id > :id AND (!tu.privado OR tu.id = :usuario)
             ORDER BY
               tp.id DESC";
 
