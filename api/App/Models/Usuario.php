@@ -51,7 +51,7 @@
     public function obterUsuarioPorUsername() {
       $sql = "
         SELECT
-          id, nome, username, sobre, assinante
+          id, nome, username, sobre, assinante, privado
         FROM 
           tbUsuarios 
         WHERE 

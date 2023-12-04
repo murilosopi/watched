@@ -58,6 +58,16 @@
       </div>
     </DarkBox>
 
+    <div v-if="privateProfile" class="text-center container">
+      <Title tag="h3" class="display-2">
+
+        <i class="bi bi-lock"></i>
+        Conta privada
+      </Title>
+
+      <p>Este usuário limita quem pode acessar suas informações!</p>
+    </div>
+
     <template v-if="reviews.length">
       <section>
         <Title tag="h3" class="ps-3 display-6 mb-4">
@@ -126,6 +136,7 @@ import Dialog from "@/components/Dialog.vue";
 import InputCustom from "@/components/InputCustom.vue";
 import Scroller from "@/components/Scroller.vue";
 import UserPost from "@/components/UserPost.vue";
+import Swal from 'sweetalert2';
 
 export default {
   mixins: [PageMixin],
@@ -147,6 +158,7 @@ export default {
     return {
       about: "",
       id: "",
+      privateProfile: false,
       reviews: [],
       posts: [],
       lists: [],
@@ -230,12 +242,15 @@ export default {
             this.about = data.sobre;
             this.name = data.nome;
             this.subscriber = data.assinante;
+            this.privateProfile = data.privado && this.loggedData.tag !== this.username;
 
             if(this.userLogged) this.following = data.seguindo;
 
             this.changePageTitle(`@${this.username}`);
-            this.getReviews();
-            this.getPosts();
+            if(!this.privateProfile) {
+              this.getReviews();
+              this.getPosts();
+            }
           } else {
             throw "Usuário não encontrado";
           }
@@ -277,6 +292,11 @@ export default {
     },
 
     followUser() {
+
+      if(this.privateProfile) {
+        Swal.fire('Ops', 'Você só pode seguir contas privadas que já seguem o seu perfil.', 'warning');
+        return;
+      }
 
       if(!this.userLogged) {
         this.notifyAuthRequired();
