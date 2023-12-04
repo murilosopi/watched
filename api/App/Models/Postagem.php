@@ -47,17 +47,43 @@ class Postagem extends Model
   public function buscarPostagens()
   {
     $sql = "SELECT
-                tp.id,
-                tp.texto,
-                tp.data,
-                tu.username
-              FROM
-                tbPostagens as tp
-              JOIN tbUsuarios as tu on
-                tu.id = tp.usuario
-              WHERE tp.data >= CURDATE() - INTERVAL 7 DAY AND tp.id > :id
-              ORDER BY
-                tp.id DESC";
+              tp.id,
+              tp.texto,
+              tp.data,
+              tu.username,
+              (
+              select
+                tpv.voto
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.usuario = :usuario) as votoUsuario,
+              (
+              select
+                count(*)
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.voto = 'U') as upvotes,
+              (
+              select
+                count(*)
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.voto = 'D') as downvotes
+            FROM
+              tbPostagens as tp
+            JOIN tbUsuarios as tu on
+              tu.id = tp.usuario
+            WHERE
+              tp.data >= CURDATE() - INTERVAL 7 DAY
+              AND tp.id > :id
+            ORDER BY
+              tp.id DESC";
 
     $stmt = $this->conexao->prepare($sql);
 
@@ -71,6 +97,7 @@ class Postagem extends Model
     }
 
     $stmt->bindValue(':id', $this->id ?? 0);
+    $stmt->bindValue(':usuario', $this->usuario ?? 0);
 
     $stmt->execute();
 
@@ -113,6 +140,18 @@ class Postagem extends Model
 
     return $stmt->execute();
   }
+
+  public function deletarVoto() {
+    $sql = "DELETE FROM tbPostagemVoto WHERE usuario = :usuario AND postagem = :postagem";
+    
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':postagem', $this->id);
+
+    return $stmt->execute();
+  }
+  
 
   public function registrarVoto() {
     $sql = "INSERT INTO tbPostagemVoto(usuario, postagem, voto)

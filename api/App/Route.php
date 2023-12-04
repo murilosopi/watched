@@ -248,7 +248,18 @@
         'controller' => 'PostagemController',
         'action' => 'buscarPostagensRecentes'
       );
+
+      $routes['postagem-votar'] = array(
+        'route' => '/postagem/votar',
+        'controller' => 'PostagemController',
+        'action' => 'registrarVoto'
+      );
       
+      $routes['postagem-remover-voto'] = array(
+        'route' => '/postagem/remover-voto',
+        'controller' => 'PostagemController',
+        'action' => 'removerVoto'
+      );
       
       
       $this->setRoutes($routes); 

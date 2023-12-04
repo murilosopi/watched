@@ -1,15 +1,15 @@
 <template>
-  <article class="userpost">
+  <article class="post">
     <div class="row align-items-center mb-2">
       <div class="col-sm-1 col-2 p-0 mb-0">
-        <UserAvatar :username="userpost.username" />
+        <UserAvatar :username="post.username" />
       </div>
       <div class="col">
         <router-link
-          :to="`/usuario/${userpost.username}`"
+          :to="`/usuario/${post.username}`"
           class="text-white fw-bold"
         >
-          <Title tag="h4">@{{ userpost.username }}</Title>
+          <Title tag="h4">@{{ post.username }}</Title>
         </router-link>
       </div>
       <div class="col d-flex justify-content-end">
@@ -19,23 +19,25 @@
       </div>
     </div>
     <div class="text-wrap text-break row">
-      <p class="col-sm-11 col-10 ms-auto fs-6 mb-0 userpost-text">
-        {{ userpost.texto }}
+      <p class="col-sm-11 col-10 ms-auto fs-6 mb-0 post-text">
+        {{ post.texto }}
       </p>
     </div>
     <div class="row mt-2">
       <div class="col column-gap-3 d-flex justify-content-end">
         <InteractiveIcon title="Upvote">
           <i
-            class="bi bi-chevron-compact-up text-primary fs-4"
-            @click="addUpvote"
+            class="bi bi-chevron-compact-up fs-4"
+            :class="{ 'text-primary': userVote == 'U' }"
+            @click="vote('U', post.id)"
           ></i>
           <p class="text-center small text-white">{{ counterUp }}</p>
         </InteractiveIcon>
         <InteractiveIcon title="Downvote">
           <i
-            class="bi bi-chevron-compact-down text-danger fs-4"
-            @click="addDownvote"
+            class="bi bi-chevron-compact-down fs-4"
+            :class="{ 'text-danger': userVote == 'D' }"
+            @click="vote('D', post.id)"
           ></i>
           <p class="text-center small text-white">{{ counterDown }}</p>
         </InteractiveIcon>
@@ -52,6 +54,7 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
+      userVote: "",
       counterUp: 0,
       counterDown: 0,
       counterComment: 0,
@@ -63,7 +66,7 @@ export default {
     UserAvatar,
   },
   props: {
-    userpost: Object,
+    post: Object,
   },
   methods: {
     async report() {
@@ -72,28 +75,100 @@ export default {
         inputLabel: "Denunciar",
         inputPlaceholder: "Descreva o motivo da sua denúncia...",
         inputAttributes: {
-          "aria-label": "Descreva o motivo da sua denúncia"
+          "aria-label": "Descreva o motivo da sua denúncia",
         },
         showCancelButton: true,
         inputValidator(value) {
-          if(value.length < 15) {
-            return 'A sua denúncia deve conter, no mínimo, 15 caracteres.'
+          if (value.length < 15) {
+            return "A sua denúncia deve conter, no mínimo, 15 caracteres.";
           }
-        }
+        },
       });
 
-      if(value) Swal.fire('Denúncia Registrada', 'Sua denúncia foi registrada e logo será analisada pela nossa equipe.', 'info')
+      if (value)
+        Swal.fire(
+          "Denúncia Registrada",
+          "Sua denúncia foi registrada e logo será analisada pela nossa equipe.",
+          "info"
+        );
     },
-    addUpvote() {},
-    addDownvote() {},
+
+    vote(value, id) {
+      if (!this.userLogged) {
+        this.notifyAuthRequired();
+        return;
+      }
+
+      if (this.userVote == value) {
+        this.removeVote(id);
+        return;
+      }
+
+      let previous = this.userVote;
+      this.userVote = value;
+
+      if (previous == "D") this.counterDown--;
+      if (previous == "U") this.counterUp--;
+
+      if (value == "D") this.counterDown++;
+      if (value == "U") this.counterUp++;
+
+
+      const params = {
+        voto: value,
+        id,
+      };
+
+      this.$api.post("/postagem/votar", params).then((res) => {
+        const response = res.data;
+
+        if (!response.sucesso) {
+          if (value == "D") this.counterDown--;
+          if (value == "U") this.counterUp--;
+
+          this.userVote = previous;
+        }
+      });
+    },
+
+    removeVote(id) {
+      if (!this.userLogged) {
+        this.notifyAuthRequired();
+        return;
+      }
+      
+      let previous = this.userVote;
+      
+      if (previous == "D") this.counterDown--;
+      if (previous == "U") this.counterUp--;
+      
+      this.userVote = null;
+
+      const params = { id };
+      this.$api.post("/postagem/remover-voto", params).then((res) => {
+        const response = res.data;
+
+        if (!response.sucesso) {
+          if (previous == "D") this.counterDown++;
+          if (previous == "U") this.counterUp++;
+
+          this.userVote = previous;
+        }
+      });
+    },
+  },
+  created() {
+    this.userVote = this.post.votoUsuario;
+    this.counterDown = this.post.downvotes;
+    this.counterUp = this.post.upvotes;
   },
 };
 </script>
 <style scoped>
-.userpost {
+.post {
   border-bottom: 2px solid rgba(255, 255, 255, 0.086);
 }
-.userpost-text {
+.post-text {
   white-space: pre-wrap;
 }
 </style>

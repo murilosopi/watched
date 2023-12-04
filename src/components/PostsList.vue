@@ -1,7 +1,7 @@
 <template>
   <ul class="posts-list list-unstyled row gap-3 justify-content-center">
     <li v-for="post in posts" :key="post.id" class="col-11">
-      <UserPost :userpost="post"/>
+      <UserPost :post="post"/>
     </li>
   </ul>
 </template>

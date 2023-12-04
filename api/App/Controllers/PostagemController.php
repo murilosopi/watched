@@ -56,6 +56,9 @@ class PostagemController extends Action
     $postagem = new Postagem;
     $postagem->limit = 15;
     $postagem->offset = ($pagina - 1) * 15;
+    if(isset($_SESSION['usuario'])) {
+      $postagem->usuario = $_SESSION['usuario']['id'];
+    }
 
     $totalPaginas = ceil($postagem->obterTotalPostagems() / $postagem->limit);
     $resultados = $postagem->buscarPostagens();
@@ -78,6 +81,10 @@ class PostagemController extends Action
     $postagem = new Postagem;
 
     $postagem->id = (int)($_GET['id'] ?? 0);
+
+    if(isset($_SESSION['usuario'])) {
+      $postagem->usuario = $_SESSION['usuario']['id'];
+    }
 
     $resultados = $postagem->buscarPostagens();
 
@@ -109,6 +116,23 @@ class PostagemController extends Action
       } else {
         $response->sucesso = $postagem->registrarVoto();
       }
+
+      $response->enviar();
+    } else {
+      $response->erro("É necessário estar logado para realizar esta ação.");
+    }
+  }
+
+  public function removerVoto()
+  {
+    $response = new Response;
+
+    if(isset($_SESSION['usuario'])) {
+      $postagem = new Postagem;
+      $postagem->id = (int)($_POST['id'] ?? 0);
+      $postagem->usuario = $_SESSION['usuario']['id'];
+
+      $response->sucesso = $postagem->deletarVoto();
 
       $response->enviar();
     } else {
