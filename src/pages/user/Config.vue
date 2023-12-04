@@ -44,6 +44,7 @@
       <div class="col-lg-4 col-sm-6 config-item">
         <DarkBox
           class="card text-light pointer"
+          @click.native="showPremiumAd"
         >
           <div class="card-body">
             <Title class="card-header" tag="h5">
@@ -59,6 +60,7 @@
       </div>
     </div>
     <AvatarDialog class="modal-change-avatar" />
+    <PremiumAd class="modal-premium-ad"/>
   </main>
 </template>
   
@@ -69,17 +71,24 @@ import { Modal } from "bootstrap";
 import DarkBox from "@/components/DarkBox.vue";
 import AvatarDialog from "./AvatarDialog.vue";
 import PageMixin from "@/mixins/PageMixin";
+import PremiumAd from './PremiumAd.vue';
 export default {
-  components: { Title, InteractiveIcon, DarkBox, AvatarDialog },
+  components: { Title, InteractiveIcon, DarkBox, AvatarDialog, PremiumAd },
   mixins: [PageMixin],
   methods: {
     showChangeAvatar() {
       this.avatarDialog.show();
     },
+
+    showPremiumAd() {
+      this.premiumAd.show();
+    }
   },
   mounted() {
-    const modal = this.$el.querySelector(".modal-change-avatar");
-    this.avatarDialog = new Modal(modal);
+    this.avatarDialog = new Modal(this.$el.querySelector(".modal-change-avatar"));
+    this.premiumAd = new Modal(this.$el.querySelector(".modal-premium-ad"));
+
+    
   },
   watch: {
     userLogged() {
