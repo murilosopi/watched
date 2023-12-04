@@ -92,6 +92,24 @@
         </div>
       </div>
     </Dialog>
+
+    <template v-if="posts.length">
+      <section>
+        <Title tag="h3" class="ps-3 display-6 mb-4">
+          <i class="bi bi-clock-history ms-2"></i>
+          Publicações
+        </Title>
+        <Scroller>
+          <ul class="posts-list list-unstyled row gap-3 align-items-center">
+            <li v-for="post in posts" :key="post.id" class="col-7">
+              <UserPost :post="post"/>
+            </li>
+          </ul>
+        </Scroller>
+      </section>
+
+      <hr>
+    </template>
   </div>
 </template>
 
@@ -106,6 +124,8 @@ import UserStats from "./UserStats.vue";
 import UserReviews from "./UserReviews.vue";
 import Dialog from "@/components/Dialog.vue";
 import InputCustom from "@/components/InputCustom.vue";
+import Scroller from "@/components/Scroller.vue";
+import UserPost from "@/components/UserPost.vue";
 
 export default {
   mixins: [PageMixin],
@@ -118,14 +138,17 @@ export default {
     UserReviews,
     UserMovieLists,
     Dialog,
-    InputCustom
-  },
+    InputCustom,
+    Scroller,
+    UserPost
+},
 
   data() {
     return {
       about: "",
       id: "",
       reviews: [],
+      posts: [],
       lists: [],
       stats: [],
       following: false,
@@ -173,6 +196,24 @@ export default {
         .catch(() => {});
     },
 
+    getPosts() {
+      if (!this.loadedInfo) return;
+
+      const params = { uid: this.id };
+      this.$api
+        .get("/obter-postagens-usuario", { params })
+        .then((res) => {
+          let response = res.data;
+
+          if (response.sucesso) {
+            response.dados.forEach((post) => {
+              this.posts.push(post);
+            });
+          }
+        })
+        .catch(() => {});
+    },
+
     getLists() {},
 
     getInfo() {
@@ -194,6 +235,7 @@ export default {
 
             this.changePageTitle(`@${this.username}`);
             this.getReviews();
+            this.getPosts();
           } else {
             throw "Usuário não encontrado";
           }

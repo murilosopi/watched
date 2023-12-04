@@ -139,4 +139,19 @@ class PostagemController extends Action
       $response->erro("É necessário estar logado para realizar esta ação.");
     }
   }
+
+  public function obterPostagensUsuario() {
+
+    $postagem = new Postagem;
+    $postagem->usuario = $_GET['uid'] ?? 0;
+
+    $usuarioLogado = isset($_SESSION['usuario']) ? $_SESSION['usuario']['id'] : 0;
+
+    $postagens = $postagem->obterPostagensUsuario($usuarioLogado);
+
+    $response = new Response;
+    $response->sucesso = !empty($postagens);
+    if($response->sucesso) $response->dados = $postagens;
+    $response->enviar();
+  }
 }

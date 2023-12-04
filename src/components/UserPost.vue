@@ -1,5 +1,5 @@
 <template>
-  <article class="post">
+  <DarkBox class="post px-4 py-3">
     <div class="row align-items-center mb-2">
       <div class="col-sm-1 col-2 p-0 mb-0">
         <UserAvatar :username="post.username" />
@@ -43,13 +43,14 @@
         </InteractiveIcon>
       </div>
     </div>
-  </article>
+  </DarkBox>
 </template>
 <script>
 import Title from "./Title.vue";
 import InteractiveIcon from "./InteractiveIcon.vue";
 import UserAvatar from "./UserAvatar.vue";
 import Swal from "sweetalert2";
+import DarkBox from "./DarkBox.vue";
 
 export default {
   data() {
@@ -64,7 +65,8 @@ export default {
     Title,
     InteractiveIcon,
     UserAvatar,
-  },
+    DarkBox
+},
   props: {
     post: Object,
   },
