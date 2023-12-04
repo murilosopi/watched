@@ -14,6 +14,9 @@ export default {
     },
     prependPosts(state, posts) {
       state.list.unshift(...posts);
+    },
+    deletePost(state, index) {
+      state.list.splice(index, 1);
     }
   },
   actions: {
@@ -35,8 +38,13 @@ export default {
       });
     },
 
-    fetchNewPosts({ state, commit }) {
+    fetchNewPosts({ dispatch, state, commit }) {
       const [ lastPost ] = state.list;
+
+      if(!lastPost) {
+        dispatch('fetchPosts');
+        return;
+      }
 
       const params = { id: lastPost.id || 0 };
 
@@ -58,5 +66,18 @@ export default {
         return res;
       });
     },
+
+    delete({ commit }, { id, index}) {
+      return this._vm.$api.post("/remover-postagem", { id }).then((res) => {
+
+        const response = res.data;
+
+        if(response.sucesso) commit('deletePost', index);
+
+        return res;
+      });
+    },
+
+    
   },
 };

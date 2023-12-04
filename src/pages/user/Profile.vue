@@ -101,8 +101,8 @@
         </Title>
         <Scroller>
           <ul class="posts-list list-unstyled row gap-3 align-items-center">
-            <li v-for="post in posts" :key="post.id" class="col-7">
-              <UserPost :post="post"/>
+            <li v-for="(post, index) in posts" :key="post.id" class="col-7">
+              <UserPost :post="post" @delete="deletePost(post.id, index)"/>
             </li>
           </ul>
         </Scroller>
@@ -303,6 +303,17 @@ export default {
           this.following = true;
         }
       }).then(this.forceUpdateStats)
+    },
+
+    deletePost(id, index) {
+      return this.$api.post("/remover-postagem", { id }).then((res) => {
+
+        const response = res.data;
+
+        if(response.sucesso) this.posts.splice(index, 1);
+
+        return res;
+      });
     },
   },
 

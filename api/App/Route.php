@@ -266,6 +266,12 @@
         'controller' => 'PostagemController',
         'action' => 'obterPostagensUsuario'
       );
+
+      $routes['remover-postagem'] = array(
+        'route' => '/remover-postagem',
+        'controller' => 'PostagemController',
+        'action' => 'removerPostagem'
+      );
       
       
       $this->setRoutes($routes); 

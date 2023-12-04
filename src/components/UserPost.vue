@@ -13,7 +13,16 @@
         </router-link>
       </div>
       <div class="col d-flex justify-content-end">
-        <InteractiveIcon title="Denunciar">
+
+        <InteractiveIcon
+          title="Excluir"
+          v-if="post.username == loggedData.tag"
+          @click.native="deletePost"
+        >
+          <i class="bi bi-trash text-danger fs-6"></i>
+        </InteractiveIcon>
+
+        <InteractiveIcon title="Denunciar" v-else>
           <i class="bi bi-flag text-danger fs-6" @click="report"></i>
         </InteractiveIcon>
       </div>
@@ -93,6 +102,19 @@ export default {
           "Sua denúncia foi registrada e logo será analisada pela nossa equipe.",
           "info"
         );
+    },
+
+    deletePost() {
+      Swal.fire({
+        title: '<i class="bi bi-trash"></i> Excluir',
+        text: 'Tem certeza que deseja excluir esta postagem? Esta ação não poderá ser desfeita...',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        showConfirmButton: true,
+        confirmButtonText: 'Sim'
+      }).then(res => {
+        if(res) this.$emit('delete')
+      })
     },
 
     vote(value, id) {

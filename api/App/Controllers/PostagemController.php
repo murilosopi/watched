@@ -154,4 +154,28 @@ class PostagemController extends Action
     if($response->sucesso) $response->dados = $postagens;
     $response->enviar();
   }
+  public function removerPostagem()
+  {
+    $response = new Response;
+
+    if(isset($_SESSION['usuario'])) {
+      $postagem = new Postagem;
+      $postagem->id = (int)($_POST['id'] ?? 0);
+      $postagem->usuario = $_SESSION['usuario']['id'];
+
+      $excluiuVotos = $postagem->deletarVotosPostagem();
+
+      if($excluiuVotos) {
+        $response->sucesso = $postagem->deletarPostagem();
+      } else {
+        $response->sucesso = false;
+      }
+
+      $response->enviar();
+    } else {
+      $response->erro("É necessário estar logado para realizar esta ação.");
+    }
+  }
+
+  
 }

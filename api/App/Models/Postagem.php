@@ -151,6 +151,26 @@ class Postagem extends Model
 
     return $stmt->execute();
   }
+
+  public function deletarVotosPostagem() {
+    $sql = "DELETE FROM tbPostagemVoto WHERE postagem = :postagem";
+    
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->bindValue(':postagem', $this->id);
+
+    return $stmt->execute();
+  }
+
+  public function deletarPostagem() {
+    $sql = "DELETE FROM tbPostagens WHERE usuario = :usuario AND id = :id";
+    
+    $stmt = $this->conexao->prepare($sql);
+
+    $stmt->bindValue(':usuario', $this->usuario);
+    $stmt->bindValue(':id', $this->id);
+
+    return $stmt->execute();
+  }
   
 
   public function registrarVoto() {
@@ -164,5 +184,55 @@ class Postagem extends Model
     $stmt->bindValue(':voto', $this->voto);
 
     return $stmt->execute();
+  }
+
+  public function obterPostagensUsuario($usuarioLogado) {
+    $sql = "SELECT
+              tp.id,
+              tp.texto,
+              tp.data,
+              tu.username,
+              (
+              select
+                tpv.voto
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.usuario = :usuarioLogado) as votoUsuario,
+              (
+              select
+                count(*)
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.voto = 'U') as upvotes,
+              (
+              select
+                count(*)
+              from
+                tbPostagemVoto tpv
+              where
+                tpv.postagem = tp.id
+                and tpv.voto = 'D') as downvotes
+            FROM
+              tbPostagens as tp
+            JOIN tbUsuarios as tu on
+              tu.id = tp.usuario
+            WHERE
+              tp.data >= CURDATE() - INTERVAL 7 DAY
+              AND tp.usuario = :usuario
+            ORDER BY
+              tp.id DESC";
+
+      $stmt = $this->conexao->prepare($sql);
+
+      $stmt->bindValue(':usuario', $this->usuario ?? 0);
+      $stmt->bindValue(':usuarioLogado', $usuarioLogado ?? 0);
+      
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
   }
 }
