@@ -96,7 +96,7 @@
     <template v-if="posts.length">
       <section>
         <Title tag="h3" class="ps-3 display-6 mb-4">
-          <i class="bi bi-clock-history ms-2"></i>
+          <i class="bi bi-stickies ms-2"></i>
           Publicações
         </Title>
         <Scroller>
