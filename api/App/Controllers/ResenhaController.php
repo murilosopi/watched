@@ -27,6 +27,7 @@ class ResenhaController extends Action
     $resenhaModel->filme = $_GET['filme'] ?? 0;
     $resenhaModel->offset = $_GET['offset'] ?? 0;
     $resenhaModel->limit = $_GET['limit'] ?? 0;
+    $resenhaModel->usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario']['id'] : 0;
 
     $resenhas = $resenhaModel->obterTodasResenhasPorFilme();
 
