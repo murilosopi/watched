@@ -5,11 +5,12 @@ export default {
       id: '',
       name: '',
       tag: '',
+      private: null
     }
   },
   getters: {
     isLogged(state) {
-      return Object.values(state.user).every(value => value);
+      return state.user && state.user.id && state.user.name && state.user.tag;
     },
     getData(state) {
       return state.user;
@@ -18,6 +19,10 @@ export default {
   mutations: {
     setUser(state, payload) {
       state.user = payload;
+    },
+
+    setPrivacy(state, payload) {
+      state.user.private = payload;
     }
   },
   actions: {
@@ -25,7 +30,8 @@ export default {
       const user = {
         id: payload.id,
         name: payload.nome,
-        tag: payload.username
+        tag: payload.username,
+        private: payload.privado ? true : false
       }
 
       commit('setUser', user);
@@ -37,7 +43,7 @@ export default {
         .then(res => {
           const response = res.data;
           
-          if(response.sucesso) dispatch('setUser', { id: '', name: '', tag: '' });
+          if(response.sucesso) dispatch('setUser', { id: '', name: '', tag: '', privado: null });
         });
     },
 
@@ -88,7 +94,7 @@ export default {
 
         return response.sucesso || false;
       });
-    }
+    },
   }
   
 }

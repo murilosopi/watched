@@ -72,7 +72,7 @@ class Auth extends Model
   {
     $sql = "
         SELECT 
-          id, nome, username, sobre, senha, email, status, token
+          id, nome, username, sobre, senha, email, status, token, privado
         FROM 
           tbUsuarios 
 

@@ -272,6 +272,14 @@
         'controller' => 'PostagemController',
         'action' => 'removerPostagem'
       );
+
+      $routes['usuario/alterar-privacidade'] = array(
+        'route' => '/usuario/alterar-privacidade',
+        'controller' => 'UsuarioController',
+        'action' => 'alterarPrivacidadePerfil'
+      );
+
+      
       
       
       $this->setRoutes($routes); 
