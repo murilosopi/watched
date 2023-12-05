@@ -13,9 +13,9 @@ import InteractiveIcon from './InteractiveIcon.vue';
 export default {
     components: {
         InteractiveIcon
-    }
-
+    },
 }
+
 </script>
 <style scoped>
 .container {
