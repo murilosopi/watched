@@ -34,7 +34,7 @@
     </div>
     <div slot="footer">
       <button class="bg-transparent border-0 outline-0 text-white-50" data-bs-dismiss="modal">
-        Igrnorar
+        Ignorar
       </button>
     </div>
   </Dialog>
