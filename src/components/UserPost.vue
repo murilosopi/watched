@@ -13,7 +13,6 @@
         </router-link>
       </div>
       <div class="col d-flex justify-content-end">
-
         <InteractiveIcon
           title="Excluir"
           v-if="post.username == loggedData.tag"
@@ -74,8 +73,8 @@ export default {
     Title,
     InteractiveIcon,
     UserAvatar,
-    DarkBox
-},
+    DarkBox,
+  },
   props: {
     post: Object,
   },
@@ -83,12 +82,14 @@ export default {
     async report() {
       let { value } = await Swal.fire({
         input: "textarea",
-        inputLabel: "Denunciar",
+        title: "Denunciar",
         inputPlaceholder: "Descreva o motivo da sua denúncia...",
         inputAttributes: {
           "aria-label": "Descreva o motivo da sua denúncia",
         },
         showCancelButton: true,
+        confirmButtonText: "Enviar",
+        cancelButtonText: "Cancelar",
         inputValidator(value) {
           if (value.length < 15) {
             return "A sua denúncia deve conter, no mínimo, 15 caracteres.";
@@ -107,14 +108,14 @@ export default {
     deletePost() {
       Swal.fire({
         title: '<i class="bi bi-trash"></i> Excluir',
-        text: 'Tem certeza que deseja excluir esta postagem? Esta ação não poderá ser desfeita...',
+        text: "Tem certeza que deseja excluir esta postagem? Esta ação não poderá ser desfeita...",
         showCancelButton: true,
-        cancelButtonText: 'Não',
+        cancelButtonText: "Não",
         showConfirmButton: true,
-        confirmButtonText: 'Sim'
-      }).then(res => {
-        if(res) this.$emit('delete')
-      })
+        confirmButtonText: "Sim",
+      }).then((res) => {
+        if (res.isConfirmed) this.$emit("delete");
+      });
     },
 
     vote(value, id) {
@@ -136,7 +137,6 @@ export default {
 
       if (value == "D") this.counterDown++;
       if (value == "U") this.counterUp++;
-
 
       const params = {
         voto: value,
@@ -160,12 +160,12 @@ export default {
         this.notifyAuthRequired();
         return;
       }
-      
+
       let previous = this.userVote;
-      
+
       if (previous == "D") this.counterDown--;
       if (previous == "U") this.counterUp--;
-      
+
       this.userVote = null;
 
       const params = { id };

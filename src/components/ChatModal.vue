@@ -142,12 +142,14 @@ export default {
     async report() {
       let { value } = await Swal.fire({
         input: "textarea",
-        inputLabel: "Denunciar",
+        title: "Denunciar",
         inputPlaceholder: "Descreva o motivo da sua denúncia...",
         inputAttributes: {
           "aria-label": "Descreva o motivo da sua denúncia"
         },
         showCancelButton: true,
+        confirmButtonText: 'Enviar',
+        cancelButtonText: 'Cancelar',
         inputValidator(value) {
           if(value.length < 15) {
             return 'A sua denúncia deve conter, no mínimo, 15 caracteres.'
