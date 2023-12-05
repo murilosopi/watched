@@ -171,13 +171,14 @@ export default {
               class: "success",
             });
 
-            this.auth({ username: this.tag, password: this.password }).then(
-              (success) => {
-                if (success) {
-                  router.push("/");
-                }
-              }
-            );
+            router.push("/login");
+          } else if (response.descricao) {
+            this.notifyUser({
+              icon: "exclamation-diamond",
+              title: "Atenção",
+              text: response.descricao.toLowerCase(),
+              class: "warning",
+            });
           } else {
             this.notifyUser({
               icon: "x-octagon",

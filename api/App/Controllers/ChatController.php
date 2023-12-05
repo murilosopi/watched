@@ -46,7 +46,7 @@ class ChatController extends Action
       $response->sucesso = !empty($response->dados);
       $response->enviar();
     } else {
-      $response->erro("É necessário estar logado para registrar uma resenha.");
+      $response->erro("É necessário estar logado para realizar esta ação.");
     }
   }
 
@@ -55,7 +55,7 @@ class ChatController extends Action
     $response = new Response;
     if (empty($_SESSION['usuario'])) {
       $response->sucesso = false;
-      $response->descricao = "É necessário estar logado para registrar uma resenha.";
+      $response->descricao = "É necessário estar logado para realizar esta ação.";
       $response->enviar();
     } else {
       $chat = new Chat;
@@ -72,7 +72,7 @@ class ChatController extends Action
     $response = new Response;
     if (empty($_SESSION['usuario'])) {
       $response->sucesso = false;
-      $response->descricao = "É necessário estar logado para registrar uma resenha.";
+      $response->descricao = "É necessário estar logado para realizar esta ação.";
       $response->enviar();
     } else {
       $chat = new Chat;

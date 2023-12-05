@@ -11,6 +11,7 @@
     protected $email;
     protected $senha;
     protected $seguidor;
+    protected $privado;
 
     // Retorna um usuário que tenha um username ou email e senha compatíveis
     public function obterUsuarioPorId() {
@@ -50,7 +51,7 @@
     public function obterUsuarioPorUsername() {
       $sql = "
         SELECT
-          id, nome, username, sobre, assinante
+          id, nome, username, sobre, assinante, privado
         FROM 
           tbUsuarios 
         WHERE 
@@ -179,6 +180,16 @@
       $stmt = $this->conexao->prepare($sql);
       $stmt->bindValue(':usuario', $this->id);
       $stmt->bindValue(':seguidor', $this->seguidor);
+
+      return $stmt->execute();
+    }
+
+    public function alterarPrivacidadePerfil() {
+      $sql = "UPDATE tbUsuarios SET privado = :privado WHERE id = :usuario";
+
+      $stmt = $this->conexao->prepare($sql);
+      $stmt->bindValue(':usuario', $this->id);
+      $stmt->bindValue(':privado', $this->privado, \PDO::PARAM_BOOL);
 
       return $stmt->execute();
     }

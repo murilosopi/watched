@@ -112,7 +112,16 @@ CREATE TABLE tbPostagens(
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario INT NOT NULL,
     texto VARCHAR(1500),
-    imagem VARCHAR(1500)
+    imagem VARCHAR(1500),
+    data DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tbPostagemVoto(
+    postagem INT,
+    FOREIGN KEY(postagem) REFERENCES tbPostagens(id),
+    usuario INT,
+    FOREIGN KEY(usuario) REFERENCES tbUsuarios(id),
+    voto CHAR(1) 
 );
 
 INSERT INTO tbReacoes(id, icone, descricao)
@@ -123,3 +132,8 @@ VALUES
     (4, 'emoji-laughing', 'animado'),
     (5, 'emoji-dizzy', 'abismado'),
     (6, 'emoji-heart-eyes', 'amei');
+
+ALTER TABLE tbPostagens CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbResenhas  CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbUsuarios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE tbChats CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;

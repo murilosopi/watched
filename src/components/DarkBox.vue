@@ -20,10 +20,10 @@ export default {
 
 <style>
 .dark-box {
-  background: rgba(23, 23, 23, 0.90);
+  background-color: rgba(23, 23, 23, 0.90)!important;
 }
 
 .dark-box.gray {
-  background-color: rgba(217, 217, 217, 0.05);
+  background-color: rgba(217, 217, 217, 0.05)!important;
 }
 </style>

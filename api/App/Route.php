@@ -231,6 +231,55 @@
         'action' => 'obterEstatisticasFilmes'
       );
 
+      $routes['registrar-postagem'] = array(
+        'route' => '/registrar-postagem',
+        'controller' => 'PostagemController',
+        'action' => 'registrarPostagem'
+      );
+
+      $routes['buscar-postagens'] = array(
+        'route' => '/buscar-postagens',
+        'controller' => 'PostagemController',
+        'action' => 'buscarTodasPostagens'
+      );
+
+      $routes['buscar-postagens-recentes'] = array(
+        'route' => '/buscar-postagens-recentes',
+        'controller' => 'PostagemController',
+        'action' => 'buscarPostagensRecentes'
+      );
+
+      $routes['postagem-votar'] = array(
+        'route' => '/postagem/votar',
+        'controller' => 'PostagemController',
+        'action' => 'registrarVoto'
+      );
+      
+      $routes['postagem-remover-voto'] = array(
+        'route' => '/postagem/remover-voto',
+        'controller' => 'PostagemController',
+        'action' => 'removerVoto'
+      );
+
+      $routes['obter-postagens-usuario'] = array(
+        'route' => '/obter-postagens-usuario',
+        'controller' => 'PostagemController',
+        'action' => 'obterPostagensUsuario'
+      );
+
+      $routes['remover-postagem'] = array(
+        'route' => '/remover-postagem',
+        'controller' => 'PostagemController',
+        'action' => 'removerPostagem'
+      );
+
+      $routes['usuario/alterar-privacidade'] = array(
+        'route' => '/usuario/alterar-privacidade',
+        'controller' => 'UsuarioController',
+        'action' => 'alterarPrivacidadePerfil'
+      );
+
+      
       
       
       $this->setRoutes($routes); 

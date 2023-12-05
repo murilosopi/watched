@@ -174,4 +174,25 @@ class UsuarioController extends Action
     $response->dados = !empty($caminho) && file_exists($avatar) ? $avatar : $padrao;
     $response->enviar();
   }
+
+  public function alterarPrivacidadePerfil()
+  {
+    $response = new Response;
+
+    if (isset($_SESSION['usuario'])) {
+      $usuario = new Usuario;
+      $usuario->id = $_SESSION['usuario']['id'];
+      $usuario->privado = !$_SESSION['usuario']['privado'];
+
+      $alterou = $usuario->alterarPrivacidadePerfil();
+
+      if($alterou) $_SESSION['usuario']['privado'] = $usuario->privado;
+
+      $response->sucesso = $alterou;
+    } else {
+      $response->erro('Necessário estar autenticado para realizar esta ação');
+    }
+
+    $response->enviar();
+  }
 }

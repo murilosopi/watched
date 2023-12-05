@@ -83,6 +83,7 @@ class AuthController extends Action
 
         $_SESSION['usuario'] = [
           'id' => $usuario['id'],
+          'privado' => $usuario['privado'],
           'nome' => $usuario['nome'],
           'username' => $usuario['username'],
           'sobre' => $usuario['sobre'],
@@ -121,11 +122,14 @@ class AuthController extends Action
         if($tokenValido) {
           $_SESSION['usuario'] = [
             'id' => $usuario['id'],
+            'privado' => $usuario['privado'],
             'nome' => $usuario['nome'],
             'username' => $usuario['username'],
             'sobre' => $usuario['sobre'],
           ];
   
+          $this->authModel->atualizarStatusVerificado();
+          $this->authModel->removerToken();
           $this->authModel->atualizarAcesso();
         }
       }

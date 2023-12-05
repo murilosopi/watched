@@ -26,7 +26,7 @@
             <i class="bi bi-trash text-danger fs-6"></i>
           </InteractiveIcon>
 
-          <InteractiveIcon title="Denunciar" v-else>
+          <InteractiveIcon title="Denunciar" v-else @click.native="report">
             <i class="bi bi-flag text-danger fs-6"></i>
           </InteractiveIcon>
         </template>
@@ -64,6 +64,9 @@ export default {
     deleteComment() {
       this.$emit('delete');
     },
+    report() {
+      this.$emit('report');
+    }
   },
 };
 </script>

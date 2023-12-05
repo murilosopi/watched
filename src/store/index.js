@@ -7,7 +7,8 @@ import auth from './modules/auth';
 import notification from './modules/notification';
 import chat from './modules/chat';
 import review from './modules/review';
+import post from './modules/post';
 
 export default new Vuex.Store({
-  modules: { auth, notification, chat, review }
+  modules: { auth, notification, chat, review, post }
 });
