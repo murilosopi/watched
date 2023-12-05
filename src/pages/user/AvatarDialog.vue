@@ -1,36 +1,56 @@
 <template>
-  <Dialog class="modal-change-avatar" size="lg">
+  <Dialog class="modal-change-avatar" size="lg" :customHeader="true">
+    <template slot="header">
+      <Title tag="h5" class="h2">
+        <i class="bi bi-camera me-2"></i>
+        Foto de Perfil
+      </Title>
+      <InteractiveIcon data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x-lg text-danger"></i>
+      </InteractiveIcon>
+    </template>
     <div slot="content">
+      <div class="row mb-2">
+        <div class="col-12">
+          <p>Abaixo você pode enviar uma imagem válida de até <strong>4 MB</strong> e visualizar o resultado da alteração ao lado.</p>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0">
+        <div
+          class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0 text-center"
+        >
+          <Title tag="p" class="opacity-75 h5 mb-2">Envie uma imagem: </Title>
           <div class="ratio ratio-1x1 m-auto">
             <UploadImage @newFile="uploadCustomAvatar" class="rounded-circle" />
           </div>
         </div>
 
         <div
+          class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0 text-center"
           v-if="userHasAvatar"
-          class="col-lg-3 col-md-5 col-sm-6 col-8 mx-auto m-sm-0"
         >
+          <Title tag="p" class="opacity-75 h5 mb-2">Sua Foto</Title>
           <UserAvatar :key="updateCounter" :username="loggedData.tag" />
         </div>
       </div>
-    </div>
+    </div>  
   </Dialog>
 </template>
 
 <script>
 import Dialog from "@/components/Dialog.vue";
+import InteractiveIcon from "@/components/InteractiveIcon.vue";
+import Title from "@/components/Title.vue";
 import UploadImage from "@/components/UploadImage.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import Swal from "sweetalert2";
 
 export default {
-  components: { Dialog, UploadImage, UserAvatar },
+  components: { Dialog, UploadImage, UserAvatar, Title, InteractiveIcon },
   data() {
     return {
       userHasAvatar: false,
-      updateCounter: 0
+      updateCounter: 0,
     };
   },
   methods: {
