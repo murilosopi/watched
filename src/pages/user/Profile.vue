@@ -80,7 +80,7 @@
       <hr>
     </template>
 
-    <UserMovieLists :lists="lists" :uid="id"/>
+    <UserMovieLists :lists="lists" :uid="id" v-if="!privateProfile" />
 
     <Dialog id="about-user" v-if="loadedInfo">
       <InputCustom slot="content" :icon="false">
